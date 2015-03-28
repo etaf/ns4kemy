@@ -1,0 +1,213 @@
+#!/usr/bin/perl -w
+
+use strict;
+use Cwd;
+
+my $origdir = getcwd;
+
+my $MIN_RTT = 149.5; # ms
+
+###################################
+#
+# This program generates the throughput-delay plots seen in
+# "TCP ex Machina: Computer-Generated Congestion Control."
+#
+#
+# Example: $ ./graphmaker ../congctrl/results/
+#
+# will write SVG to ../congctrl/results/graphdir/graph-8.svg
+# and PNG to ../congctrl/results/graphdir/graph-8.png
+#
+# MIN_RTT (above) must be adjusted to the minRTT of the link.
+#
+###################################
+
+unless ( 1 == scalar @ARGV ) {
+  print STDERR "Usage: $0 DIRECTORY\n";
+  exit;
+}
+
+my ($dir) = @ARGV;
+
+my %protos;
+my %nsrcs;
+
+for ( glob "$dir*/*" ) {
+  if ( m{graphdir} ) {
+    die "Found ${dir}graphdir directory from previous run. This needs to be deleted.\n";
+  }
+
+  my ($delta) = m{-rational-delta(.*?)/};
+  my ($protocol) = m{.*/(.*?)\.};
+  my ($nsrc) = m{nconn(\d+)};
+
+#  next if ( $protocol =~ m{XCP} );
+#  next if ( $protocol =~ m{CoDel} );
+#  next if ( $protocol =~ m{delta1$} );
+  next if ( $protocol =~ m{0_5} );
+  next if ( $protocol =~ m{2} );
+
+#  next if ( $protocol =~ m{^TCP-Linux-cubic$} );
+#  next if ( $protocol =~ m{TCP-Newreno} );
+#  next if ( $protocol =~ m{TCP-Linux-compound} );
+
+  if ( defined $delta ) {
+    $protocol .= "-$delta";
+  }
+
+  # strip iteration before storing
+  my (@records) = split('.iteration', $_);
+  $protos{ $nsrc }{ $protocol }{ filename } = $records[0];
+
+#  print STDERR "protocol $protocol\n";
+}
+
+sub median {
+  my $n = scalar @_;
+  @_ = sort { $a <=> $b } @_;
+  my $median;
+  if ( $n % 2 == 1 ) {
+    $median = $_[ int($n / 2) ] + 0;
+  } else {
+    $median = $_[ int($n / 2) ] + $_[ int($n / 2) - 1 ];
+    $median /= 2;
+  }
+
+  return $median;
+}
+
+mkdir( "$dir/graphdir" ) or die "Found ${dir}graphdir directory from previous run. This needs to be deleted.\n";
+chdir( "$dir/graphdir" ) or die "can't enter directory $dir/graphdir: $!";
+
+for my $nsrc ( keys %protos ) {
+  my ( $rttmin, $rttmax ) = ( 10000000000, -10000000000 );
+  my ( $mbpsmin, $mbpsmax ) = ( 10000000000, -10000000000 );
+
+  for my $protocol ( keys %{ $protos{ $nsrc } } ) {
+    # make clean data
+
+    my $filename = $protos{ $nsrc }{ $protocol }{ filename };
+    my ( $rtt_tot, $mbps_tot, $count );
+
+    my $catcmd = ' cat ' . $origdir . '/' . $filename . '.iteration*' . ' > ' . $origdir . '/' .$filename;
+    print `$catcmd`;
+    open DATA, $origdir . '/' . $filename or die "can't open $filename: $!";
+    open ELLIPSE, "|$origdir/ellipsemaker > $protocol-$nsrc.ellipse" or die;
+    open RAWDATA, ">$protocol-$nsrc.pts" or die;
+    my @rtts = ();
+    my @mbpss = ();
+    while ( <DATA> ) {
+      next unless m{^conn:};
+
+      my ( $mbps, $fct, $rtt, $onperc ) = m{rMbps: (.*?) fctMs: (.*?) .*?sndrttMs (.*?) .*?onperc: (.*?)$};
+
+      if ( not defined $rtt ) {
+	die "line did not match pattern: $_";
+      } elsif ( $onperc == 0 ) {
+	print STDERR "WARNING: sender was never on: $_";
+	next;
+      }
+
+      $rtt -= $MIN_RTT;
+      push @rtts, $rtt + 0;
+      $rtt = log( $rtt ) / log( 2 );
+      print ELLIPSE "$rtt $mbps\n";
+      print RAWDATA "$rtt $mbps\n";
+      $count++;
+      $rtt_tot += $rtt;
+      $mbps_tot += $mbps;
+      push @mbpss, $mbps;
+    }
+    close ELLIPSE or die;
+    close RAWDATA or die;
+
+    my $rttmed = log( median( @rtts ) ) / log( 2 );
+
+    my $mbpsmed = median( @mbpss );
+
+    # find limits of ellipse
+    open ELLIPSEOUT, "$protocol-$nsrc.ellipse" or die;
+    while ( <ELLIPSEOUT> ) {
+      my ( $rtt, $mbps ) = split /\s+/, $_;
+      if ( $rtt > $rttmax ) { $rttmax = $rtt }
+      if ( $rtt < $rttmin ) { $rttmin = $rtt }
+      if ( $mbps > $mbpsmax ) { $mbpsmax = $mbps }
+      if ( $mbps < $mbpsmin ) { $mbpsmin = $mbps }
+    }
+    close ELLIPSEOUT or die;
+
+    $protos{ $nsrc }{ $protocol }{ means } = [ $rtt_tot / $count, $mbps_tot / $count ];
+    $protos{ $nsrc }{ $protocol }{ medians } = [ $rttmed, $mbpsmed ];
+  }
+
+  my @xtic_locations = map{ 2**$_ } ( 0 .. 15 );
+  my @xtic_strings = map { qq{"$_" log($_)/log(2)} } @xtic_locations;
+
+  my $xtic_instruction = qq{set xtics (} . (join ", ", @xtic_strings) . qq{)};
+
+  open GNUPLOT, ">graph-$nsrc.gnu" or die;
+
+#  $rttmin *= 0.8;
+#  $rttmax *= 1.1;
+#  $mbpsmin *= 0.8;
+#  $mbpsmax *= 1.1;
+
+  print GNUPLOT <<"HERE";
+set xrange [0:$rttmax] reverse
+set yrange [0:$mbpsmax]
+#set logscale x 2
+#set logscale y 2
+
+$xtic_instruction
+
+set xlabel "Queueing delay (ms)"
+set ylabel "Throughput (Mbps)"
+set grid
+
+#set title "15 Mbps dumbbell, Empirical distribution of flow lengths, nsrc $nsrc"
+
+unset key
+
+set terminal svg fsize 14
+set output "graph-$nsrc.svg"
+HERE
+
+
+  my @plotcmd;
+  my @dotcmd;
+
+  my $protocount = 1;
+  for my $protocol ( keys %{ $protos{ $nsrc } } ) {
+    my $nicename = $protocol;
+    $nicename =~ s{TCP-Rational}{RemyCC};
+    $nicename =~ s{TCP-Vegas}{Vegas};
+    $nicename =~ s{TCP-Linux-vegas}{Vegas}i;
+    $nicename =~ s{Cubic-sfqCoDel}{Cubic/sfqCoDel};
+    $nicename =~ s{TCP-Reno-XCP}{XCP};
+    $nicename =~ s{TCP-Newreno}{NewReno};
+    $nicename =~ s{TCP-Linux-cubic}{Cubic};
+    $nicename =~ s{TCP-Linux-compound}{Compound};
+
+#    $protos{ $nsrc }{ $protocol }{ means }[ 1 ] += .1;
+
+    print GNUPLOT qq<set label "$nicename" at $protos{ $nsrc }{ $protocol }{ medians }[ 0 ],$protos{ $nsrc }{ $protocol }{ medians }[ 1 ] point textcolor lt 1\n>;
+
+    push @plotcmd, qq<"$protocol-$nsrc.ellipse" with lines lt 1>;
+#    push @dotcmd, qq<"$protocol-$nsrc.pts" with dots lt $protocount>;
+
+    $protocount++;
+  }
+
+  my $plotcmd = join ", ", @plotcmd, @dotcmd;
+  print GNUPLOT "plot $plotcmd\nset output\n";
+
+  close GNUPLOT or die;
+
+  print STDERR "Writing SVG to ${dir}graphdir/graph-$nsrc.svg\n";
+
+  system( "gnuplot -p graph-$nsrc.gnu" );
+
+  print STDERR "Writing PNG to ${dir}graphdir/graph-$nsrc.png\n";
+
+  system( "inkscape --export-png=graph-$nsrc.png -b '#ffffff' -D graph-$nsrc.svg" );
+}

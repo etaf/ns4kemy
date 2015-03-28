@@ -1,0 +1,363 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.9~svn20110310	//
+AIMD_HH	src/aimd.hh	2;"	d
+Aimd	src/aimd.cc	/^Aimd::Aimd(const double inter_send_time ,const bool s_track )$/;"	f	class:Aimd
+Aimd	src/aimd.hh	/^class Aimd$/;"	c
+ByteSwitchedSender	src/sendergang.hh	/^  class ByteSwitchedSender : public SwitchedSender {$/;"	c	class:SenderGang
+CONFIG_RANGE_HH	src/configrange.hh	2;"	d
+ConfigRange	src/configrange.hh	/^class ConfigRange$/;"	c
+DELAY_HH	src/delay.hh	2;"	d
+DNA	src/configrange.cc	/^KemyBuffers::ConfigRange ConfigRange::DNA( void ) const$/;"	f	class:ConfigRange
+DNA	src/evaluator.cc	/^AnswerBuffers::Outcome Evaluator::Outcome::DNA( void ) const$/;"	f	class:Evaluator::Outcome
+DNA	src/evaluator.cc	/^ProblemBuffers::Problem Evaluator::DNA( const WhiskerTree & whiskers ) const$/;"	f	class:Evaluator
+DNA	src/evaluator1.cc	/^AnswerBuffers::Outcome Evaluator::Outcome::DNA( void ) const$/;"	f	class:Evaluator::Outcome
+DNA	src/evaluator1.cc	/^ProblemBuffers::Problem Evaluator::DNA( const WhiskerTree & whiskers ) const$/;"	f	class:Evaluator
+DNA	src/memory.cc	/^KemyBuffers::Memory Memory::DNA( void ) const$/;"	f	class:Memory
+DNA	src/memoryrange.cc	/^KemyBuffers::MemoryRange MemoryRange::DNA( void ) const$/;"	f	class:MemoryRange
+DNA	src/network.hh	/^  KemyBuffers::NetConfig DNA( void ) const$/;"	f	class:NetConfig
+DNA	src/whisker.cc	/^KemyBuffers::Whisker Whisker::DNA( void ) const$/;"	f	class:Whisker
+DNA	src/whisker.hh	/^    KemyBuffers::OptimizationSetting DNA( void ) const$/;"	f	struct:Whisker::OptimizationSetting
+DNA	src/whisker.hh	/^    KemyBuffers::OptimizationSettings DNA( void ) const$/;"	f	struct:Whisker::OptimizationSettings
+DNA	src/whiskertree.cc	/^KemyBuffers::WhiskerTree WhiskerTree::DNA( void ) const$/;"	f	class:WhiskerTree
+DataType	src/memory.hh	/^  typedef double DataType;$/;"	t	class:Memory
+Delay	src/delay.hh	/^  Delay( const double s_delay ) : _queue(), _delay( s_delay ) {}$/;"	f	class:Delay
+Delay	src/delay.hh	/^class Delay$/;"	c
+EVALUATOR_HH	src/evaluator.hh	2;"	d
+EVALUATOR_HH	src/evaluator1.hh	2;"	d
+EXPONENTIAL_HH	src/exponential.hh	2;"	d
+Evaluator	src/evaluator.cc	/^Evaluator::Evaluator( const ConfigRange & range )$/;"	f	class:Evaluator
+Evaluator	src/evaluator.hh	/^class Evaluator$/;"	c
+Evaluator	src/evaluator1.cc	/^Evaluator::Evaluator( const ConfigRange & range )$/;"	f	class:Evaluator
+Evaluator	src/evaluator1.hh	/^class Evaluator$/;"	c
+Exponential	src/exponential.hh	/^  Exponential( const double & rate, PRNG & s_prng ) : distribution( rate ), prng( s_prng ) {}$/;"	f	class:Exponential
+Exponential	src/exponential.hh	/^class Exponential$/;"	c
+INITIAL_WINDOW	src/aimd.cc	/^constexpr double Aimd::INITIAL_WINDOW;$/;"	m	class:Aimd	file:
+INITIAL_WINDOW	src/aimd.hh	/^  static constexpr double INITIAL_WINDOW = 1.0; \/* INITIAL WINDOW OF 1 *\/$/;"	m	class:Aimd
+KEMY_QUEUE_HH	src/kemyqueue.hh	2;"	d
+KemyQueue	src/kemyqueue.hh	/^        KemyQueue( WhiskerTree &  s_whiskers,const bool s_track=false) :$/;"	f	class:KemyQueue
+KemyQueue	src/kemyqueue.hh	/^class KemyQueue$/;"	c
+LINK_HH	src/link.hh	2;"	d
+Link	src/link.hh	/^  Link(WhiskerTree & whiskers,const bool  & s_track,const double & forward_ppms, const double s_rate,$/;"	f	class:Link
+Link	src/link.hh	/^class Link$/;"	c
+MAX_MEMORY	src/memory.cc	/^const Memory & MAX_MEMORY( void )$/;"	f
+MEMORYRANGE_HH	src/memoryrange.hh	2;"	d
+MEMORY_HH	src/memory.hh	2;"	d
+Memory	src/memory.cc	/^Memory::Memory( const bool is_lower_limit, const KemyBuffers::Memory & dna )$/;"	f	class:Memory
+Memory	src/memory.hh	/^  Memory( const std::vector< DataType > & s_data )$/;"	f	class:Memory
+Memory	src/memory.hh	/^  Memory()$/;"	f	class:Memory
+Memory	src/memory.hh	/^class Memory {$/;"	c
+MemoryRange	src/memoryrange.cc	/^MemoryRange::MemoryRange( const KemyBuffers::MemoryRange & dna )$/;"	f	class:MemoryRange
+MemoryRange	src/memoryrange.hh	/^  MemoryRange( const Memory & s_lower, const Memory & s_upper )$/;"	f	class:MemoryRange
+MemoryRange	src/memoryrange.hh	/^class MemoryRange {$/;"	c
+NETWORK_HH	src/network.hh	2;"	d
+NETWORK_HH	src/network1.hh	2;"	d
+NetConfig	src/network.hh	/^  NetConfig( const KemyBuffers::NetConfig & dna )$/;"	f	class:NetConfig
+NetConfig	src/network.hh	/^  NetConfig( void )$/;"	f	class:NetConfig
+NetConfig	src/network.hh	/^class NetConfig$/;"	c
+NetConfig	src/network1.hh	/^  NetConfig( void ):$/;"	f	class:NetConfig
+NetConfig	src/network1.hh	/^class NetConfig$/;"	c
+Network	src/network.cc	/^Network<SenderType1, SenderType2>::Network( Link link, const SenderType1 & example_sender1,$/;"	f	class:Network
+Network	src/network.cc	/^Network<SenderType1, SenderType2>::Network( Link link,const SenderType1 & example_sender1,$/;"	f	class:Network
+Network	src/network.hh	/^class Network$/;"	c
+Network	src/network1.hh	/^  Network(const WhiskerTree & whiskers ,const NetConfig & config ):_whiskers(whiskers),_config(config){}$/;"	f	class:Network
+Network	src/network1.hh	/^class Network$/;"	c
+OptimizationSetting	src/whisker.hh	/^  struct OptimizationSetting$/;"	s	class:Whisker
+OptimizationSettings	src/whisker.hh	/^  struct OptimizationSettings$/;"	s	class:Whisker
+Outcome	src/evaluator.cc	/^Evaluator::Outcome::Outcome( const AnswerBuffers::Outcome & dna )$/;"	f	class:Evaluator::Outcome
+Outcome	src/evaluator.hh	/^    Outcome() : score( 0 ), throughputs_delays(), used_whiskers() {}$/;"	f	class:Evaluator::Outcome
+Outcome	src/evaluator.hh	/^  class Outcome$/;"	c	class:Evaluator
+Outcome	src/evaluator1.cc	/^Evaluator::Outcome::Outcome( const AnswerBuffers::Outcome & dna )$/;"	f	class:Evaluator::Outcome
+Outcome	src/evaluator1.hh	/^    Outcome() : score( 0 ), throughputs_delays(), used_whiskers() {}$/;"	f	class:Evaluator::Outcome
+Outcome	src/evaluator1.hh	/^  class Outcome$/;"	c	class:Evaluator
+PACKET_HH	src/packet.hh	2;"	d
+POISSON_HH	src/poisson.hh	2;"	d
+PRNG	src/random.hh	/^typedef boost::random::mt19937 PRNG;$/;"	t
+Packet	src/packet.hh	/^  Packet( const unsigned int & s_src,$/;"	f	class:Packet
+Packet	src/packet.hh	/^class Packet$/;"	c
+Poisson	src/poisson.hh	/^  Poisson( const double & rate, PRNG & s_prng ) : distribution( rate ), prng( s_prng ) {}$/;"	f	class:Poisson
+Poisson	src/poisson.hh	/^class Poisson$/;"	c
+RANDOM_HH	src/random.hh	2;"	d
+RATBREEDER_HH	src/ratbreeder.hh	2;"	d
+RECEIVER_HH	src/receiver.hh	2;"	d
+RatBreeder	src/ratbreeder.hh	/^  RatBreeder( const ConfigRange & s_range ) : _range( s_range ) {}$/;"	f	class:RatBreeder
+RatBreeder	src/ratbreeder.hh	/^class RatBreeder$/;"	c
+Receiver	src/receiver.cc	/^Receiver::Receiver()$/;"	f	class:Receiver
+Receiver	src/receiver.hh	/^class Receiver$/;"	c
+SENDERGANGOFGANGS_HH	src/sendergangofgangs.hh	2;"	d
+SENDERGANG_HH	src/sendergang.hh	2;"	d
+SenderGang	src/sendergang.cc	/^SenderGang<SenderType>::SenderGang( const double mean_on_duration,$/;"	f	class:SenderGang
+SenderGang	src/sendergang.cc	/^SenderGang<SenderType>::SenderGang()$/;"	f	class:SenderGang
+SenderGang	src/sendergang.hh	/^class SenderGang$/;"	c
+SenderGangofGangs	src/sendergangofgangs.cc	/^SenderGangofGangs<Sender1,Sender2>::SenderGangofGangs( const SenderGang<Sender1> & gang1,$/;"	f	class:SenderGangofGangs
+SenderGangofGangs	src/sendergangofgangs.hh	/^class SenderGangofGangs$/;"	c
+SwitchedSender	src/sendergang.hh	/^    SwitchedSender( const unsigned int s_id,$/;"	f	class:SenderGang::SwitchedSender
+SwitchedSender	src/sendergang.hh	/^  class SwitchedSender {$/;"	c	class:SenderGang
+TICK_COUNT	src/evaluator.cc	/^const unsigned int TICK_COUNT = 100000;$/;"	v
+TICK_COUNT	src/evaluator1.cc	/^const unsigned int TICK_COUNT = 100000;$/;"	v
+TimeSwitchedSender	src/sendergang.hh	/^  class TimeSwitchedSender : public SwitchedSender {$/;"	c	class:SenderGang
+UTILITY_HH	src/utility.hh	2;"	d
+Utility	src/utility.hh	/^  Utility( void ) : _tick_share_sending( 0 ),_tick_sended(0), _packets_received( 0 ), _total_delay( 0 ) {}$/;"	f	class:Utility
+Utility	src/utility.hh	/^class Utility$/;"	c
+WHISKERTREE_HH	src/whiskertree.hh	2;"	d
+WHISKER_HH	src/whisker.hh	2;"	d
+Whisker	src/whisker.cc	/^Whisker::Whisker( const KemyBuffers::Whisker & dna )$/;"	f	class:Whisker
+Whisker	src/whisker.cc	/^Whisker::Whisker( const Whisker & other )$/;"	f	class:Whisker
+Whisker	src/whisker.cc	/^Whisker::Whisker( const unsigned int s_window_increment, const double s_window_multiple,  const MemoryRange & s_domain )$/;"	f	class:Whisker
+Whisker	src/whisker.hh	/^  Whisker( const MemoryRange & s_domain ) : Whisker( get_optimizer().window_increment.default_value,$/;"	f	class:Whisker
+Whisker	src/whisker.hh	/^class Whisker {$/;"	c
+WhiskerImprover	src/ratbreeder.cc	/^WhiskerImprover::WhiskerImprover( const Evaluator & s_evaluator,$/;"	f	class:WhiskerImprover
+WhiskerImprover	src/ratbreeder.hh	/^class WhiskerImprover$/;"	c
+WhiskerTree	src/whiskertree.cc	/^WhiskerTree::WhiskerTree( const KemyBuffers::WhiskerTree & dna )$/;"	f	class:WhiskerTree
+WhiskerTree	src/whiskertree.cc	/^WhiskerTree::WhiskerTree( const Whisker & whisker, const bool bisect )$/;"	f	class:WhiskerTree
+WhiskerTree	src/whiskertree.cc	/^WhiskerTree::WhiskerTree()$/;"	f	class:WhiskerTree
+WhiskerTree	src/whiskertree.hh	/^class WhiskerTree {$/;"	c
+_acc	src/memoryrange.hh	/^							       boost::accumulators::tag::median > > > _acc;$/;"	m	class:MemoryRange
+_bottle_bw	src/network1.hh	/^  double _bottle_bw;$/;"	m	class:NetConfig
+_bottle_single_delay	src/network1.hh	/^  double _bottle_single_delay;$/;"	m	class:NetConfig
+_buffer	src/link.hh	/^  KemyQueue _buffer;$/;"	m	class:Link
+_children	src/whiskertree.hh	/^  std::vector< WhiskerTree > _children;$/;"	m	class:WhiskerTree
+_collector	src/receiver.hh	/^  std::vector< std::vector< Packet > > _collector;$/;"	m	class:Receiver
+_config	src/network1.hh	/^  NetConfig _config;$/;"	m	class:Network
+_configs	src/evaluator.hh	/^  std::vector< NetConfig > _configs;$/;"	m	class:Evaluator
+_configs	src/evaluator1.hh	/^  std::vector< NetConfig > _configs;$/;"	m	class:Evaluator
+_count	src/memoryrange.hh	/^  mutable unsigned int _count;$/;"	m	class:MemoryRange
+_delay	src/delay.hh	/^  const double _delay;$/;"	m	class:Delay
+_delay	src/network.hh	/^  Delay _delay;$/;"	m	class:Network
+_domain	src/whisker.hh	/^  MemoryRange _domain;$/;"	m	class:Whisker
+_domain	src/whiskertree.hh	/^  MemoryRange _domain;$/;"	m	class:WhiskerTree
+_ewma_qlen	src/memory.hh	/^  DataType _ewma_qlen;$/;"	m	class:Memory
+_flow_id	src/aimd.hh	/^  unsigned int _flow_id;$/;"	m	class:Aimd
+_forward_ppms	src/link.hh	/^  double _forward_ppms;$/;"	m	class:Link
+_gang	src/sendergang.hh	/^  std::vector< TimeSwitchedSender > _gang;$/;"	m	class:SenderGang
+_generation	src/whisker.hh	/^  unsigned int _generation;$/;"	m	class:Whisker
+_inter_send_time	src/aimd.hh	/^  double _inter_send_time;$/;"	m	class:Aimd
+_largest_ack	src/aimd.hh	/^  int _largest_ack;$/;"	m	class:Aimd
+_last_loss	src/aimd.hh	/^  double _last_loss;$/;"	m	class:Aimd
+_last_rec_time	src/memory.hh	/^  double _last_rec_time;$/;"	m	class:Memory
+_last_send_time	src/aimd.hh	/^  double _last_send_time;$/;"	m	class:Aimd
+_leaf	src/whiskertree.hh	/^  std::vector< Whisker > _leaf;$/;"	m	class:WhiskerTree
+_limit	src/link.hh	/^  unsigned int _limit;$/;"	m	class:Link
+_link	src/network.hh	/^  Link _link;$/;"	m	class:Network
+_lower	src/memoryrange.hh	/^  Memory _lower, _upper;$/;"	m	class:MemoryRange
+_mean_off_duration	src/network1.hh	/^  double _mean_on_duration, _mean_off_duration;$/;"	m	class:NetConfig
+_mean_on_duration	src/network1.hh	/^  double _mean_on_duration, _mean_off_duration;$/;"	m	class:NetConfig
+_memory	src/kemyqueue.hh	/^        Memory _memory;$/;"	m	class:KemyQueue
+_num_senders	src/network1.hh	/^  unsigned int _num_senders;$/;"	m	class:NetConfig
+_packets_received	src/aimd.hh	/^  int _packets_sent, _packets_received;$/;"	m	class:Aimd
+_packets_received	src/utility.hh	/^  unsigned int _packets_received;$/;"	m	class:Utility
+_packets_sent	src/aimd.hh	/^  int _packets_sent, _packets_received;$/;"	m	class:Aimd
+_pending_packet	src/link.hh	/^  Delay _pending_packet;$/;"	m	class:Link
+_prng	src/network.hh	/^  PRNG & _prng;$/;"	m	class:Network
+_prng_seed	src/evaluator.hh	/^  const unsigned int _prng_seed;$/;"	m	class:Evaluator
+_prng_seed	src/evaluator1.hh	/^  const unsigned int _prng_seed;$/;"	m	class:Evaluator
+_queue	src/delay.hh	/^  std::queue< std::tuple< double, Packet > > _queue;$/;"	m	class:Delay
+_queue	src/kemyqueue.hh	/^        std::queue< Packet > _queue;$/;"	m	class:KemyQueue
+_range	src/ratbreeder.hh	/^  ConfigRange _range;$/;"	m	class:RatBreeder
+_rec	src/network.hh	/^  Receiver _rec;$/;"	m	class:Network
+_rtt_at_loss	src/aimd.hh	/^  double _rtt_at_loss;$/;"	m	class:Aimd
+_senders	src/network.hh	/^  SenderGangofGangs<SenderType1, SenderType2> _senders;$/;"	m	class:Network
+_slow_start	src/aimd.hh	/^  bool _slow_start;$/;"	m	class:Aimd
+_start_distribution	src/sendergang.hh	/^  Exponential _start_distribution, _stop_distribution;$/;"	m	class:SenderGang
+_stop_distribution	src/sendergang.hh	/^  Exponential _start_distribution, _stop_distribution;$/;"	m	class:SenderGang
+_switch_type	src/network1.hh	/^  int _switch_type;\/\/ 1. time , 2. byte$/;"	m	class:NetConfig
+_the_window	src/aimd.hh	/^  double _the_window;$/;"	m	class:Aimd
+_the_window	src/kemyqueue.hh	/^        unsigned int _the_window;$/;"	m	class:KemyQueue
+_tick_sended	src/utility.hh	/^  double _tick_sended;$/;"	m	class:Utility
+_tick_share_sending	src/utility.hh	/^  double _tick_share_sending;$/;"	m	class:Utility
+_tickno	src/network.hh	/^  double _tickno;$/;"	m	class:Network
+_tickno	src/network1.hh	/^  double _tickno;$/;"	m	class:Network
+_total_delay	src/utility.hh	/^  double _total_delay;$/;"	m	class:Utility
+_track	src/aimd.hh	/^  bool _track;$/;"	m	class:Aimd
+_track	src/kemyqueue.hh	/^        bool _track;$/;"	m	class:KemyQueue
+_upper	src/memoryrange.hh	/^  Memory _lower, _upper;$/;"	m	class:MemoryRange
+_whiskers	src/kemyqueue.hh	/^        WhiskerTree&  _whiskers;$/;"	m	class:KemyQueue
+_whiskers	src/network1.hh	/^  WhiskerTree & _whiskers;$/;"	m	class:Network
+_window_increment	src/whisker.hh	/^  int _window_increment;$/;"	m	class:Whisker
+_window_multiple	src/whisker.hh	/^  double _window_multiple;$/;"	m	class:Whisker
+accumulate_sending_time_until	src/sendergang.cc	/^void SenderGang<SenderType>::SwitchedSender::accumulate_sending_time_until( const double & tickno,$/;"	f	class:SenderGang::SwitchedSender
+advance_to	src/memory.hh	/^  void advance_to( const unsigned int tickno __attribute((unused)) ) {}$/;"	f	class:Memory
+alpha	src/memory.cc	/^static const double alpha = 0.5;$/;"	v	file:
+alternatives	src/whisker.cc	/^vector< T > Whisker::OptimizationSetting< T >::alternatives( const T & value ) const$/;"	f	class:Whisker::OptimizationSetting
+apply_best_split	src/ratbreeder.cc	/^void RatBreeder::apply_best_split( WhiskerTree & whiskers, const unsigned int generation ) const$/;"	f	class:RatBreeder
+autosize	src/receiver.cc	/^void Receiver::autosize( const unsigned int index )$/;"	f	class:Receiver
+average_delay	src/utility.hh	/^  double average_delay( void ) const$/;"	f	class:Utility
+average_throughput	src/utility.hh	/^  double average_throughput( void ) const$/;"	f	class:Utility
+bisect	src/memoryrange.cc	/^std::vector< MemoryRange > MemoryRange::bisect( void ) const$/;"	f	class:MemoryRange
+bisect	src/whisker.cc	/^vector< Whisker > Whisker::bisect( void ) const$/;"	f	class:Whisker
+clear	src/receiver.hh	/^  void clear( const unsigned int src ) { _collector[ src ].clear(); }$/;"	f	class:Receiver
+contains	src/memoryrange.cc	/^bool MemoryRange::contains( const Memory & query ) const$/;"	f	class:MemoryRange
+count	src/memoryrange.hh	/^  unsigned int count( void ) const { return _count; }$/;"	f	class:MemoryRange
+count	src/whisker.hh	/^  unsigned int count( void ) const { return _domain.count(); }$/;"	f	class:Whisker
+count_active_senders	src/sendergang.cc	/^unsigned int SenderGang<SenderType>::count_active_senders( void ) const$/;"	f	class:SenderGang
+count_active_senders	src/sendergangofgangs.cc	/^unsigned int SenderGangofGangs<Sender1,Sender2>::count_active_senders( void ) const$/;"	f	class:SenderGangofGangs
+count_senders	src/sendergang.hh	/^  unsigned int count_senders( void ) const { return _gang.size(); }$/;"	f	class:SenderGang
+datasize	src/memory.hh	/^  static const unsigned int datasize = 1;$/;"	m	class:Memory
+default_value	src/whisker.hh	/^    T default_value;$/;"	m	struct:Whisker::OptimizationSetting
+delay	src/network.hh	/^  double delay;$/;"	m	class:NetConfig
+demote	src/whisker.hh	/^  void demote( const unsigned int generation ) { _generation = generation; }$/;"	f	class:Whisker
+deque	src/kemyqueue.cc	/^void KemyQueue::deque()$/;"	f	class:KemyQueue
+distribution	src/exponential.hh	/^  boost::random::exponential_distribution<> distribution;$/;"	m	class:Exponential
+distribution	src/poisson.hh	/^  boost::random::poisson_distribution<> distribution;$/;"	m	class:Poisson
+domain	src/whisker.hh	/^  const MemoryRange & domain( void ) const { return _domain; }$/;"	f	class:Whisker
+eligible_value	src/whisker.cc	/^bool Whisker::OptimizationSetting< T >::eligible_value( const T & value ) const$/;"	f	class:Whisker::OptimizationSetting
+empty	src/delay.hh	/^  bool empty( void ) const { return _queue.empty(); }$/;"	f	class:Delay
+empty	src/kemyqueue.hh	/^        bool  empty(){return _queue.empty(); } $/;"	f	class:KemyQueue
+enque	src/kemyqueue.cc	/^void KemyQueue::enque(Packet p,const double& tickno)$/;"	f	class:KemyQueue
+eval_	src/ratbreeder.hh	/^  const Evaluator eval_;$/;"	m	class:WhiskerImprover
+field	src/memory.hh	/^  const DataType & field( unsigned int num ) const { return num == 0 ? _ewma_qlen : _ewma_qlen ; }$/;"	f	class:Memory
+flow_id	src/packet.hh	/^  unsigned int flow_id;$/;"	m	class:Packet
+forward_ppms	src/network.hh	/^  double forward_ppms;$/;"	m	class:NetConfig
+front	src/kemyqueue.hh	/^        Packet front(){return _queue.front();}$/;"	f	class:KemyQueue
+gang1_	src/sendergangofgangs.hh	/^  SenderGang<Sender1> gang1_;$/;"	m	class:SenderGangofGangs
+gang2_	src/sendergangofgangs.hh	/^  SenderGang<Sender2> gang2_;$/;"	m	class:SenderGangofGangs
+generation	src/whisker.hh	/^  const unsigned int & generation( void ) const { return _generation; }$/;"	f	class:Whisker
+get_optimizer	src/whisker.hh	/^  static const OptimizationSettings & get_optimizer( void ) {$/;"	f	class:Whisker
+get_val_or_default	src/memory.cc	46;"	d	file:
+global_PRNG	src/random.cc	/^PRNG & global_PRNG( void )$/;"	f
+hash_value	src/memory.cc	/^size_t hash_value( const Memory & mem )$/;"	f
+hash_value	src/memoryrange.cc	/^size_t hash_value( const MemoryRange & mr )$/;"	f
+hash_value	src/whisker.cc	/^size_t hash_value( const Whisker & whisker )$/;"	f
+id	src/sendergang.hh	/^    unsigned int id;$/;"	m	class:SenderGang::SwitchedSender
+id_of_first_sender	src/sendergang.hh	/^  unsigned int id_of_first_sender( void ) const { return _gang.at( 0 ).id; }$/;"	f	class:SenderGang
+improve	src/ratbreeder.cc	/^Evaluator::Outcome RatBreeder::improve( WhiskerTree & whiskers )$/;"	f	class:RatBreeder
+improve	src/ratbreeder.cc	/^double WhiskerImprover::improve( Whisker & whisker_to_improve )$/;"	f	class:WhiskerImprover
+inter_send_time	src/network.hh	/^  double inter_send_time;$/;"	m	class:NetConfig
+internal_tick	src/sendergang.hh	/^    double internal_tick;$/;"	m	class:SenderGang::SwitchedSender
+is_leaf	src/whiskertree.cc	/^bool WhiskerTree::is_leaf( void ) const$/;"	f	class:WhiskerTree
+link_ppt	src/network.hh	/^  double link_ppt;$/;"	m	class:NetConfig
+main	src/kemy.cc	/^int main( int argc, char *argv[] )$/;"	f
+main	src/rat-runner.cc	/^int main( int argc, char *argv[] )$/;"	f
+main	src/scoring-example.cc	/^int main( int argc, char *argv[] )$/;"	f
+max_change	src/whisker.hh	/^    T max_change; \/* the biggest change *\/$/;"	m	struct:Whisker::OptimizationSetting
+max_value	src/whisker.hh	/^    T max_value; \/* the biggest *\/$/;"	m	struct:Whisker::OptimizationSetting
+mean_off_duration	src/network.hh	/^  double mean_on_duration, mean_off_duration;$/;"	m	class:NetConfig
+mean_on_duration	src/network.hh	/^  double mean_on_duration, mean_off_duration;$/;"	m	class:NetConfig
+min_change	src/whisker.hh	/^    T min_change; \/* the smallest change to the value in an optimization exploration step *\/$/;"	m	struct:Whisker::OptimizationSetting
+min_value	src/whisker.hh	/^    T min_value; \/* the smallest the value can be *\/$/;"	m	struct:Whisker::OptimizationSetting
+most_used	src/whiskertree.cc	/^const Whisker * WhiskerTree::most_used( const unsigned int max_generation ) const$/;"	f	class:WhiskerTree
+multiplier	src/whisker.hh	/^    T multiplier; \/* we will explore multiples of the min_change until we hit the max_change *\/$/;"	m	struct:Whisker::OptimizationSetting
+mutable_field	src/memory.hh	/^  DataType & mutable_field( unsigned int num )   { return num == 0 ? _ewma_qlen : _ewma_qlen; }$/;"	f	class:Memory
+next_event_time	src/aimd.cc	/^double Aimd::next_event_time( const double & tickno ) const$/;"	f	class:Aimd
+next_event_time	src/delay.hh	/^  double next_event_time( const double & tickno ) const$/;"	f	class:Delay
+next_event_time	src/link.hh	/^  double next_event_time( const double & tickno ) const { $/;"	f	class:Link
+next_event_time	src/receiver.cc	/^double Receiver::next_event_time( const double & tickno ) const$/;"	f	class:Receiver
+next_event_time	src/sendergang.cc	/^double SenderGang<SenderType>::SwitchedSender::next_event_time( const double & tickno ) const$/;"	f	class:SenderGang::SwitchedSender
+next_event_time	src/sendergang.cc	/^double SenderGang<SenderType>::next_event_time( const double & tickno ) const$/;"	f	class:SenderGang
+next_event_time	src/sendergangofgangs.cc	/^double SenderGangofGangs<Sender1,Sender2>::next_event_time( const double & tickno ) const$/;"	f	class:SenderGangofGangs
+next_generation	src/whisker.cc	/^vector< Whisker > Whisker::next_generation( void ) const$/;"	f	class:Whisker
+next_switch_tick	src/sendergang.hh	/^    double next_switch_tick;$/;"	m	class:SenderGang::SwitchedSender
+noexcept	src/receiver.hh	/^  void accept( const Packet & p, const double & tickno ) noexcept;$/;"	m	class:Receiver
+num_children	src/whiskertree.cc	/^unsigned int WhiskerTree::num_children( void ) const$/;"	f	class:WhiskerTree
+num_senders	src/network.hh	/^  unsigned int num_senders;$/;"	m	class:NetConfig
+operator <	src/memory.hh	/^  bool operator<( const Memory & other ) const { return (_ewma_qlen <  other._ewma_qlen); }$/;"	f	class:Memory
+operator =	src/aimd.hh	/^  Aimd & operator=( const Aimd & ) { assert( false ); return *this; }$/;"	f	class:Aimd
+operator =	src/poisson.hh	/^  Poisson & operator=( const Poisson & ) { assert( false ); return *this; }$/;"	f	class:Poisson
+operator ==	src/memory.hh	/^  bool operator==( const Memory & other ) const { return (_ewma_qlen ==  other._ewma_qlen); }$/;"	f	class:Memory
+operator ==	src/memoryrange.cc	/^bool MemoryRange::operator==( const MemoryRange & other ) const$/;"	f	class:MemoryRange
+operator ==	src/whisker.hh	/^  bool operator==( const Whisker & other ) const { return (_window_increment == other._window_increment) && (_window_multiple == other._window_multiple) && (_domain == other._domain); }$/;"	f	class:Whisker
+operator >=	src/memory.hh	/^  bool operator>=( const Memory & other ) const { return (_ewma_qlen >= other._ewma_qlen); }$/;"	f	class:Memory
+override	src/sendergang.hh	/^		   const unsigned int num_sending ) override;$/;"	m	class:SenderGang::ByteSwitchedSender
+override	src/sendergang.hh	/^		   const unsigned int num_sending ) override;$/;"	m	class:SenderGang::TimeSwitchedSender
+override	src/sendergang.hh	/^	       Exponential & start_distribution ) override;$/;"	m	class:SenderGang::ByteSwitchedSender
+override	src/sendergang.hh	/^	       Exponential & start_distribution ) override;$/;"	m	class:SenderGang::TimeSwitchedSender
+packet_drop	src/memory.cc	/^void Memory::packet_drop(const double& tickno,const unsigned int & qlen)$/;"	f	class:Memory
+packet_receive	src/memory.cc	/^void Memory::packet_receive(const double& tickno,const unsigned int & qlen)$/;"	f	class:Memory
+packet_sent	src/memory.hh	/^  void packet_sent( const Packet & packet __attribute((unused)) ) {}$/;"	f	class:Memory
+packets_for	src/receiver.hh	/^  const std::vector< Packet > & packets_for( const unsigned int src ) { return _collector[ src ]; }$/;"	f	class:Receiver
+packets_received	src/aimd.cc	/^void Aimd::packets_received( const vector< Packet > & packets ) {$/;"	f	class:Aimd
+packets_received	src/utility.hh	/^  void packets_received( const std::vector< Packet > & packets ) {$/;"	f	class:Utility
+pair_to_range	src/configrange.cc	/^static KemyBuffers::Range pair_to_range( const pair< double, double > & p )$/;"	f	file:
+parse_problem_and_evaluate	src/evaluator.cc	/^Evaluator::Outcome Evaluator::parse_problem_and_evaluate( const ProblemBuffers::Problem & problem )$/;"	f	class:Evaluator
+parse_problem_and_evaluate	src/evaluator1.cc	/^Evaluator::Outcome Evaluator::parse_problem_and_evaluate( const ProblemBuffers::Problem & problem )$/;"	f	class:Evaluator
+prng	src/exponential.hh	/^  PRNG & prng;$/;"	m	class:Exponential
+prng	src/poisson.hh	/^  PRNG & prng;$/;"	m	class:Poisson
+promote	src/whisker.cc	/^void Whisker::promote( const unsigned int generation )$/;"	f	class:Whisker
+promote	src/whiskertree.cc	/^void WhiskerTree::promote( const unsigned int generation )$/;"	f	class:WhiskerTree
+range_median	src/memoryrange.cc	/^Memory MemoryRange::range_median( void ) const$/;"	f	class:MemoryRange
+rat_	src/ratbreeder.hh	/^  WhiskerTree rat_;$/;"	m	class:WhiskerImprover
+receive_feedback	src/sendergang.cc	/^void SenderGang<SenderType>::SwitchedSender::receive_feedback( Receiver & rec )$/;"	f	class:SenderGang::SwitchedSender
+replace	src/whiskertree.cc	/^bool WhiskerTree::replace( const Whisker & src, const WhiskerTree & dst )$/;"	f	class:WhiskerTree
+replace	src/whiskertree.cc	/^bool WhiskerTree::replace( const Whisker & w )$/;"	f	class:WhiskerTree
+reset	src/aimd.cc	/^void Aimd::reset( const double & )$/;"	f	class:Aimd
+reset	src/memory.hh	/^  void reset( void ) { _ewma_qlen  = 0; }$/;"	f	class:Memory
+reset_count	src/memoryrange.hh	/^  void reset_count( void ) const { _count = 0; }$/;"	f	class:MemoryRange
+reset_count	src/whisker.hh	/^  void reset_count( void ) const { _domain.reset_count(); }$/;"	f	class:Whisker
+reset_counts	src/whiskertree.cc	/^void WhiskerTree::reset_counts( void )$/;"	f	class:WhiskerTree
+reset_generation	src/whiskertree.cc	/^void WhiskerTree::reset_generation( void )$/;"	f	class:WhiskerTree
+round	src/whisker.cc	/^void Whisker::round( void )$/;"	f	class:Whisker
+run_senders	src/sendergang.cc	/^void SenderGang<SenderType>::run_senders( NextHop & next, Receiver & rec,$/;"	f	class:SenderGang
+run_senders	src/sendergangofgangs.cc	/^void SenderGangofGangs<Sender1,Sender2>::run_senders( NextHop & next, Receiver & rec,$/;"	f	class:SenderGangofGangs
+run_simulation	src/network.cc	/^void Network<SenderType1, SenderType2>::run_simulation( const double & duration )$/;"	f	class:Network
+run_simulation	src/network1.cc	/^void Network::run_simulation( const double & duration )$/;"	f	class:Network
+sample	src/exponential.hh	/^  double sample( void ) { return distribution( prng ); }$/;"	f	class:Exponential
+sample	src/poisson.hh	/^  int sample( void ) { return distribution( prng ); }$/;"	f	class:Poisson
+score	src/evaluator.cc	/^Evaluator::Outcome Evaluator::score( WhiskerTree & run_whiskers,$/;"	f	class:Evaluator
+score	src/evaluator.hh	/^    double score;$/;"	m	class:Evaluator::Outcome
+score	src/evaluator1.cc	/^Evaluator::Outcome Evaluator::score( WhiskerTree & run_whiskers,$/;"	f	class:Evaluator
+score	src/evaluator1.hh	/^    double score;$/;"	m	class:Evaluator::Outcome
+score_to_beat_	src/ratbreeder.hh	/^  double score_to_beat_;$/;"	m	class:WhiskerImprover
+send	src/aimd-templates.cc	/^void Aimd::send(const unsigned int id, NextHop & next, const double & tickno,const unsigned int packets_sent_cap  )$/;"	f	class:Aimd
+sender	src/sendergang.hh	/^    SenderType sender;$/;"	m	class:SenderGang::SwitchedSender
+senders	src/network.hh	/^  const SenderGangofGangs<SenderType1,SenderType2> & senders( void ) const { return _senders; }$/;"	f	class:Network
+sending	src/sendergang.hh	/^    bool sending;$/;"	m	class:SenderGang::SwitchedSender
+sending_duration	src/utility.hh	/^  void sending_duration( const double & duration, const unsigned int num_sending )$/;"	f	class:Utility
+seq_num	src/packet.hh	/^  int seq_num;$/;"	m	class:Packet
+set_bottle_bw	src/network1.hh	/^  NetConfig & set_bottle_bw( const double bottle_bw ) { _bottle_bw = bottle_bw; return *this; }$/;"	f	class:NetConfig
+set_bottle_single_delay	src/network1.hh	/^  NetConfig & set_bottle_single_delay( const double bottle_single_delay ) { _bottle_single_delay = bottle_single_delay ; return *this; }$/;"	f	class:NetConfig
+set_delay	src/network.hh	/^  NetConfig & set_delay( const double s_delay ) { delay = s_delay; return *this; }$/;"	f	class:NetConfig
+set_forward_ppms	src/network.hh	/^  NetConfig & set_forward_ppms( const double & _forward_ppms) { forward_ppms = _forward_ppms; return *this;}$/;"	f	class:NetConfig
+set_inter_send_time	src/network.hh	/^  NetConfig & set_inter_send_time( const double & tt) { inter_send_time = tt; return *this;}$/;"	f	class:NetConfig
+set_link_ppt	src/network.hh	/^  NetConfig & set_link_ppt( const double s_link_ppt ) { link_ppt = s_link_ppt; return *this; }$/;"	f	class:NetConfig
+set_num_senders	src/network.hh	/^  NetConfig & set_num_senders( const unsigned int n ) { num_senders = n; return *this; }$/;"	f	class:NetConfig
+set_num_senders	src/network1.hh	/^  NetConfig & set_num_senders( const unsigned int n ) { _num_senders = n; return *this; }$/;"	f	class:NetConfig
+set_off_duration	src/network.hh	/^  NetConfig & set_off_duration( const double & duration ) { mean_off_duration = duration; return *this; }$/;"	f	class:NetConfig
+set_off_duration	src/network1.hh	/^  NetConfig & set_off_duration( const double & duration ) { _mean_off_duration = duration; return *this; }$/;"	f	class:NetConfig
+set_on_duration	src/network.hh	/^  NetConfig & set_on_duration( const double & duration ) { mean_on_duration = duration; return *this; }$/;"	f	class:NetConfig
+set_on_duration	src/network1.hh	/^  NetConfig & set_on_duration( const double & duration ) { _mean_on_duration = duration; return *this; }$/;"	f	class:NetConfig
+set_switch_type	src/network1.hh	/^  NetConfig & set_switch_type( const int switch_type) { _switch_type = set_switch_type}$/;"	f	class:NetConfig
+src	src/packet.hh	/^  unsigned int src;$/;"	m	class:Packet
+str	src/memory.cc	/^string Memory::str( void ) const$/;"	f	class:Memory
+str	src/memoryrange.cc	/^string MemoryRange::str( void ) const$/;"	f	class:MemoryRange
+str	src/network.hh	/^  std::string str( void ) const$/;"	f	class:NetConfig
+str	src/network1.hh	/^  std::string str( void ) const$/;"	f	class:NetConfig
+str	src/whisker.cc	/^string Whisker::str( const unsigned int total ) const$/;"	f	class:Whisker
+str	src/whiskertree.cc	/^string WhiskerTree::str( const unsigned int total ) const$/;"	f	class:WhiskerTree
+str	src/whiskertree.cc	/^string WhiskerTree::str() const$/;"	f	class:WhiskerTree
+switch_off	src/sendergang.cc	/^void SenderGang<SenderType>::SwitchedSender::switch_off( const double & tickno,$/;"	f	class:SenderGang::SwitchedSender
+switch_on	src/sendergang.cc	/^void SenderGang<SenderType>::SwitchedSender::switch_on( const double & tickno )$/;"	f	class:SenderGang::SwitchedSender
+switch_senders	src/sendergang.cc	/^void SenderGang<SenderType>::switch_senders( const unsigned int num_sending, const double & tickno )$/;"	f	class:SenderGang
+switch_senders	src/sendergangofgangs.cc	/^void SenderGangofGangs<Sender1,Sender2>::switch_senders( const unsigned int num_sending,$/;"	f	class:SenderGangofGangs
+switcher	src/sendergang.cc	/^void SenderGang<SenderType>::ByteSwitchedSender::switcher( const double & tickno,$/;"	f	class:SenderGang::ByteSwitchedSender
+switcher	src/sendergang.cc	/^void SenderGang<SenderType>::TimeSwitchedSender::switcher( const double & tickno,$/;"	f	class:SenderGang::TimeSwitchedSender
+throughputs_delays	src/evaluator.hh	/^    std::vector< std::pair< NetConfig, std::vector< std::pair< double, double > > > > throughputs_delays;$/;"	m	class:Evaluator::Outcome
+throughputs_delays	src/evaluator1.hh	/^    std::vector< std::pair< NetConfig, std::vector< std::pair< double, double > > > > throughputs_delays;$/;"	m	class:Evaluator::Outcome
+throughputs_delays	src/sendergang.cc	/^vector< pair< double, double > > SenderGang<SenderType>::throughputs_delays( void ) const$/;"	f	class:SenderGang
+throughputs_delays	src/sendergangofgangs.cc	/^vector< pair< double, double > > SenderGangofGangs<Sender1,Sender2>::throughputs_delays( void ) const$/;"	f	class:SenderGangofGangs
+tick	src/delay.hh	/^  void tick( NextHop & next, const double & tickno )$/;"	f	class:Delay
+tick	src/link-templates.cc	/^void Link::tick( NextHop & next, const double & tickno )$/;"	f	class:Link
+tick	src/network.cc	/^void Network<SenderType1, SenderType2>::tick( void )$/;"	f	class:Network
+tick	src/sendergang.cc	/^void SenderGang<SenderType>::ByteSwitchedSender::tick( NextHop & next, Receiver & rec,$/;"	f	class:SenderGang::ByteSwitchedSender
+tick	src/sendergang.cc	/^void SenderGang<SenderType>::TimeSwitchedSender::tick( NextHop & next, Receiver & rec,$/;"	f	class:SenderGang::TimeSwitchedSender
+tick	src/sendergang.cc	/^void SenderGang<SenderType>::tick( NextHop & next, Receiver & rec, const double & tickno )$/;"	f	class:SenderGang
+tick	src/sendergangofgangs.cc	/^void SenderGangofGangs<Sender1,Sender2>::tick( NextHop & next, Receiver & rec, const double & tickno )$/;"	f	class:SenderGangofGangs
+tick_received	src/packet.hh	/^  double tick_sent, tick_received;$/;"	m	class:Packet
+tick_sent	src/packet.hh	/^  double tick_sent, tick_received;$/;"	m	class:Packet
+total_whisker_queries	src/whiskertree.cc	/^unsigned int WhiskerTree::total_whisker_queries( void ) const$/;"	f	class:WhiskerTree
+track	src/memoryrange.cc	/^void MemoryRange::track( const Memory & query ) const$/;"	f	class:MemoryRange
+use	src/memoryrange.hh	/^  void use( void ) const { _count++; $/;"	f	class:MemoryRange
+use	src/whisker.hh	/^  void use( void ) const { _domain.use(); }$/;"	f	class:Whisker
+use_whisker	src/whiskertree.cc	/^const Whisker & WhiskerTree::use_whisker( const Memory & _memory, const bool track ) const$/;"	f	class:WhiskerTree
+used_whiskers	src/evaluator.hh	/^    WhiskerTree used_whiskers;$/;"	m	class:Evaluator::Outcome
+used_whiskers	src/evaluator1.hh	/^    WhiskerTree used_whiskers;$/;"	m	class:Evaluator::Outcome
+utility	src/sendergang.cc	/^double SenderGang<SenderType>::utility( void ) const$/;"	f	class:SenderGang
+utility	src/sendergang.hh	/^    Utility utility;$/;"	m	class:SenderGang::SwitchedSender
+utility	src/sendergangofgangs.cc	/^double SenderGangofGangs<Sender1,Sender2>::utility( void ) const$/;"	f	class:SenderGangofGangs
+utility	src/utility.hh	/^  double utility( void ) const$/;"	f	class:Utility
+whisker	src/whiskertree.cc	/^const Whisker * WhiskerTree::whisker( const Memory & _memory ) const$/;"	f	class:WhiskerTree
+window	src/whisker.hh	/^  unsigned int window( const unsigned int previous_window ) const { return std::min( std::max( 0, int( previous_window * _window_multiple + _window_increment ) ), 1000000 ); }$/;"	f	class:Whisker
+window_increment	src/whisker.hh	/^    OptimizationSetting< unsigned int > window_increment;$/;"	m	struct:Whisker::OptimizationSettings
+window_multiple	src/whisker.hh	/^    OptimizationSetting< double > window_multiple;$/;"	m	struct:Whisker::OptimizationSettings

@@ -1,0 +1,29 @@
+#!/usr/bin/perl -w
+
+use strict;
+
+my $arrSize = @ARGV;
+if ($arrSize < 2) {
+     print "Enter topology file, followed by source-destination file\n";
+     exit 1;
+}
+
+if (-d "results/Dumbbell$ARGV[0]") {
+     print "Will not run, results/Dumbbell$ARGV[0] already exists. Either delete it or specify another directory.\n";
+     exit 1;
+}
+
+if (-d "results/Dumbbell-Rational-$ARGV[0]") {
+     print "Will not run, results/Dumbbell-Rational-$ARGV[0] already exists. Either delete it or specify another directory.\n";
+     exit 1;
+}
+
+system qq{python runremy.py -g $ARGV[0] -s $ARGV[1] -d results/Dumbbell$ARGV[0] -t time -p TCP/Newreno &};
+system qq{python runremy.py -g $ARGV[0] -s $ARGV[1] -d results/Dumbbell$ARGV[0] -t time -p TCP/Linux/cubic &};
+system qq{python runremy.py -g $ARGV[0] -s $ARGV[1] -d results/Dumbbell$ARGV[0] -t time -p TCP/Linux/compound &};
+system qq{python runremy.py -g $ARGV[0] -s $ARGV[1] -d results/Dumbbell$ARGV[0] -t time -p TCP/Linux/vegas &};
+system qq{python runremy.py -g $ARGV[0] -s $ARGV[1] -d results/Dumbbell$ARGV[0] -t time -p TCP/Reno/XCP &};
+system qq{python runremy.py -g $ARGV[0] -s $ARGV[1] -d results/Dumbbell$ARGV[0] -t time -p Cubic/sfqCoDel &};
+
+$ENV{ WHISKERS } = "/home/keithw/rats/1000x/slow.dna.5";
+system qq{python runremy.py -g $ARGV[0] -s $ARGV[1] -d results/Dumbbell-Rational-$ARGV[0] -t time -p TCP/Rational &};
