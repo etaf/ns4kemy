@@ -3,7 +3,7 @@ AM_CXXFLAGS = $(PICKY_CXXFLAGS)
 LDADD = ../protobufs/libkemyprotos.a -ljemalloc -lm $(protobuf_LIBS) -lboost_thread -lboost_system
 
 #bin_PROGRAMS = kemy rat-runner scoring-example
-bin_PROGRAMS = kemy whiskers_reader
+bin_PROGRAMS = kemy whiskers_reader run_once
 
 #common_source = delay.hh evaluator.cc evaluator.hh                 \
 	#exponential.hh link.hh link-templates.cc                       \
@@ -31,3 +31,5 @@ kemy_SOURCES = $(common_source) kemy.cc ratbreeder.cc ratbreeder.hh
 #scoring_example_SOURCES = $(common_source) scoring-example.cc
 
 whiskers_reader_SOURCES = $(common_source) whiskers_reader.cc
+
+run_once_SOURCES = $(common_source) run_once.cc

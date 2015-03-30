@@ -76,7 +76,8 @@ POST_INSTALL = :
 NORMAL_UNINSTALL = :
 PRE_UNINSTALL = :
 POST_UNINSTALL = :
-bin_PROGRAMS = kemy$(EXEEXT) whiskers_reader$(EXEEXT)
+bin_PROGRAMS = kemy$(EXEEXT) whiskers_reader$(EXEEXT) \
+	run_once$(EXEEXT)
 subdir = src
 DIST_COMMON = $(srcdir)/Makefile.in $(srcdir)/Makefile.am \
 	$(top_srcdir)/depcomp
@@ -98,6 +99,11 @@ kemy_OBJECTS = $(am_kemy_OBJECTS)
 kemy_LDADD = $(LDADD)
 am__DEPENDENCIES_1 =
 kemy_DEPENDENCIES = ../protobufs/libkemyprotos.a $(am__DEPENDENCIES_1)
+am_run_once_OBJECTS = $(am__objects_1) run_once.$(OBJEXT)
+run_once_OBJECTS = $(am_run_once_OBJECTS)
+run_once_LDADD = $(LDADD)
+run_once_DEPENDENCIES = ../protobufs/libkemyprotos.a \
+	$(am__DEPENDENCIES_1)
 am_whiskers_reader_OBJECTS = $(am__objects_1) \
 	whiskers_reader.$(OBJEXT)
 whiskers_reader_OBJECTS = $(am_whiskers_reader_OBJECTS)
@@ -145,8 +151,10 @@ AM_V_CCLD = $(am__v_CCLD_$(V))
 am__v_CCLD_ = $(am__v_CCLD_$(AM_DEFAULT_VERBOSITY))
 am__v_CCLD_0 = @echo "  CCLD    " $@;
 am__v_CCLD_1 = 
-SOURCES = $(kemy_SOURCES) $(whiskers_reader_SOURCES)
-DIST_SOURCES = $(kemy_SOURCES) $(whiskers_reader_SOURCES)
+SOURCES = $(kemy_SOURCES) $(run_once_SOURCES) \
+	$(whiskers_reader_SOURCES)
+DIST_SOURCES = $(kemy_SOURCES) $(run_once_SOURCES) \
+	$(whiskers_reader_SOURCES)
 am__can_run_installinfo = \
   case $$AM_UPDATE_INFO_DIR in \
     n|no|NO) false;; \
@@ -296,6 +304,7 @@ kemy_SOURCES = $(common_source) kemy.cc ratbreeder.cc ratbreeder.hh
 
 #scoring_example_SOURCES = $(common_source) scoring-example.cc
 whiskers_reader_SOURCES = $(common_source) whiskers_reader.cc
+run_once_SOURCES = $(common_source) run_once.cc
 all: all-am
 
 .SUFFIXES:
@@ -377,6 +386,10 @@ kemy$(EXEEXT): $(kemy_OBJECTS) $(kemy_DEPENDENCIES) $(EXTRA_kemy_DEPENDENCIES)
 	@rm -f kemy$(EXEEXT)
 	$(AM_V_CXXLD)$(CXXLINK) $(kemy_OBJECTS) $(kemy_LDADD) $(LIBS)
 
+run_once$(EXEEXT): $(run_once_OBJECTS) $(run_once_DEPENDENCIES) $(EXTRA_run_once_DEPENDENCIES) 
+	@rm -f run_once$(EXEEXT)
+	$(AM_V_CXXLD)$(CXXLINK) $(run_once_OBJECTS) $(run_once_LDADD) $(LIBS)
+
 whiskers_reader$(EXEEXT): $(whiskers_reader_OBJECTS) $(whiskers_reader_DEPENDENCIES) $(EXTRA_whiskers_reader_DEPENDENCIES) 
 	@rm -f whiskers_reader$(EXEEXT)
 	$(AM_V_CXXLD)$(CXXLINK) $(whiskers_reader_OBJECTS) $(whiskers_reader_LDADD) $(LIBS)
@@ -395,6 +408,7 @@ include ./$(DEPDIR)/memoryrange.Po
 include ./$(DEPDIR)/network.Po
 include ./$(DEPDIR)/random.Po
 include ./$(DEPDIR)/ratbreeder.Po
+include ./$(DEPDIR)/run_once.Po
 include ./$(DEPDIR)/whisker.Po
 include ./$(DEPDIR)/whiskers_reader.Po
 include ./$(DEPDIR)/whiskertree.Po

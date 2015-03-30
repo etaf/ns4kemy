@@ -38,8 +38,7 @@ class OnOffApp : public Application {
            uint32_t t_hdr_size,
            double   on_average,
            double   off_time_avg,
-           TcpAgent * tcp_handle,
-           bool reset);
+           TcpAgent * tcp_handle);
   OnOffApp() = delete; /* Delete the default constructor */
   void recv_ack(Packet* ack) override; /* Called inside TcpAgent::recv() */
   void resume(void) override; /* Called when the TcpAgent is done transmitting for the first time */
@@ -78,7 +77,6 @@ class OnOffApp : public Application {
 
   /* Handle to TCP to reset to IW for every new flow */
   TcpAgent* tcp_handle_;
-  const bool do_i_reset_;
 
   /* Timers */
   AppOnTimer  on_timer_;

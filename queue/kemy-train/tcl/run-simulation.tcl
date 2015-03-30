@@ -54,6 +54,21 @@ proc create-dumbbell-topology {} {
     $ns queue-limit $node_array(1) $node_array(0) 65536
     set bt_aqm [[$ns link $node_array(0) $node_array(1)] queue]
 
+    if { [info exists opt(qmon)] } {
+
+        puts "$opt(qmon)"
+        set f_qmon [open $opt(qmon) w]
+        set qmon [$ns monitor-queue $node_array(0) $node_array(1) $f_qmon 0.1]
+        [$ns link $node_array(0) $node_array(1)] queue-sample-timeout
+    }
+
+    if {[info exists opt(qtr)] } {
+
+        puts "$opt(qtr)"
+        set f_qtr [open $opt(qtr) w]
+        $ns trace-queue $node_array(0) $node_array(1) $f_qtr
+    }
+
     if { [info exists opt(trace4split)] } {
         $bt_aqm trace4split
     }
@@ -86,9 +101,9 @@ proc create-sources-destinations {} {
     	$tcpsrc set fid_ [expr $i%256]
         $tcpsrc set packetSize_ $opt(pktsize)
         $tcpsrc set window_ $opt(rcvwin)
-        #$tcpsrc set syn_ 0
-        #$tcpsrc set delay_growth_ 0
-        set app_src($i) [new Application/OnOff $opt(ontype) $i $opt(pktsize) $opt(hdrsize) $opt(run) $opt(onavg) $opt(offavg) $tcpsrc 1]
+        $tcpsrc set syn_ 0
+        $tcpsrc set delay_growth_ 0
+        set app_src($i) [new Application/OnOff $opt(ontype) $i $opt(pktsize) $opt(hdrsize) $opt(run) $opt(onavg) $opt(offavg) $tcpsrc]
         $app_src($i) attach-agent $tcpsrc
     }
 
@@ -96,18 +111,22 @@ proc create-sources-destinations {} {
 
 proc finish {} {
     global ns opt app_src bt_aqm
-    global f f_nam
+    global f_tr f_qmon qtr f_nam
     for {set i 1} {$i <= [array size app_src]} {incr i} {
       $app_src($i) stats
     }
     $bt_aqm  printstats
 
-    if { [info exists f] } {
-        $ns flush-trace
-        close $f
+    $ns flush-trace
+
+    if { [info exists f_tr] } {
+        close $f_tr
     }
     if { [info exists f_nam] } {
         close $f_nam
+    }
+    if { [info exists f_qmon]} {
+        close $f_qmon
     }
     exit 0
 }

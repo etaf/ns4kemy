@@ -14,13 +14,10 @@ message WhiskerTree {
 
 
 message MemoryRange {
-    message Array {
-        repeated double element = 10;
-    }
   optional Memory lower = 11;
   optional Memory upper = 12;
   optional uint32 count = 13;
-  repeated Array arrs = 14;
+  repeated double medians = 14;
 }
 
 message Memory {

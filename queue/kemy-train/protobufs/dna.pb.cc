@@ -23,9 +23,6 @@ const ::google::protobuf::internal::GeneratedMessageReflection*
 const ::google::protobuf::Descriptor* MemoryRange_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
   MemoryRange_reflection_ = NULL;
-const ::google::protobuf::Descriptor* MemoryRange_Array_descriptor_ = NULL;
-const ::google::protobuf::internal::GeneratedMessageReflection*
-  MemoryRange_Array_reflection_ = NULL;
 const ::google::protobuf::Descriptor* Memory_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
   Memory_reflection_ = NULL;
@@ -81,7 +78,7 @@ void protobuf_AssignDesc_dna_2eproto() {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MemoryRange, lower_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MemoryRange, upper_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MemoryRange, count_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MemoryRange, arrs_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MemoryRange, medians_),
   };
   MemoryRange_reflection_ =
     new ::google::protobuf::internal::GeneratedMessageReflection(
@@ -94,21 +91,6 @@ void protobuf_AssignDesc_dna_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(MemoryRange));
-  MemoryRange_Array_descriptor_ = MemoryRange_descriptor_->nested_type(0);
-  static const int MemoryRange_Array_offsets_[1] = {
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MemoryRange_Array, element_),
-  };
-  MemoryRange_Array_reflection_ =
-    new ::google::protobuf::internal::GeneratedMessageReflection(
-      MemoryRange_Array_descriptor_,
-      MemoryRange_Array::default_instance_,
-      MemoryRange_Array_offsets_,
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MemoryRange_Array, _has_bits_[0]),
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MemoryRange_Array, _unknown_fields_),
-      -1,
-      ::google::protobuf::DescriptorPool::generated_pool(),
-      ::google::protobuf::MessageFactory::generated_factory(),
-      sizeof(MemoryRange_Array));
   Memory_descriptor_ = file->message_type(2);
   static const int Memory_offsets_[3] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Memory, ewma_qlen_),
@@ -245,8 +227,6 @@ void protobuf_RegisterTypes(const ::std::string&) {
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
     MemoryRange_descriptor_, &MemoryRange::default_instance());
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
-    MemoryRange_Array_descriptor_, &MemoryRange_Array::default_instance());
-  ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
     Memory_descriptor_, &Memory::default_instance());
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
     Whisker_descriptor_, &Whisker::default_instance());
@@ -269,8 +249,6 @@ void protobuf_ShutdownFile_dna_2eproto() {
   delete WhiskerTree_reflection_;
   delete MemoryRange::default_instance_;
   delete MemoryRange_reflection_;
-  delete MemoryRange_Array::default_instance_;
-  delete MemoryRange_Array_reflection_;
   delete Memory::default_instance_;
   delete Memory_reflection_;
   delete Whisker::default_instance_;
@@ -300,33 +278,30 @@ void protobuf_AddDesc_dna_2eproto() {
     "erTree\022\"\n\004leaf\030\003 \001(\0132\024.KemyBuffers.Whisk"
     "er\022(\n\006config\030\004 \001(\0132\030.KemyBuffers.ConfigR"
     "ange\0224\n\toptimizer\030\005 \001(\0132!.KemyBuffers.Op"
-    "timizationSettings\"\254\001\n\013MemoryRange\022\"\n\005lo"
-    "wer\030\013 \001(\0132\023.KemyBuffers.Memory\022\"\n\005upper\030"
-    "\014 \001(\0132\023.KemyBuffers.Memory\022\r\n\005count\030\r \001("
-    "\r\022,\n\004arrs\030\016 \003(\0132\036.KemyBuffers.MemoryRang"
-    "e.Array\032\030\n\005Array\022\017\n\007element\030\n \003(\001\"P\n\006Mem"
-    "ory\022\021\n\tewma_qlen\030\025 \001(\001\022\031\n\021ewma_arrival_r"
-    "ate\030\026 \001(\001\022\030\n\020ewma_depart_rate\030\027 \001(\001\"W\n\007W"
-    "hisker\022\022\n\ngeneration\030\037 \001(\r\022\016\n\006drop_f\030  \001"
-    "(\010\022(\n\006domain\030! \001(\0132\030.KemyBuffers.MemoryR"
-    "ange\"\216\001\n\023OptimizationSetting\022\021\n\tmin_valu"
-    "e\030) \001(\001\022\021\n\tmax_value\030* \001(\001\022\022\n\nmin_change"
-    "\030+ \001(\001\022\022\n\nmax_change\030, \001(\001\022\022\n\nmultiplier"
-    "\030- \001(\001\022\025\n\rdefault_value\030. \001(\001\"H\n\024Optimiz"
-    "ationSettings\0220\n\006drop_f\0303 \001(\0132 .KemyBuff"
-    "ers.OptimizationSetting\"\"\n\005Range\022\013\n\003low\030"
-    "= \001(\001\022\014\n\004high\030> \001(\001\"\216\001\n\013ConfigRange\022\'\n\013n"
-    "um_senders\030G \001(\0132\022.KemyBuffers.Range\022%\n\t"
-    "bottle_bw\030H \001(\0132\022.KemyBuffers.Range\022/\n\023b"
-    "ottle_single_delay\030I \001(\0132\022.KemyBuffers.R"
-    "ange\"P\n\tNetConfig\022\023\n\013num_senders\030\001 \001(\r\022\021"
-    "\n\tbottle_bw\030\002 \001(\001\022\033\n\023bottle_single_delay"
-    "\030\003 \001(\001", 1086);
+    "timizationSettings\"u\n\013MemoryRange\022\"\n\005low"
+    "er\030\013 \001(\0132\023.KemyBuffers.Memory\022\"\n\005upper\030\014"
+    " \001(\0132\023.KemyBuffers.Memory\022\r\n\005count\030\r \001(\r"
+    "\022\017\n\007medians\030\016 \003(\001\"P\n\006Memory\022\021\n\tewma_qlen"
+    "\030\025 \001(\001\022\031\n\021ewma_arrival_rate\030\026 \001(\001\022\030\n\020ewm"
+    "a_depart_rate\030\027 \001(\001\"W\n\007Whisker\022\022\n\ngenera"
+    "tion\030\037 \001(\r\022\016\n\006drop_f\030  \001(\010\022(\n\006domain\030! \001"
+    "(\0132\030.KemyBuffers.MemoryRange\"\216\001\n\023Optimiz"
+    "ationSetting\022\021\n\tmin_value\030) \001(\001\022\021\n\tmax_v"
+    "alue\030* \001(\001\022\022\n\nmin_change\030+ \001(\001\022\022\n\nmax_ch"
+    "ange\030, \001(\001\022\022\n\nmultiplier\030- \001(\001\022\025\n\rdefaul"
+    "t_value\030. \001(\001\"H\n\024OptimizationSettings\0220\n"
+    "\006drop_f\0303 \001(\0132 .KemyBuffers.Optimization"
+    "Setting\"\"\n\005Range\022\013\n\003low\030= \001(\001\022\014\n\004high\030> "
+    "\001(\001\"\216\001\n\013ConfigRange\022\'\n\013num_senders\030G \001(\013"
+    "2\022.KemyBuffers.Range\022%\n\tbottle_bw\030H \001(\0132"
+    "\022.KemyBuffers.Range\022/\n\023bottle_single_del"
+    "ay\030I \001(\0132\022.KemyBuffers.Range\"P\n\tNetConfi"
+    "g\022\023\n\013num_senders\030\001 \001(\r\022\021\n\tbottle_bw\030\002 \001("
+    "\001\022\033\n\023bottle_single_delay\030\003 \001(\001", 1030);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "dna.proto", &protobuf_RegisterTypes);
   WhiskerTree::default_instance_ = new WhiskerTree();
   MemoryRange::default_instance_ = new MemoryRange();
-  MemoryRange_Array::default_instance_ = new MemoryRange_Array();
   Memory::default_instance_ = new Memory();
   Whisker::default_instance_ = new Whisker();
   OptimizationSetting::default_instance_ = new OptimizationSetting();
@@ -336,7 +311,6 @@ void protobuf_AddDesc_dna_2eproto() {
   NetConfig::default_instance_ = new NetConfig();
   WhiskerTree::default_instance_->InitAsDefaultInstance();
   MemoryRange::default_instance_->InitAsDefaultInstance();
-  MemoryRange_Array::default_instance_->InitAsDefaultInstance();
   Memory::default_instance_->InitAsDefaultInstance();
   Whisker::default_instance_->InitAsDefaultInstance();
   OptimizationSetting::default_instance_->InitAsDefaultInstance();
@@ -745,217 +719,10 @@ void WhiskerTree::Swap(WhiskerTree* other) {
 // ===================================================================
 
 #ifndef _MSC_VER
-const int MemoryRange_Array::kElementFieldNumber;
-#endif  // !_MSC_VER
-
-MemoryRange_Array::MemoryRange_Array()
-  : ::google::protobuf::Message() {
-  SharedCtor();
-}
-
-void MemoryRange_Array::InitAsDefaultInstance() {
-}
-
-MemoryRange_Array::MemoryRange_Array(const MemoryRange_Array& from)
-  : ::google::protobuf::Message() {
-  SharedCtor();
-  MergeFrom(from);
-}
-
-void MemoryRange_Array::SharedCtor() {
-  _cached_size_ = 0;
-  ::memset(_has_bits_, 0, sizeof(_has_bits_));
-}
-
-MemoryRange_Array::~MemoryRange_Array() {
-  SharedDtor();
-}
-
-void MemoryRange_Array::SharedDtor() {
-  if (this != default_instance_) {
-  }
-}
-
-void MemoryRange_Array::SetCachedSize(int size) const {
-  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
-  _cached_size_ = size;
-  GOOGLE_SAFE_CONCURRENT_WRITES_END();
-}
-const ::google::protobuf::Descriptor* MemoryRange_Array::descriptor() {
-  protobuf_AssignDescriptorsOnce();
-  return MemoryRange_Array_descriptor_;
-}
-
-const MemoryRange_Array& MemoryRange_Array::default_instance() {
-  if (default_instance_ == NULL) protobuf_AddDesc_dna_2eproto();  return *default_instance_;
-}
-
-MemoryRange_Array* MemoryRange_Array::default_instance_ = NULL;
-
-MemoryRange_Array* MemoryRange_Array::New() const {
-  return new MemoryRange_Array;
-}
-
-void MemoryRange_Array::Clear() {
-  element_.Clear();
-  ::memset(_has_bits_, 0, sizeof(_has_bits_));
-  mutable_unknown_fields()->Clear();
-}
-
-bool MemoryRange_Array::MergePartialFromCodedStream(
-    ::google::protobuf::io::CodedInputStream* input) {
-#define DO_(EXPRESSION) if (!(EXPRESSION)) return false
-  ::google::protobuf::uint32 tag;
-  while ((tag = input->ReadTag()) != 0) {
-    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // repeated double element = 10;
-      case 10: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_FIXED64) {
-         parse_element:
-          DO_((::google::protobuf::internal::WireFormatLite::ReadRepeatedPrimitive<
-                   double, ::google::protobuf::internal::WireFormatLite::TYPE_DOUBLE>(
-                 1, 81, input, this->mutable_element())));
-        } else if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag)
-                   == ::google::protobuf::internal::WireFormatLite::
-                      WIRETYPE_LENGTH_DELIMITED) {
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPackedPrimitiveNoInline<
-                   double, ::google::protobuf::internal::WireFormatLite::TYPE_DOUBLE>(
-                 input, this->mutable_element())));
-        } else {
-          goto handle_uninterpreted;
-        }
-        if (input->ExpectTag(81)) goto parse_element;
-        if (input->ExpectAtEnd()) return true;
-        break;
-      }
-      
-      default: {
-      handle_uninterpreted:
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
-          return true;
-        }
-        DO_(::google::protobuf::internal::WireFormat::SkipField(
-              input, tag, mutable_unknown_fields()));
-        break;
-      }
-    }
-  }
-  return true;
-#undef DO_
-}
-
-void MemoryRange_Array::SerializeWithCachedSizes(
-    ::google::protobuf::io::CodedOutputStream* output) const {
-  // repeated double element = 10;
-  for (int i = 0; i < this->element_size(); i++) {
-    ::google::protobuf::internal::WireFormatLite::WriteDouble(
-      10, this->element(i), output);
-  }
-  
-  if (!unknown_fields().empty()) {
-    ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
-        unknown_fields(), output);
-  }
-}
-
-::google::protobuf::uint8* MemoryRange_Array::SerializeWithCachedSizesToArray(
-    ::google::protobuf::uint8* target) const {
-  // repeated double element = 10;
-  for (int i = 0; i < this->element_size(); i++) {
-    target = ::google::protobuf::internal::WireFormatLite::
-      WriteDoubleToArray(10, this->element(i), target);
-  }
-  
-  if (!unknown_fields().empty()) {
-    target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
-        unknown_fields(), target);
-  }
-  return target;
-}
-
-int MemoryRange_Array::ByteSize() const {
-  int total_size = 0;
-  
-  // repeated double element = 10;
-  {
-    int data_size = 0;
-    data_size = 8 * this->element_size();
-    total_size += 1 * this->element_size() + data_size;
-  }
-  
-  if (!unknown_fields().empty()) {
-    total_size +=
-      ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
-        unknown_fields());
-  }
-  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
-  _cached_size_ = total_size;
-  GOOGLE_SAFE_CONCURRENT_WRITES_END();
-  return total_size;
-}
-
-void MemoryRange_Array::MergeFrom(const ::google::protobuf::Message& from) {
-  GOOGLE_CHECK_NE(&from, this);
-  const MemoryRange_Array* source =
-    ::google::protobuf::internal::dynamic_cast_if_available<const MemoryRange_Array*>(
-      &from);
-  if (source == NULL) {
-    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
-  } else {
-    MergeFrom(*source);
-  }
-}
-
-void MemoryRange_Array::MergeFrom(const MemoryRange_Array& from) {
-  GOOGLE_CHECK_NE(&from, this);
-  element_.MergeFrom(from.element_);
-  mutable_unknown_fields()->MergeFrom(from.unknown_fields());
-}
-
-void MemoryRange_Array::CopyFrom(const ::google::protobuf::Message& from) {
-  if (&from == this) return;
-  Clear();
-  MergeFrom(from);
-}
-
-void MemoryRange_Array::CopyFrom(const MemoryRange_Array& from) {
-  if (&from == this) return;
-  Clear();
-  MergeFrom(from);
-}
-
-bool MemoryRange_Array::IsInitialized() const {
-  
-  return true;
-}
-
-void MemoryRange_Array::Swap(MemoryRange_Array* other) {
-  if (other != this) {
-    element_.Swap(&other->element_);
-    std::swap(_has_bits_[0], other->_has_bits_[0]);
-    _unknown_fields_.Swap(&other->_unknown_fields_);
-    std::swap(_cached_size_, other->_cached_size_);
-  }
-}
-
-::google::protobuf::Metadata MemoryRange_Array::GetMetadata() const {
-  protobuf_AssignDescriptorsOnce();
-  ::google::protobuf::Metadata metadata;
-  metadata.descriptor = MemoryRange_Array_descriptor_;
-  metadata.reflection = MemoryRange_Array_reflection_;
-  return metadata;
-}
-
-
-// -------------------------------------------------------------------
-
-#ifndef _MSC_VER
 const int MemoryRange::kLowerFieldNumber;
 const int MemoryRange::kUpperFieldNumber;
 const int MemoryRange::kCountFieldNumber;
-const int MemoryRange::kArrsFieldNumber;
+const int MemoryRange::kMediansFieldNumber;
 #endif  // !_MSC_VER
 
 MemoryRange::MemoryRange()
@@ -1023,7 +790,7 @@ void MemoryRange::Clear() {
     }
     count_ = 0u;
   }
-  arrs_.Clear();
+  medians_.Clear();
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
   mutable_unknown_fields()->Clear();
 }
@@ -1073,21 +840,28 @@ bool MemoryRange::MergePartialFromCodedStream(
         } else {
           goto handle_uninterpreted;
         }
-        if (input->ExpectTag(114)) goto parse_arrs;
+        if (input->ExpectTag(113)) goto parse_medians;
         break;
       }
       
-      // repeated .KemyBuffers.MemoryRange.Array arrs = 14;
+      // repeated double medians = 14;
       case 14: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
-         parse_arrs:
-          DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
-                input, add_arrs()));
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_FIXED64) {
+         parse_medians:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadRepeatedPrimitive<
+                   double, ::google::protobuf::internal::WireFormatLite::TYPE_DOUBLE>(
+                 1, 113, input, this->mutable_medians())));
+        } else if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag)
+                   == ::google::protobuf::internal::WireFormatLite::
+                      WIRETYPE_LENGTH_DELIMITED) {
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPackedPrimitiveNoInline<
+                   double, ::google::protobuf::internal::WireFormatLite::TYPE_DOUBLE>(
+                 input, this->mutable_medians())));
         } else {
           goto handle_uninterpreted;
         }
-        if (input->ExpectTag(114)) goto parse_arrs;
+        if (input->ExpectTag(113)) goto parse_medians;
         if (input->ExpectAtEnd()) return true;
         break;
       }
@@ -1127,10 +901,10 @@ void MemoryRange::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteUInt32(13, this->count(), output);
   }
   
-  // repeated .KemyBuffers.MemoryRange.Array arrs = 14;
-  for (int i = 0; i < this->arrs_size(); i++) {
-    ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
-      14, this->arrs(i), output);
+  // repeated double medians = 14;
+  for (int i = 0; i < this->medians_size(); i++) {
+    ::google::protobuf::internal::WireFormatLite::WriteDouble(
+      14, this->medians(i), output);
   }
   
   if (!unknown_fields().empty()) {
@@ -1160,11 +934,10 @@ void MemoryRange::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(13, this->count(), target);
   }
   
-  // repeated .KemyBuffers.MemoryRange.Array arrs = 14;
-  for (int i = 0; i < this->arrs_size(); i++) {
+  // repeated double medians = 14;
+  for (int i = 0; i < this->medians_size(); i++) {
     target = ::google::protobuf::internal::WireFormatLite::
-      WriteMessageNoVirtualToArray(
-        14, this->arrs(i), target);
+      WriteDoubleToArray(14, this->medians(i), target);
   }
   
   if (!unknown_fields().empty()) {
@@ -1200,12 +973,11 @@ int MemoryRange::ByteSize() const {
     }
     
   }
-  // repeated .KemyBuffers.MemoryRange.Array arrs = 14;
-  total_size += 1 * this->arrs_size();
-  for (int i = 0; i < this->arrs_size(); i++) {
-    total_size +=
-      ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
-        this->arrs(i));
+  // repeated double medians = 14;
+  {
+    int data_size = 0;
+    data_size = 8 * this->medians_size();
+    total_size += 1 * this->medians_size() + data_size;
   }
   
   if (!unknown_fields().empty()) {
@@ -1233,7 +1005,7 @@ void MemoryRange::MergeFrom(const ::google::protobuf::Message& from) {
 
 void MemoryRange::MergeFrom(const MemoryRange& from) {
   GOOGLE_CHECK_NE(&from, this);
-  arrs_.MergeFrom(from.arrs_);
+  medians_.MergeFrom(from.medians_);
   if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
     if (from.has_lower()) {
       mutable_lower()->::KemyBuffers::Memory::MergeFrom(from.lower());
@@ -1270,7 +1042,7 @@ void MemoryRange::Swap(MemoryRange* other) {
     std::swap(lower_, other->lower_);
     std::swap(upper_, other->upper_);
     std::swap(count_, other->count_);
-    arrs_.Swap(&other->arrs_);
+    medians_.Swap(&other->medians_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.Swap(&other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);

@@ -10,7 +10,7 @@ cwd = os.getcwd()
 
 parser = OptionParser()
 parser.add_option("--result", type="string",dest="result_dir",default="results/func")
-parser.add_option("-w","--whiskers",  type="string",dest="whiskers", default=os.path.join(cwd, "../../../queue/kemy-train/src/result/Hope.7.1"))
+parser.add_option("-w","--whiskers",  type="string",dest="whiskers", default=os.path.join(cwd, "../../../queue/kemy-train/src/result/U.2"))
 (config, args) = parser.parse_args()
 
 condidates = ["KEMY", "RED","PIE","CoDel"]

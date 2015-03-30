@@ -317,3 +317,4 @@ bool WhiskerTree::combine_other(const WhiskerTree& other, bool trace){
     }
     return true;
 }
+

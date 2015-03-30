@@ -15,11 +15,11 @@ std::vector< MemoryRange > MemoryRange::bisect( void ) const
 
   /* bisect in each axis */
   for ( unsigned int i = 0; i < Memory::datasize; i++ ) {
-      assert(_arrs[i].size() );
       std::vector< MemoryRange > doubled;
     for ( const auto &x : ret ) {
       auto ersatz_lower( x._lower ), ersatz_upper( x._upper );
-      ersatz_lower.mutable_field( i ) = ersatz_upper.mutable_field( i ) = median( &(_arrs[ i ]) );
+      //ersatz_lower.mutable_field( i ) = ersatz_upper.mutable_field( i ) = median( &(_arrs[ i ]) );
+      ersatz_lower.mutable_field( i ) = ersatz_upper.mutable_field( i ) = _medians[i];
 
       if ( x._lower == ersatz_upper ) {
 	/* try range midpoint instead */
@@ -75,9 +75,9 @@ bool MemoryRange::operator==( const MemoryRange & other ) const
 std::string MemoryRange::str( void ) const
 {
   char tmp[ 256 ];
-  snprintf( tmp, 256, "(lo=<%s>, hi=<%s>),count=%d,arrs=%ldx%ld\n",
+  snprintf( tmp, 256, "(lo=<%s>, hi=<%s>),count=%d,medians=%fx%fx%f\n",
 	    _lower.str().c_str(),
-	    _upper.str().c_str() ,_count,_arrs.size(),_arrs.size() > 0 ? _arrs[0].size():0);
+	    _upper.str().c_str() ,_count,_medians[0],_medians[1],_medians[2]);
   return tmp;
 }
 
@@ -88,11 +88,14 @@ KemyBuffers::MemoryRange MemoryRange::DNA( void ) const
   ret.mutable_lower()->CopyFrom( _lower.DNA() );
   ret.mutable_upper()->CopyFrom( _upper.DNA() );
   ret.set_count(_count);
-  for(auto vec : _arrs){
-      auto arr = ret.add_arrs();
-      for(auto x : vec){
-        arr->add_element(x);
-      }
+  for(unsigned int i =0; i< Memory::datasize; ++i){
+      if(_arrs[i].size() > 0)
+          _medians[i] = median( &(_arrs[ i ]) );
+      else
+          _medians[i] = 0;
+  }
+  for(auto x : _medians){
+    ret.add_medians(x);
   }
   //printf("setting count=%d\n",_count);
   //printf("setting arrs=%lu x %lu\n",_arrs.size(),_arrs[0].size());
@@ -104,17 +107,15 @@ MemoryRange::MemoryRange( const KemyBuffers::MemoryRange & dna )
   : _lower( true, dna.lower() ),
     _upper( false, dna.upper() ),
     _arrs(Memory::datasize),
-    _count( dna.count() )
+    _count( dna.count() ),
+    _medians(0)
 {
-    int i=0;
-    for(const auto &arr : dna.arrs() )
-    {
-        std::vector<double> tmp;
-        for(const auto & x : arr.element()){
-            tmp.emplace_back(x);
-        }
-        _arrs[i] = tmp;
-        ++i;
+    _medians.clear();
+    for( const auto &m : dna.medians()){
+        _medians.emplace_back(m);
+    }
+    if(_medians.size() !=  Memory::datasize){
+        _medians.resize(Memory::datasize);
     }
     //printf("reading count=%d\n",_count);
   //printf("reading arrs=%lu x %lu\n",_arrs.size(),_arrs[0].size());
@@ -135,10 +136,9 @@ void MemoryRange::combine_other(const MemoryRange& other, bool trace){
     //printf("other_count=%d\n",other._count);
     //printf("combining %ldx%ld\n",other._arrs.size(),other._arrs.size()>0?other._arrs[0].size():0);
     if(trace){
-        for(size_t i=0;i< other._arrs.size();++i){
-            for(size_t j=0; j < other._arrs[i].size();++j){
-                _arrs[i].emplace_back(other._arrs[i][j]);
-            }
+        for(size_t i =0; i<other._medians.size();++i)
+        {
+            _medians[i] = 0.5 * (_medians[i]  + other._medians[i]);
         }
     }
 }

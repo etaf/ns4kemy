@@ -89,7 +89,7 @@ void KemyQueue::update_enque(Packet* p ){
     double now = Scheduler::instance().clock();
 
     double interval = (now - _last_arrival)*1000; //arrive interval in ms
-    if(interval<0.001){
+    if(interval<0.01){
         //arrive at the same time
         _pkg_acc += packet_size;
         return;
@@ -111,9 +111,12 @@ void KemyQueue::update_enque(Packet* p ){
     _ewma_qlen = ( 1-lamda) * qlen + lamda * _ewma_qlen;
     _memory.update_ewma_qlen(_ewma_qlen);
 
+    /*std::cout<<"packt_size:"<<packet_size<<"\t interval:"<<interval<<std::endl;*/
     //update_ewma_arrival_rate
+
     _ewma_arrival_rate = (1-lamda) * packet_size / interval  + lamda * _ewma_arrival_rate;
     _memory.update_ewma_arrival_rate(_ewma_arrival_rate);
+
     //if(interval<1)std::cout<<"packet_size:"<<packet_size<<"\tinterval:"<<interval<<"\tlamda:"<<lamda<<"\t_ewma_arrival_rate:"<<_ewma_arrival_rate<<std::endl;
 
 }
@@ -198,7 +201,6 @@ int KemyQueue::command(int argc, const char*const* argv){
             return (TCL_OK);
         }else if(strcmp(argv[1],"trace4split") == 0){
             _trace4split = true;
-            //printf("trace4split=%d\n",_trace4split);
             return (TCL_OK);
         }
     }

@@ -72,6 +72,12 @@ int main( int argc, char *argv[] )
     printf( "Not saving output. Use the of=FILENAME argument to save the results.\n" );
   }
 
+  //prepare the results fold
+  if(system("rm ../jrats -rf && mkdir ../jrats") !=0 ){
+      perror("rm ../jrats error");
+      return 1;
+  }
+
   while ( 1 ) {
     auto outcome = breeder.improve( whiskers );
     printf( "run = %u, score = %f\n", run, outcome.score );

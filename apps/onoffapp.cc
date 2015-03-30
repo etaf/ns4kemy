@@ -12,8 +12,7 @@ OnOffApp::OnOffApp(string str_ontype,
                    uint32_t t_run,
                    double   on_average,
                    double   off_time_avg,
-                   TcpAgent* t_tcp_handle,
-                   bool reset)
+                   TcpAgent* t_tcp_handle)
     : ontype_(str_ontype == "bytes" ? BYTE_BASED :
               str_ontype == "time"  ? TIME_BASED :
               str_ontype == "flowcdf" ? EMPIRICAL:
@@ -26,11 +25,10 @@ OnOffApp::OnOffApp(string str_ontype,
       stop_distribution_(on_average, run_),
       emp_stop_distribution_(run_),
       tcp_handle_(t_tcp_handle),
-      do_i_reset_(reset),
       on_timer_(this),
       off_timer_(this)
 {
-  on_timer_.sched(start_distribution_.sample());
+  on_timer_.sched(std::max(0.1,start_distribution_.sample()));
 }
 
 void OnOffApp::turn_on() {
@@ -40,16 +38,14 @@ void OnOffApp::turn_on() {
     current_flow_.flow_size = std::max(current_flow_.flow_size,(uint32_t) 5);
   } else if (ontype_ == TIME_BASED) {
     //current_flow_.on_duration = stop_distribution_.sample();
-    current_flow_.on_duration = std::max(0.1,stop_distribution_.sample());
+    current_flow_.on_duration = std::max(1.0,stop_distribution_.sample());
   } else if (ontype_ == EMPIRICAL) {
     current_flow_.flow_size = lround(ceil(emp_stop_distribution_.sample()));
   }
 
   laststart_ = Scheduler::instance().clock();
   state_ = ON;
-  if (do_i_reset_) {
-    tcp_handle_->reset_to_iw();
-  }
+
 
   if (ontype_ == BYTE_BASED or ontype_ == EMPIRICAL) {
     //assert(current_flow_.flow_size > 0);
@@ -104,7 +100,7 @@ static class OnOffClass : public TclClass {
   OnOffClass() : TclClass("Application/OnOff") {}
   TclObject* create(int argc, const char*const* argv) {
     try {
-      if (argc != 13) {
+      if (argc != 12) {
         throw Exception("Application/OnOff mirror constructor", "too few args");
       } else {
         return new OnOffApp(string(argv[4]),
@@ -114,8 +110,7 @@ static class OnOffClass : public TclClass {
                             myatoi(argv[8]),
                             myatod(argv[9]),
                             myatod(argv[10]),
-                            reinterpret_cast<TcpAgent *>(TclObject::lookup(argv[11])),
-                            myatoi(argv[12]));
+                            reinterpret_cast<TcpAgent *>(TclObject::lookup(argv[11])));
       }
     } catch (const Exception & e) {
       e.perror();

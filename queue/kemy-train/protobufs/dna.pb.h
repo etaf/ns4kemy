@@ -34,7 +34,6 @@ void protobuf_ShutdownFile_dna_2eproto();
 
 class WhiskerTree;
 class MemoryRange;
-class MemoryRange_Array;
 class Memory;
 class Whisker;
 class OptimizationSetting;
@@ -174,91 +173,6 @@ class WhiskerTree : public ::google::protobuf::Message {
 };
 // -------------------------------------------------------------------
 
-class MemoryRange_Array : public ::google::protobuf::Message {
- public:
-  MemoryRange_Array();
-  virtual ~MemoryRange_Array();
-  
-  MemoryRange_Array(const MemoryRange_Array& from);
-  
-  inline MemoryRange_Array& operator=(const MemoryRange_Array& from) {
-    CopyFrom(from);
-    return *this;
-  }
-  
-  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
-    return _unknown_fields_;
-  }
-  
-  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
-    return &_unknown_fields_;
-  }
-  
-  static const ::google::protobuf::Descriptor* descriptor();
-  static const MemoryRange_Array& default_instance();
-  
-  void Swap(MemoryRange_Array* other);
-  
-  // implements Message ----------------------------------------------
-  
-  MemoryRange_Array* New() const;
-  void CopyFrom(const ::google::protobuf::Message& from);
-  void MergeFrom(const ::google::protobuf::Message& from);
-  void CopyFrom(const MemoryRange_Array& from);
-  void MergeFrom(const MemoryRange_Array& from);
-  void Clear();
-  bool IsInitialized() const;
-  
-  int ByteSize() const;
-  bool MergePartialFromCodedStream(
-      ::google::protobuf::io::CodedInputStream* input);
-  void SerializeWithCachedSizes(
-      ::google::protobuf::io::CodedOutputStream* output) const;
-  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
-  int GetCachedSize() const { return _cached_size_; }
-  private:
-  void SharedCtor();
-  void SharedDtor();
-  void SetCachedSize(int size) const;
-  public:
-  
-  ::google::protobuf::Metadata GetMetadata() const;
-  
-  // nested types ----------------------------------------------------
-  
-  // accessors -------------------------------------------------------
-  
-  // repeated double element = 10;
-  inline int element_size() const;
-  inline void clear_element();
-  static const int kElementFieldNumber = 10;
-  inline double element(int index) const;
-  inline void set_element(int index, double value);
-  inline void add_element(double value);
-  inline const ::google::protobuf::RepeatedField< double >&
-      element() const;
-  inline ::google::protobuf::RepeatedField< double >*
-      mutable_element();
-  
-  // @@protoc_insertion_point(class_scope:KemyBuffers.MemoryRange.Array)
- private:
-  
-  ::google::protobuf::UnknownFieldSet _unknown_fields_;
-  
-  ::google::protobuf::RepeatedField< double > element_;
-  
-  mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
-  
-  friend void  protobuf_AddDesc_dna_2eproto();
-  friend void protobuf_AssignDesc_dna_2eproto();
-  friend void protobuf_ShutdownFile_dna_2eproto();
-  
-  void InitAsDefaultInstance();
-  static MemoryRange_Array* default_instance_;
-};
-// -------------------------------------------------------------------
-
 class MemoryRange : public ::google::protobuf::Message {
  public:
   MemoryRange();
@@ -311,8 +225,6 @@ class MemoryRange : public ::google::protobuf::Message {
   
   // nested types ----------------------------------------------------
   
-  typedef MemoryRange_Array Array;
-  
   // accessors -------------------------------------------------------
   
   // optional .KemyBuffers.Memory lower = 11;
@@ -338,17 +250,17 @@ class MemoryRange : public ::google::protobuf::Message {
   inline ::google::protobuf::uint32 count() const;
   inline void set_count(::google::protobuf::uint32 value);
   
-  // repeated .KemyBuffers.MemoryRange.Array arrs = 14;
-  inline int arrs_size() const;
-  inline void clear_arrs();
-  static const int kArrsFieldNumber = 14;
-  inline const ::KemyBuffers::MemoryRange_Array& arrs(int index) const;
-  inline ::KemyBuffers::MemoryRange_Array* mutable_arrs(int index);
-  inline ::KemyBuffers::MemoryRange_Array* add_arrs();
-  inline const ::google::protobuf::RepeatedPtrField< ::KemyBuffers::MemoryRange_Array >&
-      arrs() const;
-  inline ::google::protobuf::RepeatedPtrField< ::KemyBuffers::MemoryRange_Array >*
-      mutable_arrs();
+  // repeated double medians = 14;
+  inline int medians_size() const;
+  inline void clear_medians();
+  static const int kMediansFieldNumber = 14;
+  inline double medians(int index) const;
+  inline void set_medians(int index, double value);
+  inline void add_medians(double value);
+  inline const ::google::protobuf::RepeatedField< double >&
+      medians() const;
+  inline ::google::protobuf::RepeatedField< double >*
+      mutable_medians();
   
   // @@protoc_insertion_point(class_scope:KemyBuffers.MemoryRange)
  private:
@@ -363,7 +275,7 @@ class MemoryRange : public ::google::protobuf::Message {
   
   ::KemyBuffers::Memory* lower_;
   ::KemyBuffers::Memory* upper_;
-  ::google::protobuf::RepeatedPtrField< ::KemyBuffers::MemoryRange_Array > arrs_;
+  ::google::protobuf::RepeatedField< double > medians_;
   ::google::protobuf::uint32 count_;
   
   mutable int _cached_size_;
@@ -1245,35 +1157,6 @@ inline ::KemyBuffers::OptimizationSettings* WhiskerTree::release_optimizer() {
 
 // -------------------------------------------------------------------
 
-// MemoryRange_Array
-
-// repeated double element = 10;
-inline int MemoryRange_Array::element_size() const {
-  return element_.size();
-}
-inline void MemoryRange_Array::clear_element() {
-  element_.Clear();
-}
-inline double MemoryRange_Array::element(int index) const {
-  return element_.Get(index);
-}
-inline void MemoryRange_Array::set_element(int index, double value) {
-  element_.Set(index, value);
-}
-inline void MemoryRange_Array::add_element(double value) {
-  element_.Add(value);
-}
-inline const ::google::protobuf::RepeatedField< double >&
-MemoryRange_Array::element() const {
-  return element_;
-}
-inline ::google::protobuf::RepeatedField< double >*
-MemoryRange_Array::mutable_element() {
-  return &element_;
-}
-
-// -------------------------------------------------------------------
-
 // MemoryRange
 
 // optional .KemyBuffers.Memory lower = 11;
@@ -1356,29 +1239,29 @@ inline void MemoryRange::set_count(::google::protobuf::uint32 value) {
   count_ = value;
 }
 
-// repeated .KemyBuffers.MemoryRange.Array arrs = 14;
-inline int MemoryRange::arrs_size() const {
-  return arrs_.size();
+// repeated double medians = 14;
+inline int MemoryRange::medians_size() const {
+  return medians_.size();
 }
-inline void MemoryRange::clear_arrs() {
-  arrs_.Clear();
+inline void MemoryRange::clear_medians() {
+  medians_.Clear();
 }
-inline const ::KemyBuffers::MemoryRange_Array& MemoryRange::arrs(int index) const {
-  return arrs_.Get(index);
+inline double MemoryRange::medians(int index) const {
+  return medians_.Get(index);
 }
-inline ::KemyBuffers::MemoryRange_Array* MemoryRange::mutable_arrs(int index) {
-  return arrs_.Mutable(index);
+inline void MemoryRange::set_medians(int index, double value) {
+  medians_.Set(index, value);
 }
-inline ::KemyBuffers::MemoryRange_Array* MemoryRange::add_arrs() {
-  return arrs_.Add();
+inline void MemoryRange::add_medians(double value) {
+  medians_.Add(value);
 }
-inline const ::google::protobuf::RepeatedPtrField< ::KemyBuffers::MemoryRange_Array >&
-MemoryRange::arrs() const {
-  return arrs_;
+inline const ::google::protobuf::RepeatedField< double >&
+MemoryRange::medians() const {
+  return medians_;
 }
-inline ::google::protobuf::RepeatedPtrField< ::KemyBuffers::MemoryRange_Array >*
-MemoryRange::mutable_arrs() {
-  return &arrs_;
+inline ::google::protobuf::RepeatedField< double >*
+MemoryRange::mutable_medians() {
+  return &medians_;
 }
 
 // -------------------------------------------------------------------
