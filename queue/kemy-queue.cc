@@ -107,7 +107,7 @@ void KemyQueue::update_enque(Packet* p ){
     _last_arrival = now;
     //update _ewma_qlen
     double lamda = exp(- interval/_min_arrive_interval * _K);
-    //qlen /= (qib_?100:1);
+    qlen /= (qib_?1000:1);
     _ewma_qlen = ( 1-lamda) * qlen + lamda * _ewma_qlen;
     _memory.update_ewma_qlen(_ewma_qlen);
 

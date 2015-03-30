@@ -39,7 +39,8 @@ void OnOffApp::turn_on() {
     current_flow_.flow_size = lround(ceil(stop_distribution_.sample()));
     current_flow_.flow_size = std::max(current_flow_.flow_size,(uint32_t) 5);
   } else if (ontype_ == TIME_BASED) {
-    current_flow_.on_duration = stop_distribution_.sample();
+    //current_flow_.on_duration = stop_distribution_.sample();
+    current_flow_.on_duration = std::max(0.1,stop_distribution_.sample());
   } else if (ontype_ == EMPIRICAL) {
     current_flow_.flow_size = lround(ceil(emp_stop_distribution_.sample()));
   }

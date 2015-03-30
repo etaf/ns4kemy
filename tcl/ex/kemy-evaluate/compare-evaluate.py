@@ -10,7 +10,7 @@ cwd = os.getcwd()
 
 parser = OptionParser()
 parser.add_option("--result", type="string",dest="result_dir",default="results/func")
-parser.add_option("-w","--whiskers",  type="string",dest="whiskers", default=os.path.join(cwd, "../../../queue/kemy-train/src/result/new.23.9"))
+parser.add_option("-w","--whiskers",  type="string",dest="whiskers", default=os.path.join(cwd, "../../../queue/kemy-train/src/result/Hope.7.1"))
 (config, args) = parser.parse_args()
 
 condidates = ["KEMY", "RED","PIE","CoDel"]
@@ -30,9 +30,9 @@ def heavy_eval():
     """heavy 50 TCP flows simulate 100s"""
     result_dir = os.path.join(RESULT_DIR, 'heavy')
     evaluate(result_dir, 50, 0)
-    #graph_base_simtime(result_dir, "Heavy: 50 TCP Flows")
+    graph_base_simtime(result_dir, "Heavy: 50 TCP Flows")
     #graph_box(result_dir, "Heavy: 50 TCP Flows")
-    graph_cdf(result_dir, "Heavy: 50 TCP Flows")
+    #graph_cdf(result_dir, "Heavy: 50 TCP Flows")
 
 def mix_eavl():
     """mix 5 TCP + 2 UDP flows simulate 100s"""
@@ -82,17 +82,18 @@ def result_process(result_file):
     """awk process and graph"""
 
     # throughput
-    subprocess.call(["awk -f ./awks/throughput.awk " + result_file+" >"  + result_file+".throughput" ], shell=True)
+    subprocess.call(["awk -f ./awks/inst_throughput.awk " + result_file+" >"  + result_file+".throughput" ], shell=True)
     # delay
-    subprocess.call(["awk -f ./awks/delay.awk " + result_file+" >"  + result_file+".delay" ], shell=True)
+    subprocess.call(["awk -f ./awks/insta_delay.awk " + result_file+" >"  + result_file+".delay" ], shell=True)
     # drop_rate
-    subprocess.call(["awk -f ./awks/drop_rate.awk " + result_file+" >"  + result_file+".drop_rate" ], shell=True)
+    #subprocess.call(["awk -f ./awks/drop_rate.awk " + result_file+" >"  + result_file+".drop_rate" ], shell=True)
 
 
 def graph_base_simtime(result_dir, graph_title):
     """graph base simulation time"""
     #graph x:simulation time, y: metric
-    metrics = ['throughput', 'delay', 'drop_rate']
+    #metrics = ['throughput', 'delay', 'drop_rate']
+    metrics = ['throughput', 'delay']
     ylabels = {}
     ylabels['throughput'] = 'Throughput [Mbps]'
     ylabels['delay'] = 'Queueing Delay [msec]'
@@ -156,9 +157,7 @@ def eval_dynamic_bw():
 
     child_ps = []
     for condidate in condidates:
-        for bw in bws:
-            tcl_args = ['./run-simulation.tcl', \
-                                          conffile,\
+        for bw in bws: tcl_args = ['./run-simulation.tcl', conffile,\
                                           '-nTCPsrc', 16,\
                                           '-tcp_app', 'Application/OnOff',\
                                           '-nUDPsrc', 0,\
@@ -168,18 +167,15 @@ def eval_dynamic_bw():
                                           '-qtr', result_dir+"/"+condidate + "-bw-"+bw, \
                                           #'-nam', condidate+'.nam',\
                                           ]
-            child_ps.append(subprocess.Popen(tcl_args))
 
 
-    for child_p in child_ps:
-        child_p.wait()
 
-    for condidate in condidates:
-        for bw in bws:
-            result_process(result_dir+"/"+condidate + "-bw-"+bw)
+
+
+
 
 if __name__ == '__main__':
     #light_eval()
-    #heavy_eval()
+    heavy_eval()
     #mix_eavl()
-    eval_dynamic_bw()
+    #eval_dynamic_bw()

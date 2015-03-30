@@ -83,17 +83,11 @@ proc create-sources-destinations {} {
         set tcpsrc [lindex $tp($i) 0]
         set tcpsink [lindex $tp($i) 1]
 
-    	$tcpsrc set fid_ 0
+    	$tcpsrc set fid_ [expr $i%256]
         $tcpsrc set packetSize_ $opt(pktsize)
-        $tcpsrc set syn_ 0
+        $tcpsrc set window_ $opt(rcvwin)
+        #$tcpsrc set syn_ 0
         #$tcpsrc set delay_growth_ 0
-        #if { [info exists opt(tr)] } {
-            #$tcpsrc trace cwnd_
-            #$tcpsrc trace rtt_
-            #$tcpsrc trace maxseq_
-            #$tcpsrc trace ack_
-            #$tcpsrc attach $f
-        #}
         set app_src($i) [new Application/OnOff $opt(ontype) $i $opt(pktsize) $opt(hdrsize) $opt(run) $opt(onavg) $opt(offavg) $tcpsrc 1]
         $app_src($i) attach-agent $tcpsrc
     }

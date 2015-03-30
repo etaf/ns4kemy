@@ -5,7 +5,6 @@
 BEGIN{
     cnt = 0
     start_time = -1
-    pkt_sum[0] = 0
 }
 {
     event = $1
