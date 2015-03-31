@@ -125,7 +125,7 @@ int main(int argc, char** args)
         ss>>tmp>>tmp;
         ss>>sender_id;
         _utility+=log2(tp)-log2(del);
-        printf("throughput:%lf\tdelay:%lf\ton:%lf\tacks:%d\tinorder:%d\tid:%d\n",tp,del,on_time,acks,inorder,sender_id);
+        printf("throughput:%f\tdelay:%f\ton:%f\tacks:%d\tinorder:%d\tid:%d\n",tp,del,on_time,acks,inorder,sender_id);
         ++cnt;
     }
     if(cnt){
@@ -138,7 +138,7 @@ int main(int argc, char** args)
         perror("error awk");
         return 1;
     }
-    printf("utility: %.2lf\n",_utility);
+    printf("utility: %.2f\n",_utility);
 /*    if(chdir(current_dir) == -1){*/
         //perror("change  directory to tcl error");
         //exit(1);
