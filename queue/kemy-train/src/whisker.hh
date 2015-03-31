@@ -13,7 +13,7 @@ private:
 
     int _drop_f;
     MemoryRange _domain;
-    bool _improved;
+    //bool _improved;
 public:
   Whisker( const Whisker & other );
   Whisker( const int s_drop_f, const MemoryRange & s_domain );
@@ -29,8 +29,8 @@ public:
   const unsigned int & generation( void ) const { return _generation; }
   bool drop_f()const{return _drop_f;}
 
-  void set_improved(bool improved){ _improved = improved;}
-  bool improved()const{return _improved;}
+  //void set_improved(bool improved){ _improved = improved;}
+  //bool improved()const{return _improved;}
 
   const MemoryRange & domain( void ) const { return _domain; }
 

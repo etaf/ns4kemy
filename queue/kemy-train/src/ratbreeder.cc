@@ -41,7 +41,7 @@ Evaluator::Outcome RatBreeder::improve( WhiskerTree & whiskers )
   WhiskerTree input_whiskertree( whiskers );
   /* evaluate the whiskers we have */
   whiskers.reset_generation();
-  whiskers.reset_improved();
+  //whiskers.reset_improved();
   unsigned int generation = 0;
 
   while ( generation < 5 ) {
@@ -74,7 +74,7 @@ Evaluator::Outcome RatBreeder::improve( WhiskerTree & whiskers )
       } else {
 	cerr << "Score jumps from " << score_to_beat << " to " << new_score << endl;
 	score_to_beat = new_score;
-    whisker_to_improve.set_improved(true);
+    //whisker_to_improve.set_improved(true);
       }
     }
 

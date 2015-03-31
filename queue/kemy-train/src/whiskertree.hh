@@ -33,7 +33,7 @@ public:
   void reset_counts( void );
   void promote( const unsigned int generation );
   void reset_generation( void );
-  void reset_improved(void);
+  //void reset_improved(void);
   std::string str( void ) const;
   std::string str( const unsigned int total ) const;
   unsigned int total_whisker_queries( void ) const;

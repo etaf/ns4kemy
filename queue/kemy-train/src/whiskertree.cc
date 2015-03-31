@@ -96,29 +96,29 @@ const Whisker * WhiskerTree::most_used( const unsigned int max_generation ) cons
   unsigned int count_max = 0;
   const Whisker * ret( nullptr );
 
-/*  for ( auto &x : _children ) {*/
-    //const Whisker * candidate( x.most_used( max_generation ) );
-    //if ( candidate
-	 //&& (candidate->generation() <= max_generation)
-	 //&& (candidate->count() >= count_max) ) {
-      //ret = candidate;
-      //count_max = candidate->count();
-    //}
-  /*}*/
   for ( auto &x : _children ) {
     const Whisker * candidate( x.most_used( max_generation ) );
-    if ( candidate && (candidate->generation() <= max_generation)){
-        //priority: improved > count
-        if( (!ret) ||
-            ( (ret->improved() == false) && (candidate->improved() || candidate->count() >=count_max)) ||
-            ( ret->improved() && candidate->improved() && candidate->count() >= count_max)
-
-          ){
-            ret = candidate;
-            count_max = candidate->count();
-        }
+    if ( candidate
+     && (candidate->generation() <= max_generation)
+     && (candidate->count() >= count_max) ) {
+      ret = candidate;
+      count_max = candidate->count();
     }
   }
+/*  for ( auto &x : _children ) {*/
+    //const Whisker * candidate( x.most_used( max_generation ) );
+    //if ( candidate && (candidate->generation() <= max_generation)){
+        ////priority: improved > count
+        //if( (!ret) ||
+            //( (ret->improved() == false) && (candidate->improved() || candidate->count() >=count_max)) ||
+            //( ret->improved() && candidate->improved() && candidate->count() >= count_max)
+
+          //){
+            //ret = candidate;
+            //count_max = candidate->count();
+        //}
+    //}
+  /*}*/
 
   return ret;
 }
@@ -136,16 +136,16 @@ void WhiskerTree::reset_generation( void )
   }
 }
 
-void WhiskerTree::reset_improved( void )
-{
-  if ( is_leaf() ) {
-    _leaf.front().set_improved( false );
-  } else {
-    for ( auto &x : _children ) {
-      x.reset_improved();
-    }
-  }
-}
+/*void WhiskerTree::reset_improved( void )*/
+//{
+  //if ( is_leaf() ) {
+    //_leaf.front().set_improved( false );
+  //} else {
+    //for ( auto &x : _children ) {
+      //x.reset_improved();
+    //}
+  //}
+/*}*/
 void WhiskerTree::promote( const unsigned int generation )
 {
   if ( is_leaf() ) {

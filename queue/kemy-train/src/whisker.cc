@@ -21,16 +21,16 @@ vector< Whisker > Whisker::bisect( void ) const
 Whisker::Whisker( const int s_drop_f, const MemoryRange & s_domain )
   : _generation( 0 ),
     _drop_f( s_drop_f ),
-    _domain( s_domain ),
-    _improved(false)
+    _domain( s_domain )
+    //_improved(false)
 {
 }
 
 Whisker::Whisker( const Whisker & other )
   : _generation( other._generation ),
     _drop_f( other._drop_f ),
-    _domain( other._domain ),
-    _improved(other._improved)
+    _domain( other._domain )
+    //_improved(other._improved)
 {
 }
 
@@ -119,8 +119,8 @@ KemyBuffers::Whisker Whisker::DNA( void ) const
 Whisker::Whisker( const KemyBuffers::Whisker & dna )
   : _generation( dna.generation() ),
     _drop_f( dna.drop_f() ),
-    _domain( dna.domain() ),
-    _improved(false)
+    _domain( dna.domain() )
+    //_improved(false)
 {
 }
 
