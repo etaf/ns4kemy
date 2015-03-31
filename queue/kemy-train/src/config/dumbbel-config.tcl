@@ -13,18 +13,17 @@ set opt(gw) KEMY;            # queueing at bottleneck
 set opt(rcvwin) 65536
 # app parameters
 set opt(app) FTP/OnOffSender
-set opt(pktsize) 512;           # doesn't include proto headers (bytes)
-#set opt(pktsize) 1024;           # doesn't include proto headers (bytes)
-set opt(hdrsize) 50
+set opt(pktsize) 1000;           # doesn't include proto headers (bytes)
+set opt(hdrsize) 40
 
 # random on-off times for sources
 set opt(run) 1
 set opt(onrand) Exponential
 set opt(offrand) Exponential
 #set opt(onavg) 5.0;              # mean on and off time
-set opt(onavg) 200.0;              # mean on and off time ( x opt(pktsize)bytes)
+set opt(onavg) 100000.0;              # mean on and off time ( x opt(pktsize)bytes)
 #set opt(offavg) 0.2;             # mean on and off time (s)
-set opt(offavg) 1.2;             # mean on and off time (s)
+set opt(offavg) 2;             # mean on and off time (s)
 set opt(ontype) "bytes";         # valid options: "time", "bytes", and "flowcdf"
 #set opt(ontype) "time";         # valid options: "time", "bytes", and "flowcdf"
 

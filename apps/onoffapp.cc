@@ -81,8 +81,8 @@ void OnOffApp::turn_off(void) {
   state_ = OFF;
   total_on_time_ += (Scheduler::instance().clock() - laststart_);
 
-  double off_duration = start_distribution_.sample();
-  //double off_duration = std::max(0.1,start_distribution_.sample());
+  //double off_duration = start_distribution_.sample();
+  double off_duration = std::max(0.1,start_distribution_.sample());
   //fprintf(stderr, "%d, %f Turning off, turning on at %f\n", sender_id_, Scheduler::instance().clock(),
                   //Scheduler::instance().clock() + off_duration);
   

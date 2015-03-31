@@ -45,6 +45,7 @@ proc Getopt {} {
 proc create-dumbbell-topology {} {
     global ns opt node_array bt_aqm
 
+    Queue/KEMY set mean_pktsize_ [expr $opt(pktsize) + $opt(hdrsize)]
     #create bottle link node_array(0) -> node_array(1)
     set node_array(0) [$ns node]
     set node_array(1) [$ns node]
@@ -53,7 +54,6 @@ proc create-dumbbell-topology {} {
     $ns queue-limit $node_array(0) $node_array(1) 65536
     $ns queue-limit $node_array(1) $node_array(0) 65536
     set bt_aqm [[$ns link $node_array(0) $node_array(1)] queue]
-
     if { [info exists opt(qmon)] } {
 
         #puts "$opt(qmon)"

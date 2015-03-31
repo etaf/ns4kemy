@@ -18884,7 +18884,7 @@ Queue/dsRED set ecn_ 0\n\
 \n\
 Queue/XCP set tcp_xcp_on_ 0  ;\n\
 \n\
-Queue/KEMY set mean_pktsize_ 500\n\
+Queue/KEMY set mean_pktsize_ 1000\n\
 Queue/KEMY set queue_in_bytes_ true\n\
 \n\
 Queue/RED set bytes_ true ;		# default changed on 10/11/2004.\n\

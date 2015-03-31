@@ -119,7 +119,7 @@ Queue/dsRED set ecn_ 0
 # support only xcp flows; set to 1 when supporting both tcp and xcp flows; temporary fix for allocating link BW between xcp and tcp queues until dynamic queue weights come into effect. This fix should then go away
 Queue/XCP set tcp_xcp_on_ 0  ;
 
-Queue/KEMY set mean_pktsize_ 500
+Queue/KEMY set mean_pktsize_ 1000
 Queue/KEMY set queue_in_bytes_ true
 
 Queue/RED set bytes_ true ;		# default changed on 10/11/2004.

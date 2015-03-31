@@ -26,7 +26,7 @@ KemyQueue::KemyQueue() :
         _ewma_arrival_rate(0),
         _ewma_depart_rate(0),
         qib_(true),
-        _mean_pktsize(500),
+        _mean_pktsize(1000),
         _pkg_acc(0),
         _K(0.69)
         {
