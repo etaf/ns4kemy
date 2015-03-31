@@ -18,15 +18,17 @@ Evaluator::Evaluator( const ConfigRange & range )
     return;
   }
 
+  _configs.push_back( NetConfig().set_bottle_bw( range.bottle_bw.first ).set_bottle_single_delay( range.bottle_single_delay.first ).set_num_senders( range.max_senders ) );
   _configs.push_back( NetConfig().set_bottle_bw( range.bottle_bw.first ).set_bottle_single_delay( range.bottle_single_delay.second ).set_num_senders( range.max_senders ) );
   _configs.push_back( NetConfig().set_bottle_bw( range.bottle_bw.second ).set_bottle_single_delay( range.bottle_single_delay.first ).set_num_senders( range.max_senders ));
   _configs.push_back( NetConfig().set_bottle_bw( range.bottle_bw.second ).set_bottle_single_delay( range.bottle_single_delay.second ).set_num_senders( range.max_senders ));
-  for ( unsigned int i = (range.max_senders+1)/2; i <= range.max_senders; ++i)
-  {
-  _configs.push_back( NetConfig().set_bottle_bw( (range.bottle_bw.second + range.bottle_bw.second)/2 ).set_bottle_single_delay( (range.bottle_single_delay.first + range.bottle_single_delay.second)/2 ).set_num_senders(i) );
-  }
+/*  for ( unsigned int i = (range.max_senders+1)/3*2; i <= range.max_senders; ++i)*/
+  //{
+  //_configs.push_back( NetConfig().set_bottle_bw( (range.bottle_bw.second + range.bottle_bw.second)/2 ).set_bottle_single_delay( (range.bottle_single_delay.first + range.bottle_single_delay.second)/2 ).set_num_senders(i) );
+  /*}*/
   /* now load some random ones just for fun */
-  for ( int i = 0; i < 12; i++ ) {
+
+  for ( int i = 0; i < 16; i++ ) {
     boost::random::uniform_real_distribution<> link_speed( range.bottle_bw.first, range.bottle_bw.second );
     boost::random::uniform_real_distribution<> rtt( range.bottle_single_delay.first, range.bottle_single_delay.second );
     boost::random::uniform_int_distribution<> num_senders( 1, range.max_senders );

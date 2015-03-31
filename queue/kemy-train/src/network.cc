@@ -50,7 +50,7 @@ void Network::run_simulation(WhiskerTree & _whiskers, bool trace)
             _config._bottle_single_delay
             );
     if(trace){
-        strcat(buf," -trace4split");
+        strcat(buf," -trace4split true");
     }
     //puts(buf);
     int ret_code = system(buf);

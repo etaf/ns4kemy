@@ -53,6 +53,13 @@ proc create-dumbbell-topology {} {
         set f_qtr [open $opt(qtr) w]
         $ns trace-queue $node_array(0) $node_array(1) $f_qtr
     }
+    if { [info exists opt(qmon)] } {
+
+        set f_qmon [open $opt(qmon) w]
+        set qmon [$ns monitor-queue $node_array(0) $node_array(1) $f_qmon 0.1]
+        [$ns link $node_array(0) $node_array(1)] queue-sample-timeout
+    }
+
     if { [info exists opt(trace4split)] } {
         $bt_aqm trace4split
     }
@@ -62,6 +69,12 @@ proc create-dumbbell-topology {} {
         set node_array([expr $i+$i+1]) [$ns node]
         $ns duplex-link $node_array([expr $i+$i]) $node_array(0) 1000Mb 1ms DropTail
         $ns duplex-link $node_array([expr $i+$i+1]) $node_array(1) 1000Mb 1ms DropTail
+
+        $ns queue-limit $node_array([expr $i+$i]) $node_array(0) 65536
+        $ns queue-limit $node_array(0) $node_array([expr $i+$i]) 65536
+        $ns queue-limit $node_array([expr $i+$i+1]) $node_array(1) 65536
+        $ns queue-limit $node_array(1) $node_array([expr $i+$i+1]) 65536
+
     }
 }
 
@@ -77,10 +90,12 @@ proc create-sources-destinations {} {
         set tcpsrc [lindex $tp($i) 0]
         set tcpsink [lindex $tp($i) 1]
 
-    	$tcpsrc set fid_ 0
+
+    	$tcpsrc set fid_ [expr $i%256]
         $tcpsrc set packetSize_ $opt(pktsize)
-        #$tcpsrc set syn_ 0
-        #$tcpsrc set delay_growth_ 0
+        $tcpsrc set window_ $opt(rcvwin)
+        $tcpsrc set syn_ 0
+        $tcpsrc set delay_growth_ 0
         set app_src($i) [new $opt(tcp_app) ]
         $app_src($i) attach-agent $tcpsrc
         $ns at 0.1 "$app_src($i) start"
@@ -93,7 +108,7 @@ proc create-sources-destinations {} {
         set udpsrc [lindex $tp_udp($i) 0]
         set udpnull [lindex $tp_udp($i) 1]
 
-        $udpsrc set fid_ 0
+        $udpsrc set fid_ [expr $i%256]
         set app_udp_src($i) [new Application/Traffic/CBR]
         $app_udp_src($i) attach-agent $udpsrc
         $app_udp_src($i) set packetSize_ $opt(pktsize)
@@ -121,6 +136,10 @@ proc finish {} {
     if { [info exists f_nam] } {
         close $f_nam
     }
+    if { [info exists f_qmon]} {
+        close $f_qmon
+    }
+
     exit 0
 }
 ## MAIN ##

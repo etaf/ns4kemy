@@ -166,6 +166,10 @@ bool WhiskerTree::replace( const Whisker & w )
   }
 
   if ( is_leaf() ) {
+      if(!(w.domain() == _leaf.front().domain()))
+      {
+          printf("\n============\n%s\n===============\n%s\n===============\n%s\n",w.domain().str().c_str(), _leaf.front().domain().str().c_str(), w.domain().range_median().str().c_str());
+      }
     assert( w.domain() == _leaf.front().domain() );
     _leaf.front() = w;
     return true;

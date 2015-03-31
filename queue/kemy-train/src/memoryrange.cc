@@ -31,6 +31,11 @@ std::vector< MemoryRange > MemoryRange::bisect( void ) const
 	assert( x._lower == ersatz_lower );
 	/* cannot double on this axis */
 	doubled.push_back( x );
+    printf("cannot split domain:%s\nmedians:",str().c_str());
+    for(size_t kk = 0; kk < Memory::datasize; ++kk){
+        printf("%lf ",_medians[kk]);
+    }
+    printf("\n");
       } else {
 	doubled.emplace_back( x._lower, ersatz_upper );
 	doubled.emplace_back( ersatz_lower, x._upper );
@@ -74,8 +79,8 @@ bool MemoryRange::operator==( const MemoryRange & other ) const
 
 std::string MemoryRange::str( void ) const
 {
-  char tmp[ 256 ];
-  snprintf( tmp, 256, "(lo=<%s>, hi=<%s>),count=%d,medians=%fx%fx%f\n",
+  char tmp[ 1024 ];
+  snprintf( tmp, 1024, "(\nlo=<%s>\nhi=<%s>\n),count=%d,medians=%fx%fx%f",
 	    _lower.str().c_str(),
 	    _upper.str().c_str() ,_count,_medians[0],_medians[1],_medians[2]);
   return tmp;
@@ -89,11 +94,15 @@ KemyBuffers::MemoryRange MemoryRange::DNA( void ) const
   ret.mutable_upper()->CopyFrom( _upper.DNA() );
   ret.set_count(_count);
   for(unsigned int i =0; i< Memory::datasize; ++i){
-      if(_arrs[i].size() > 0)
+      if(_arrs[i].size() > 0){
           _medians[i] = median( &(_arrs[ i ]) );
-      else
+      }
+      else{
+          //if(_count > 0) printf("not logged!!!\n");
           _medians[i] = 0;
+      }
   }
+
   for(auto x : _medians){
     ret.add_medians(x);
   }
@@ -117,6 +126,10 @@ MemoryRange::MemoryRange( const KemyBuffers::MemoryRange & dna )
     if(_medians.size() !=  Memory::datasize){
         _medians.resize(Memory::datasize);
     }
+    /*for(auto x : _medians){*/
+        //printf("%f ",x);
+    /*}*/
+    //printf("\n");
     //printf("reading count=%d\n",_count);
   //printf("reading arrs=%lu x %lu\n",_arrs.size(),_arrs[0].size());
 }
@@ -136,6 +149,7 @@ void MemoryRange::combine_other(const MemoryRange& other, bool trace){
     //printf("other_count=%d\n",other._count);
     //printf("combining %ldx%ld\n",other._arrs.size(),other._arrs.size()>0?other._arrs[0].size():0);
     if(trace){
+        assert(_medians.size() == Memory::datasize && other._medians.size() == Memory::datasize);
         for(size_t i =0; i<other._medians.size();++i)
         {
             _medians[i] = 0.5 * (_medians[i]  + other._medians[i]);

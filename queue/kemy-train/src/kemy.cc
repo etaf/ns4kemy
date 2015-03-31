@@ -43,7 +43,9 @@ int main( int argc, char *argv[] )
   ConfigRange configuration_range;
   configuration_range.bottle_bw = make_pair( 10, 20 ); // 10 Mbps to 20 Mbps
   configuration_range.bottle_single_delay = make_pair( 100, 200 ); // ms
-  configuration_range.max_senders = 32;
+  configuration_range.max_senders = 64;
+  configuration_range.min_senders = 24;
+
   //configuration_range.mean_on_duration = 5000;
   //configuration_range.mean_off_duration = 5000;
 
@@ -73,7 +75,7 @@ int main( int argc, char *argv[] )
   }
 
   //prepare the results fold
-  if(system("rm ../jrats -rf && mkdir ../jrats") !=0 ){
+  if(system("rm ../jrats -rf && mkdir ../jrats && rm core* -f") !=0 ){
       perror("rm ../jrats error");
       return 1;
   }

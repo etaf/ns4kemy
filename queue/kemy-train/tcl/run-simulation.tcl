@@ -56,7 +56,7 @@ proc create-dumbbell-topology {} {
 
     if { [info exists opt(qmon)] } {
 
-        puts "$opt(qmon)"
+        #puts "$opt(qmon)"
         set f_qmon [open $opt(qmon) w]
         set qmon [$ns monitor-queue $node_array(0) $node_array(1) $f_qmon 0.1]
         [$ns link $node_array(0) $node_array(1)] queue-sample-timeout
@@ -64,7 +64,7 @@ proc create-dumbbell-topology {} {
 
     if {[info exists opt(qtr)] } {
 
-        puts "$opt(qtr)"
+        #puts "$opt(qtr)"
         set f_qtr [open $opt(qtr) w]
         $ns trace-queue $node_array(0) $node_array(1) $f_qtr
     }
@@ -111,7 +111,7 @@ proc create-sources-destinations {} {
 
 proc finish {} {
     global ns opt app_src bt_aqm
-    global f_tr f_qmon qtr f_nam
+    global f_tr f_qmon f_qtr f_nam
     for {set i 1} {$i <= [array size app_src]} {incr i} {
       $app_src($i) stats
     }
@@ -122,6 +122,11 @@ proc finish {} {
     if { [info exists f_tr] } {
         close $f_tr
     }
+
+    if { [info exists f_qtr] } {
+        close $f_qtr
+    }
+
     if { [info exists f_nam] } {
         close $f_nam
     }

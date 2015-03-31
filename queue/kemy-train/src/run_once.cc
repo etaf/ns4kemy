@@ -13,7 +13,7 @@ int main(int argc, char** args)
         perror("args error");
         return 1;
     }
-    const unsigned int BUFFSIZE = 256;
+    const unsigned int BUFFSIZE = 1024;
     //write whiskers to file
     char whiskers_file[BUFFSIZE];
     char current_dir[BUFFSIZE];
@@ -25,10 +25,42 @@ int main(int argc, char** args)
     std::stringstream ss;
     sprintf(whiskers_file,"%s/%s", current_dir, args[1]);
 
+    int fd = open( whiskers_file, O_RDONLY );
+    if ( fd < 0 ) {
+        perror( "open" );
+        exit( 1 );
+    }
+
+    KemyBuffers::WhiskerTree tree;
+    if ( !tree.ParseFromFileDescriptor( fd ) ) {
+        fprintf( stderr, "Could not parse %s.\n", whiskers_file);
+        exit( 1 );
+    }
+    if ( close( fd ) < 0 ) {
+        perror( "close" );
+        exit( 1 );
+    }
+    auto _whiskers = WhiskerTree( tree );
+
+    _whiskers.reset_counts();
+
+    fd = open( whiskers_file, O_WRONLY | O_TRUNC | O_CREAT, S_IRUSR | S_IWUSR );
+    if ( not _whiskers.DNA().SerializeToFileDescriptor( fd ) ) {
+	fprintf( stderr, "Could not serialize kemyCC.\n" );
+	exit( 1 );
+      }
+      if ( close( fd ) < 0 ) {
+	perror( "close" );
+	exit( 1 );
+      }
+
+    //printf("whiskers:\n%s\n",_whiskers.str().c_str());
+
+    printf("================================================================\n");
     char buf[1024];
-    sprintf(buf,"WHISKERS=%s ./run-simulation.tcl  -nsrc 32 -bw 10 -delay 100  -qtr ./debug/out.qtr -qmon ./debug/out.qmon -trace4split",
+    sprintf(buf,"WHISKERS=%s ./run-simulation.tcl  -nsrc 32 -bw 10 -delay 100  -qtr ./debug/out.qtr -qmon ./debug/out.qmon -trace4split true",
             whiskers_file);
-    puts(buf);
+    //puts(buf);
     int ret_code = system(buf);
     if( ret_code !=0 ) {
         fprintf(stderr,"system return code:%d\n",ret_code);
@@ -37,25 +69,25 @@ int main(int argc, char** args)
 
     //read whiskers tree
     sprintf(buf,"%s.out",whiskers_file);
-    int fd = open( buf, O_RDONLY );
+    fd = open( buf, O_RDONLY );
     if ( fd < 0 ) {
         perror( "open" );
         exit( 1 );
     }
 
-    KemyBuffers::WhiskerTree tree;
-    if ( !tree.ParseFromFileDescriptor( fd ) ) {
+    KemyBuffers::WhiskerTree tree_new;
+    if ( !tree_new.ParseFromFileDescriptor( fd ) ) {
         fprintf( stderr, "Could not parse %s.\n", buf );
         exit( 1 );
     }
 
-    auto _whiskers = WhiskerTree( tree );
+    auto _whiskers_new = WhiskerTree( tree_new );
     if ( close( fd ) < 0 ) {
         perror( "close" );
         exit( 1 );
     }
 
-    printf("whiskers:\n%s\n",_whiskers.str().c_str());
+    printf("whiskers:\n%s\n",_whiskers_new.str().c_str());
 
     // read utility
     sprintf(buf,"%s.utility",whiskers_file);

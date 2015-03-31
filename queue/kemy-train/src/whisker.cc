@@ -100,8 +100,8 @@ void Whisker::promote( const unsigned int generation )
 
 string Whisker::str( const unsigned int total ) const
 {
-  char tmp[ 256 ];
-  snprintf( tmp, 256, "{%s} gen=%u usage=%.4f => (drop_f=%d)",
+  char tmp[ 1024 ];
+  snprintf( tmp, 1024, "{%s} gen=%u usage=%.4f => (drop_f=%d)\n",
 	    _domain.str().c_str(), _generation, double( _domain.count() ) / double( total ), _drop_f );
   return tmp;
 }

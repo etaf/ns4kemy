@@ -28,7 +28,8 @@ OnOffApp::OnOffApp(string str_ontype,
       on_timer_(this),
       off_timer_(this)
 {
-  on_timer_.sched(std::max(0.1,start_distribution_.sample()));
+  //on_timer_.sched(std::max(0.1,start_distribution_.sample()));
+  on_timer_.sched(start_distribution_.sample());
 }
 
 void OnOffApp::turn_on() {
@@ -46,13 +47,9 @@ void OnOffApp::turn_on() {
   laststart_ = Scheduler::instance().clock();
   state_ = ON;
 
-
   if (ontype_ == BYTE_BASED or ontype_ == EMPIRICAL) {
     //assert(current_flow_.flow_size > 0);
-    if(current_flow_.flow_size <1 ){
-        fprintf(stderr,"!!!\nflow_size=%d",current_flow_.flow_size);
-        exit(1);
-    }
+
     /* TODO: Handle the Vegas kludge somehow */
     tcp_handle_->advanceby(current_flow_.flow_size);
   } else if (ontype_ == TIME_BASED) {
@@ -84,7 +81,8 @@ void OnOffApp::turn_off(void) {
   state_ = OFF;
   total_on_time_ += (Scheduler::instance().clock() - laststart_);
 
-  double off_duration = std::max(0.1,start_distribution_.sample());
+  double off_duration = start_distribution_.sample();
+  //double off_duration = std::max(0.1,start_distribution_.sample());
   //fprintf(stderr, "%d, %f Turning off, turning on at %f\n", sender_id_, Scheduler::instance().clock(),
                   //Scheduler::instance().clock() + off_duration);
   
