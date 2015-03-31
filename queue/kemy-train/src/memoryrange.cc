@@ -33,7 +33,7 @@ std::vector< MemoryRange > MemoryRange::bisect( void ) const
 	doubled.push_back( x );
     printf("cannot split domain:%s\nmedians:",str().c_str());
     for(size_t kk = 0; kk < Memory::datasize; ++kk){
-        printf("%lf ",_medians[kk]);
+        printf("%f ",_medians[kk]);
     }
     printf("\n");
       } else {
