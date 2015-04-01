@@ -13,21 +13,24 @@ std::vector< MemoryRange > MemoryRange::bisect( void ) const
 {
     std::vector< MemoryRange > ret { *this };
 
-    double tmp_sum = 0;
-    for(auto tmp : _medians){
-        tmp_sum += tmp;
-    }
-    assert(tmp_sum > 0);
-  /* bisect in each axis */
+      /* bisect in each axis */
   for ( unsigned int i = 0; i < Memory::datasize; i++ ) {
       std::vector< MemoryRange > doubled;
     for ( const auto &x : ret ) {
+        if(!(_medians[i] > x._lower.field(i) && _medians[i] < x._upper.field(i)) ){
+            printf("!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n medians[%d] = %f\n!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n",i, _medians[i]);
+            printf("!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n lower(%d) = %f\n!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n", i, x._lower.field(i));
+            printf("!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n upper(%d) = %f\n!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n", i, x._upper.field(i));
+        }
+        assert(_medians[i] > x._lower.field(i) && _medians[i] < x._upper.field(i) );
+
       auto ersatz_lower( x._lower ), ersatz_upper( x._upper );
       //ersatz_lower.mutable_field( i ) = ersatz_upper.mutable_field( i ) = median( &(_arrs[ i ]) );
       ersatz_lower.mutable_field( i ) = ersatz_upper.mutable_field( i ) = _medians[i];
 
       if ( x._lower == ersatz_upper ) {
 	/* try range midpoint instead */
+          printf("try range midpoint instead\n");
 	ersatz_lower.mutable_field( i ) = ersatz_upper.mutable_field( i ) = (x._lower.field( i ) + x._upper.field( i )) / 2;
       }
 
@@ -104,7 +107,7 @@ KemyBuffers::MemoryRange MemoryRange::DNA( void ) const
       }
       else{
           //if(_count > 0) printf("not logged!!!\n");
-          _medians[i] = 0;
+          _medians[i] = -1;
       }
   }
 

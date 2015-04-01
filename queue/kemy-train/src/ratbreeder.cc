@@ -20,7 +20,7 @@ void RatBreeder::apply_best_split( WhiskerTree & whiskers, const unsigned int ge
     WhiskerTree bisected_whisker( *my_whisker, true );
 
     if ( bisected_whisker.num_children() == 1 ) {
-      //      printf( "Got unbisectable whisker! %s\n", my_whisker->str().c_str() );
+            printf( "Got unbisectable whisker! %s\n", my_whisker->str().c_str() );
       auto mutable_whisker( *my_whisker );
       mutable_whisker.promote( generation + 1 );
       assert( outcome.used_whiskers.replace( mutable_whisker ) );
@@ -41,7 +41,6 @@ Evaluator::Outcome RatBreeder::improve( WhiskerTree & whiskers )
   WhiskerTree input_whiskertree( whiskers );
   /* evaluate the whiskers we have */
   whiskers.reset_generation();
-  //whiskers.reset_improved();
   unsigned int generation = 0;
 
   while ( generation < 5 ) {
@@ -74,7 +73,6 @@ Evaluator::Outcome RatBreeder::improve( WhiskerTree & whiskers )
       } else {
 	cerr << "Score jumps from " << score_to_beat << " to " << new_score << endl;
 	score_to_beat = new_score;
-    //whisker_to_improve.set_improved(true);
       }
     }
 
@@ -116,7 +114,7 @@ double WhiskerImprover::improve( Whisker & whisker_to_improve )
 {
   auto replacements( whisker_to_improve.next_generation() );
 
-  vector< pair< const Whisker &, future< pair< bool, double > > > > scores;
+  //vector< pair< const Whisker &, future< pair< bool, double > > > > scores;
 
   /* find best replacement */
 /*  for ( const auto & test_replacement : replacements ) {*/
@@ -140,13 +138,21 @@ double WhiskerImprover::improve( Whisker & whisker_to_improve )
   /*}*/
 
   for (const auto & test_replacement : replacements ){
+      double score;
+    if ( eval_cache_.find( test_replacement ) == eval_cache_.end() ) {
       WhiskerTree replaced_whiskertree( rat_ );
       replaced_whiskertree.replace( test_replacement );
-      auto outcome = eval_.score(replaced_whiskertree);
-      if( outcome.score > score_to_beat_){
-          score_to_beat_ = outcome.score;
-          whisker_to_improve = test_replacement;
-      }
+      score = eval_.score(replaced_whiskertree).score;
+      eval_cache_.insert(make_pair(test_replacement, score));
+    }else{
+        score = eval_cache_.at(test_replacement);
+    }
+
+    if( score > score_to_beat_){
+        score_to_beat_ = score;
+        whisker_to_improve = test_replacement;
+    }
+
   }
 
 /*  [> find the best one <]*/

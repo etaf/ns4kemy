@@ -14,7 +14,7 @@ set opt(rcvwin) 65536
 # app parameters
 set opt(app) FTP/OnOffSender
 set opt(pktsize) 1000;           # doesn't include proto headers (bytes)
-set opt(hdrsize) 40
+set opt(hdrsize) 50
 
 # random on-off times for sources
 set opt(run) 1
