@@ -101,7 +101,7 @@ public:
 
   static const OptimizationSettings & get_optimizer( void ) {
     static OptimizationSettings default_settings {
-      { 0,  1, -1,1, 1, 0 }, /* drop_f */
+      { 0,  1, -1,1, 1, 1 }, /* drop_f */
     };
     return default_settings;
   }
