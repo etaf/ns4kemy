@@ -13,6 +13,11 @@ std::vector< MemoryRange > MemoryRange::bisect( void ) const
 {
     std::vector< MemoryRange > ret { *this };
 
+    double tmp_sum = 0;
+    for(auto tmp : _medians){
+        tmp_sum += tmp;
+    }
+    assert(tmp_sum > 0);
   /* bisect in each axis */
   for ( unsigned int i = 0; i < Memory::datasize; i++ ) {
       std::vector< MemoryRange > doubled;
