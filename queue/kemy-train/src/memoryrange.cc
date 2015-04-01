@@ -2,7 +2,6 @@
 #include<algorithm>
 #include "memoryrange.hh"
 #include<iostream>
-//using namespace boost::accumulators;
 
 double MemoryRange::median(std::vector<double> * vs) const{
     int n = vs->size()/2;
@@ -107,7 +106,7 @@ KemyBuffers::MemoryRange MemoryRange::DNA( void ) const
       }
       else{
           //if(_count > 0) printf("not logged!!!\n");
-          _medians[i] = -1;
+          _medians[i] = -100000000;
       }
   }
 
@@ -160,7 +159,12 @@ void MemoryRange::combine_other(const MemoryRange& other, bool trace){
         assert(_medians.size() == Memory::datasize && other._medians.size() == Memory::datasize);
         for(size_t i =0; i<other._medians.size();++i)
         {
-            _medians[i] = 0.5 * (_medians[i]  + other._medians[i]);
+            if(other._medians[i] > 0){
+                if(_medians[i] > 0)
+                    _medians[i] = 0.5 * (_medians[i]  + other._medians[i]);
+                else
+                    _medians[i] = other._medians[i];
+            }
         }
     }
 }

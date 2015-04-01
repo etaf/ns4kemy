@@ -86,13 +86,6 @@ int main( int argc, char *argv[] )
 
     printf( "whiskers: %s\n", whiskers.str().c_str() );
 
-/*    for ( auto &run : outcome.throughputs_delays ) {*/
-      //printf( "===\nconfig: %s\n", run.first.str().c_str() );
-      //for ( auto &x : run.second ) {
-	//printf( "sender: [tp=%f, del=%f]\n", x.first / run.first.link_ppt, x.second / run.first.delay );
-      //}
-    //}
-
     if ( !output_filename.empty() ) {
       char of[ 128 ];
       snprintf( of, 128, "%s.%d", output_filename.c_str(), run );
