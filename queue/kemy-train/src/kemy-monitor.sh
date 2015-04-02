@@ -11,11 +11,12 @@ ${monitor_obj}
 while :
 do
     cnt=`ps aux | grep "$monitor_obj" | wc -l`
+    echo $cnt
     if [ "$cnt" -lt 4 ]; then
         #"stoped"
         echo "stoped"
         latest_of=`ls -t result | head -n 1`
-        monitor_obj="./kemy if=result/$latest_of of=result/$latest_of"
+        monitor_obj="./kemy if=result/${latest_of} of=result/${latest_of}"
         echo $monitor_obj
         ./kemy if=result/$latest_of of=result/$latest_of
     fi

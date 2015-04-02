@@ -10,12 +10,13 @@ cwd = os.getcwd()
 
 parser = OptionParser()
 parser.add_option("--result", type="string",dest="result_dir",default="results/func")
-parser.add_option("-w","--whiskers",  type="string",dest="whiskers", default=os.path.join(cwd, "/home/lxa/D.6.1"))
+parser.add_option("-w","--whiskers",  type="string",dest="whiskers", default=os.path.join(cwd,"../../../queue/kemy-train/src/result/E.10"))
 (config, args) = parser.parse_args()
 
-condidates = ["KEMY", "RED","PIE","CoDel"]
+#condidates = ["KEMY", "RED","PIE","CoDel"]
+condidates = ["KEMY", "RED"]
 
-conffile = "./config/func_eval.tcl"
+conffile = "./config/func-eval.tcl"
 
 RESULT_DIR = os.path.join(cwd, config.result_dir)
 os.environ['WHISKERS'] = config.whiskers
@@ -25,6 +26,7 @@ def light_eval():
     """light 5 TCP flows simulate 100s"""
     result_dir = os.path.join(RESULT_DIR, 'light')
     evaluate(result_dir, 5, 0)
+    graph_base_simtime(result_dir, "Heavy: 50 TCP Flows")
 
 def heavy_eval():
     """heavy 50 TCP flows simulate 100s"""
@@ -41,7 +43,7 @@ def mix_eavl():
     graph_base_simtime(result_dir, "Mixture: 5 TCP + 2 UDP Flows")
 
 def evaluate(result_dir, ntcpsrc, nudpsrc):
-    """evaluate an AQM by run run-simulation.tcl """
+    """evaluate an AQM by run run-test.tcl """
     if  os.path.exists(result_dir):
         while True:
             ret = raw_input("Results already existed, remove and continue ? y/n\t")
@@ -56,7 +58,7 @@ def evaluate(result_dir, ntcpsrc, nudpsrc):
 
     child_ps = []
     for condidate in condidates:
-        tcl_args = ['./run-simulation.tcl', \
+        tcl_args = ['./run-test.tcl', \
                                           conffile,\
                                           '-nTCPsrc', str(ntcpsrc),\
                                           '-tcp_app', 'Application/FTP',\
@@ -157,7 +159,7 @@ def eval_dynamic_bw():
 
     child_ps = []
     for condidate in condidates:
-        for bw in bws: tcl_args = ['./run-simulation.tcl', conffile,\
+        for bw in bws: tcl_args = ['./run-test.tcl', conffile,\
                                           '-nTCPsrc', 16,\
                                           '-tcp_app', 'Application/OnOff',\
                                           '-nUDPsrc', 0,\
@@ -175,7 +177,7 @@ def eval_dynamic_bw():
 
 
 if __name__ == '__main__':
-    #light_eval()
+    light_eval()
     heavy_eval()
-    #mix_eavl()
+    mix_eavl()
     #eval_dynamic_bw()
