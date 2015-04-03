@@ -14,7 +14,7 @@ parser.add_option("-w","--whiskers",  type="string",dest="whiskers", default=os.
 (config, args) = parser.parse_args()
 
 #condidates = ["KEMY", "RED","PIE","CoDel"]
-condidates = ["KEMY", "RED"]
+condidates = ["KEMY", "CoDel", "PIE"]
 
 conffile = "./config/func-eval.tcl"
 
@@ -26,15 +26,15 @@ def light_eval():
     """light 5 TCP flows simulate 100s"""
     result_dir = os.path.join(RESULT_DIR, 'light')
     evaluate(result_dir, 5, 0)
-    graph_base_simtime(result_dir, "Heavy: 50 TCP Flows")
+    graph_base_simtime(result_dir, "light: 5 TCP Flows")
 
 def heavy_eval():
     """heavy 50 TCP flows simulate 100s"""
     result_dir = os.path.join(RESULT_DIR, 'heavy')
     evaluate(result_dir, 50, 0)
     graph_base_simtime(result_dir, "Heavy: 50 TCP Flows")
-    #graph_box(result_dir, "Heavy: 50 TCP Flows")
-    #graph_cdf(result_dir, "Heavy: 50 TCP Flows")
+    graph_box(result_dir, "Heavy: 50 TCP Flows")
+    graph_cdf(result_dir, "Heavy: 50 TCP Flows")
 
 def mix_eavl():
     """mix 5 TCP + 2 UDP flows simulate 100s"""
@@ -130,7 +130,7 @@ def graph_box(result_dir, graph_title):
         plt.savefig(os.path.join(result_dir, metric+"-box.svg"))
         plt.show()
 def graph_cdf(result_dir, graph_title):
-    metrics = ['throughput', 'delay']
+    metrics = ['delay','throughput']
     for metric in metrics:
         plt.title(graph_title)
         plt.grid(True)
@@ -139,7 +139,7 @@ def graph_cdf(result_dir, graph_title):
             data = np.loadtxt(result_file, unpack = True)
             sorted_data = np.sort(data[1])
             yvals = np.arange(len(sorted_data)) / float(len(sorted_data))
-            line, = plt.plot(data[1],yvals,label = condidate)
+            line, = plt.plot(sorted_data, yvals,label = condidate)
         plt.legend()
         plt.savefig(os.path.join(result_dir, metric+"-cdf.svg"))
         plt.show()
@@ -178,6 +178,6 @@ def eval_dynamic_bw():
 
 if __name__ == '__main__':
     light_eval()
-    heavy_eval()
-    mix_eavl()
+    #heavy_eval()
+    #mix_eavl()
     #eval_dynamic_bw()

@@ -18,7 +18,7 @@ void StatCollector::add_sample(Packet* pkt) {
   /* Assert that packet is an ACK */
   assert (cmn_hdr->ptype() == PT_ACK);
 
-  /* Get size of packet, iff it's a new ack */
+  /* Get size of packet, if it's a new ack */
   int32_t current_ack = tcph->seqno();
   assert (current_ack >= last_ack_); /* ACKs are cumulative */
   if (current_ack > last_ack_) {

@@ -17,11 +17,13 @@ std::vector< MemoryRange > MemoryRange::bisect( void ) const
       std::vector< MemoryRange > doubled;
     for ( const auto &x : ret ) {
         if(!(_medians[i] > x._lower.field(i) && _medians[i] < x._upper.field(i)) ){
+
+            printf("!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n count = %d\n!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n",_count);
             printf("!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n medians[%d] = %f\n!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n",i, _medians[i]);
             printf("!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n lower(%d) = %f\n!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n", i, x._lower.field(i));
             printf("!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n upper(%d) = %f\n!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n", i, x._upper.field(i));
         }
-        assert(_medians[i] > x._lower.field(i) && _medians[i] < x._upper.field(i) );
+        assert(_medians[i] >= x._lower.field(i) && _medians[i] < x._upper.field(i) );
 
       auto ersatz_lower( x._lower ), ersatz_upper( x._upper );
       //ersatz_lower.mutable_field( i ) = ersatz_upper.mutable_field( i ) = median( &(_arrs[ i ]) );
@@ -132,6 +134,9 @@ MemoryRange::MemoryRange( const KemyBuffers::MemoryRange & dna )
     }
     if(_medians.size() !=  Memory::datasize){
         _medians.resize(Memory::datasize);
+        for(unsigned int i =0; i < Memory::datasize; ++i){
+          _medians[i] = -100000000;
+        }
     }
     /*for(auto x : _medians){*/
         //printf("%f ",x);

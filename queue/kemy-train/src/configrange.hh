@@ -8,8 +8,8 @@ class ConfigRange
 public:
   std::pair< double, double > bottle_bw { 1, 2 };
   std::pair< double, double > bottle_single_delay { 100, 200 };
-  unsigned int min_senders { 1 };
-  unsigned int max_senders { 16 };
+  unsigned int min_senders { 5 };
+  unsigned int max_senders { 32 };
   bool lo_only { false };
 
   KemyBuffers::ConfigRange DNA( void ) const;

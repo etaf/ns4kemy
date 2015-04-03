@@ -104,7 +104,7 @@ void Network::run_simulation(WhiskerTree & _whiskers, bool trace)
         }
         ss>>tmp;
         del = stod(tmp);
-        del/=1000;
+        del/=1100;
         _utility+=log2(tp)-log2(del);
         //_utility += tp - del/500;
         //std::cout<<tp<<" , "<<del/500<<std::endl;
