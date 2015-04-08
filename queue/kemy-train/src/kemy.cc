@@ -44,7 +44,7 @@ int main( int argc, char *argv[] )
   configuration_range.bottle_bw = make_pair( 10, 20 ); // 10 Mbps to 20 Mbps
   configuration_range.bottle_single_delay = make_pair( 100, 200 ); // ms
   configuration_range.max_senders = 50;
-  configuration_range.max_senders = 5;
+  configuration_range.min_senders = 5;
 
   //configuration_range.mean_on_duration = 5000;
   //configuration_range.mean_off_duration = 5000;
@@ -62,8 +62,8 @@ int main( int argc, char *argv[] )
   printf( "Optimizing for rtt_ms in [%f, %f]\n",
 	  configuration_range.bottle_single_delay.first,
 	  configuration_range.bottle_single_delay.second );
-  printf( "Optimizing for num_senders = 1-%d\n",
-	  configuration_range.max_senders );
+  printf( "Optimizing for num_senders = %d-%d\n",
+	  configuration_range.min_senders, configuration_range.max_senders );
 
   printf( "Initial rules (use if=FILENAME to read from disk): %s\n", whiskers.str().c_str() );
   printf( "#######################\n" );

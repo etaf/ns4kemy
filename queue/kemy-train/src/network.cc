@@ -84,7 +84,7 @@ void Network::run_simulation(WhiskerTree & _whiskers, bool trace)
     // read utility
     sprintf(buf,"%s.utility",whiskers_file);
     FILE* fp = fopen(buf,"r");
-    double tp,del;
+    double tp=0,del=0;
     _utility=0;
     int cnt = 0;
     while(fgets(buf,sizeof(buf),fp)){
@@ -96,23 +96,25 @@ void Network::run_simulation(WhiskerTree & _whiskers, bool trace)
             exit(1);
         }
         ss>>tmp;
-        tp = stod(tmp);
+        tp += stod(tmp);
         ss>>tmp;
         ss>>tmp;
         if(tmp!="del="){
             perror("read utility error");
         }
         ss>>tmp;
-        del = stod(tmp);
-        del/=1100;
-        _utility+=log2(tp)-log2(del);
+        del += stod(tmp);
         //_utility += tp - del/500;
         //std::cout<<tp<<" , "<<del/500<<std::endl;
         ++cnt;
     }
     if(cnt){
-        _utility/=cnt;
+        tp/=cnt;
+        del/=cnt;
+        del/=1800;
+        _utility = log2(tp/del);
     }
+    else _utility = -100000000;
     fclose(fp);
 
 /*    if(chdir(current_dir) == -1){*/

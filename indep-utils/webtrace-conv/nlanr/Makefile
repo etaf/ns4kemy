@@ -50,7 +50,7 @@ BINDEST = /usr/local/bin
 
 CC = g++
 INCLUDE = -I. -I../../.. -I/home/lxa/nkemy/ns4kemy/tclcl-1.20 -I/home/lxa/nkemy/ns4kemy/otcl-1.14 -I/home/lxa/nkemy/ns4kemy/include -I/home/lxa/nkemy/ns4kemy/include -I/home/lxa/nkemy/ns4kemy/include -I/usr/include/pcap
-CFLAGS = -O2 -Wall -Wno-write-strings -DCPP_NAMESPACE=std
+CFLAGS =  -Wall -Wno-write-strings -DCPP_NAMESPACE=std
 LDFLAGS = 
 LIBS = -L/home/lxa/nkemy/ns4kemy/lib -ltcl8.5  -lnsl -lpcap -ldl -lm 
 INSTALL = /usr/bin/install -c
