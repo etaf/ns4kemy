@@ -107,7 +107,6 @@ KemyBuffers::MemoryRange MemoryRange::DNA( void ) const
           _medians[i] = median( &(_arrs[ i ]) );
       }
       else{
-          //if(_count > 0) printf("not logged!!!\n");
           _medians[i] = -100000000;
       }
   }

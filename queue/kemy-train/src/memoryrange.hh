@@ -23,7 +23,7 @@ private:
   double median(  std::vector<double>* )const;
 public:
   MemoryRange( const Memory & s_lower, const Memory & s_upper )
-    : _lower( s_lower ), _upper( s_upper ), _arrs( Memory::datasize ), _count( 0 ), _medians(Memory::datasize)
+    : _lower( s_lower ), _upper( s_upper ), _arrs( Memory::datasize ), _count( 0 ), _medians(Memory::datasize,-10000000)
   {}
 
   std::vector< MemoryRange > bisect( void ) const;
@@ -33,7 +33,7 @@ public:
 
   void use( void ) const { _count++;}
   unsigned int count( void ) const { return _count; }
-  void reset_count( void ) const { _count = 0; _arrs.clear(); _arrs.resize(Memory::datasize); _medians.clear(); _medians.resize(Memory::datasize); }
+  void reset_count( void ) const { _count = 0; _arrs.clear(); _arrs.resize(Memory::datasize); _medians.clear(); _medians.resize(Memory::datasize,-10000000); }
   void combine_other(const MemoryRange& other, bool trace);
   void track( const Memory & query ) const;
 

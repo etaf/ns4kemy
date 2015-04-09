@@ -28,8 +28,7 @@ OnOffApp::OnOffApp(string str_ontype,
       on_timer_(this),
       off_timer_(this)
 {
-  //on_timer_.sched(std::max(0.1,start_distribution_.sample()));
-  on_timer_.sched(start_distribution_.sample());
+  on_timer_.sched(std::max(0.1,start_distribution_.sample()));
 }
 
 void OnOffApp::turn_on() {

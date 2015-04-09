@@ -178,6 +178,6 @@ def eval_dynamic_bw():
 
 if __name__ == '__main__':
     light_eval()
-    #heavy_eval()
-    #mix_eavl()
+    heavy_eval()
+    mix_eavl()
     #eval_dynamic_bw()

@@ -21,9 +21,9 @@ set opt(run) 1
 set opt(onrand) Exponential
 set opt(offrand) Exponential
 #set opt(onavg) 100000.0;              # mean on and off time ( x opt(pktsize)bytes)
-set opt(onavg) 20000.0;              # mean on and off time ( x opt(pktsize)bytes)
+set opt(onavg) 10000.0;              # mean on and off time ( x opt(pktsize)bytes)
 #set opt(offavg) 0.2;             # mean on and off time (s)
-set opt(offavg) 3;             # mean on and off time (s)
+set opt(offavg) 2;             # mean on and off time (s)
 set opt(ontype) "bytes";         # valid options: "time", "bytes", and "flowcdf"
 #set opt(ontype) "time";         # valid options: "time", "bytes", and "flowcdf"
 
