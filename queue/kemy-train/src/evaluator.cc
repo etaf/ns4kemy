@@ -35,7 +35,7 @@ Evaluator::Evaluator( const ConfigRange & range )
   /*}*/
   /* now load some random ones just for fun */
 
-  for ( int i = 0; i < 16; i++ ) {
+  for ( int i = 0; i < 12; i++ ) {
     boost::random::uniform_real_distribution<> link_speed( range.bottle_bw.first, range.bottle_bw.second );
     boost::random::uniform_real_distribution<> rtt( range.bottle_single_delay.first, range.bottle_single_delay.second );
     boost::random::uniform_int_distribution<> num_senders( 1, range.max_senders );

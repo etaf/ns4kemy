@@ -36,7 +36,7 @@ void OnOffApp::turn_on() {
   //fprintf(stderr, "%d, %f Turning on\n", sender_id_, Scheduler::instance().clock());
   if (ontype_ == BYTE_BASED) {
     current_flow_.flow_size = lround(ceil(stop_distribution_.sample()));
-    current_flow_.flow_size = std::max(current_flow_.flow_size,(uint32_t) 5);
+    //current_flow_.flow_size = std::max(current_flow_.flow_size,(uint32_t) 5);
   } else if (ontype_ == TIME_BASED) {
     //current_flow_.on_duration = stop_distribution_.sample();
     current_flow_.on_duration = std::max(1.0,stop_distribution_.sample());
@@ -52,6 +52,7 @@ void OnOffApp::turn_on() {
 
     /* TODO: Handle the Vegas kludge somehow */
     tcp_handle_->advanceby(current_flow_.flow_size);
+
   } else if (ontype_ == TIME_BASED) {
     tcp_handle_->send(-1);
     assert(off_timer_.status() == TIMER_IDLE);
@@ -68,7 +69,8 @@ void OnOffApp::resume(void) {
   /* If ontype is BYTE_BASED or EMPIRICAL, turn off */
   if (ontype_ == BYTE_BASED or ontype_ == EMPIRICAL) {
     //printf("%d sender is turning off\n",sender_id_);
-    turn_off();
+    //turn_off();
+    off_timer_.sched(0.1);
   }
 }
 
@@ -79,7 +81,7 @@ void OnOffApp::turn_off(void) {
   }
 
   state_ = OFF;
-  total_on_time_ += (Scheduler::instance().clock() - laststart_);
+  total_on_time_ += (Scheduler::instance().clock() - laststart_ - 0.1);
 
   //double off_duration = start_distribution_.sample();
   double off_duration = std::max(0.1,start_distribution_.sample());
@@ -88,9 +90,12 @@ void OnOffApp::turn_off(void) {
   
   /* Either on_timer_ is unscheduled (TIMER_IDLE) */
   /* Or we got here from on_timer_'s callback, start_send. This can happen only if pkts are sent out all at once */
-  assert(on_timer_.status() == TIMER_IDLE or
-        (on_timer_.status() == TimerHandler::TimerStatus::TIMER_HANDLING and Scheduler::instance().clock() == laststart_));
-  on_timer_.resched(off_duration);
+/*  assert(on_timer_.status() == TIMER_IDLE or*/
+        /*(on_timer_.status() == TimerHandler::TimerStatus::TIMER_HANDLING and Scheduler::instance().clock() == laststart_));*/
+  if(on_timer_.status() != TIMER_IDLE){
+      perror("on_timer_ is not idle before resched!");
+  }
+  on_timer_.sched(off_duration);
 }
 
 static class OnOffClass : public TclClass {
