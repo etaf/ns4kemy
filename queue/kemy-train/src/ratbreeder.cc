@@ -43,7 +43,7 @@ Evaluator::Outcome RatBreeder::improve( WhiskerTree & whiskers )
   whiskers.reset_generation();
   unsigned int generation = 0;
 
-  while ( generation < 5 ) {
+  while ( generation < 2 ) {
 
     const Evaluator eval( _range );
 

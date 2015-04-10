@@ -32,7 +32,7 @@ OnOffApp::OnOffApp(string str_ontype,
 }
 
 void OnOffApp::turn_on() {
-  //fprintf(stderr, "%d, %f Turning on\n", sender_id_, Scheduler::instance().clock());
+  fprintf(stderr, "%d, %f Turning on\n", sender_id_, Scheduler::instance().clock());
   if (ontype_ == BYTE_BASED) {
     current_flow_.flow_size = lround(ceil(stop_distribution_.sample()));
     //current_flow_.flow_size = std::max(current_flow_.flow_size,(uint32_t) 5);
@@ -84,8 +84,9 @@ void OnOffApp::turn_off(void) {
 
   //double off_duration = start_distribution_.sample();
   double off_duration = std::max(0.1,start_distribution_.sample());
-  //fprintf(stderr, "%d, %f Turning off, turning on at %f\n", sender_id_, Scheduler::instance().clock(),
-                  //Scheduler::instance().clock() + off_duration);
+  fprintf(stderr, "%d, %f Turning off,time used:%f\n next turning on at %f\n", sender_id_, Scheduler::instance().clock()-laststart_ -0.1 ,
+          Scheduler::instance().clock(),
+                  Scheduler::instance().clock() + off_duration);
   
   /* Either on_timer_ is unscheduled (TIMER_IDLE) */
   /* Or we got here from on_timer_'s callback, start_send. This can happen only if pkts are sent out all at once */
