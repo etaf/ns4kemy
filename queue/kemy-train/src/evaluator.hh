@@ -7,6 +7,7 @@
 #include "random.hh"
 #include "whiskertree.hh"
 #include "network.hh"
+#include "utility.hh"
 /*#include "problem.pb.h"*/
 /*#include "answer.pb.h"*/
 
@@ -16,11 +17,11 @@ public:
   class Outcome
   {
   public:
-    double score;
+    Utility score;
     //std::vector< std::pair< NetConfig, std::vector< std::pair< double, double > > > > throughputs_delays;
     WhiskerTree used_whiskers;
 
-    Outcome() : score( 0 ), used_whiskers() {}
+    Outcome() : score(), used_whiskers() {}
 
     //Outcome( const AnswerBuffers::Outcome & dna );
 

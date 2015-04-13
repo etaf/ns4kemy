@@ -6,7 +6,7 @@
 
 #include "configrange.hh"
 #include "evaluator.hh"
-
+#include "utility.hh"
 class WhiskerImprover
 {
 private:
@@ -14,13 +14,13 @@ private:
 
   WhiskerTree rat_;
 
-  std::unordered_map< Whisker, double, boost::hash< Whisker > > eval_cache_ {};
+  std::unordered_map< Whisker, Utility, boost::hash< Whisker > > eval_cache_ {};
 
-  double score_to_beat_;
+  Utility score_to_beat_;
 
 public:
-  WhiskerImprover( const Evaluator & evaluator, const WhiskerTree & rat, const double score_to_beat );
-  double improve( Whisker & whisker_to_improve );
+  WhiskerImprover( const Evaluator & evaluator, const WhiskerTree & rat, const Utility score_to_beat );
+  Utility improve( Whisker & whisker_to_improve );
 };
 
 class RatBreeder

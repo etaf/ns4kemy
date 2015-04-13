@@ -56,7 +56,7 @@ void StatCollector::output_stats(double on_duration, uint32_t flow_id,
   fprintf(fp,
           "tp= %f mbps, del= %f ms, on= %f secs, samples= %d , inorder= %d , sender_id= %d\n",
           (cumulative_pkts_ * 8.0 * payload_size)/ (1.0e6 * on_duration),
-          (num_samples_ == 0 ? std::numeric_limits<float>::max() :(cumulative_rtt_ * 1000.0) / num_samples_),
+          (num_samples_ == 0 ? std::numeric_limits<float>::max() :(cumulative_rtt_) / num_samples_),
           on_duration,
           num_samples_,
           cumulative_pkts_,flow_id);

@@ -5,6 +5,7 @@
 #include "whiskertree.hh"
 #include<string>
 #include<fcntl.h>
+#include "utility.hh"
 using namespace std;
 
 int main(int argc, char** args)
@@ -93,12 +94,13 @@ int main(int argc, char** args)
     sprintf(buf,"%s.utility",whiskers_file);
     FILE* fp = fopen(buf,"r");
     double tp,del;
-    double _utility=0;
+    Utility _utility;
     double on_time=0;
     int acks=0;
     int inorder=0;
     int  sender_id=0;
     int cnt = 0;
+    double sum_tp=0 , sum_del=0;
     while(fgets(buf,sizeof(buf),fp)){
         std::stringstream ss(buf);
         std::string tmp;
@@ -109,6 +111,7 @@ int main(int argc, char** args)
         }
         ss>>tmp;
         tp = stod(tmp);
+        sum_tp += tp;
         ss>>tmp;
         ss>>tmp;
         if(tmp!="del="){
@@ -116,6 +119,7 @@ int main(int argc, char** args)
         }
         ss>>tmp;
         del = stod(tmp);
+        sum_del += del;
         ss>>tmp>>tmp;
         ss>>on_time;
         ss>>tmp>>tmp;
@@ -124,13 +128,11 @@ int main(int argc, char** args)
         ss>>inorder;
         ss>>tmp>>tmp;
         ss>>sender_id;
-        del/=1000;
-        _utility+=log2(tp)-log2(del);
         printf("throughput:%f\tdelay:%f\ton:%f\tacks:%d\tinorder:%d\tid:%d\n",tp,del,on_time,acks,inorder,sender_id);
         ++cnt;
     }
     if(cnt){
-        _utility/=cnt;
+        _utility = Utility({sum_tp/cnt,-sum_del/cnt});
     }
     fclose(fp);
 
@@ -139,7 +141,7 @@ int main(int argc, char** args)
         perror("error awk");
         return 1;
     }
-    printf("utility: %.2f\n",_utility);
+    printf("utility: %s\n",_utility.str().c_str());
 /*    if(chdir(current_dir) == -1){*/
         //perror("change  directory to tcl error");
         //exit(1);

@@ -7,8 +7,10 @@
 #include <fcntl.h>
 
 #include "ratbreeder.hh"
+#include "utility.hh"
 
 using namespace std;
+
 
 int main( int argc, char *argv[] )
 {
@@ -82,7 +84,7 @@ int main( int argc, char *argv[] )
 
   while ( 1 ) {
     auto outcome = breeder.improve( whiskers );
-    printf( "run = %u, score = %f\n", run, outcome.score );
+    printf( "run = %u, score = %s\n", run, outcome.score.str().c_str() );
 
     printf( "whiskers: %s\n", whiskers.str().c_str() );
 

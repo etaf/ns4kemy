@@ -85,7 +85,6 @@ void Network::run_simulation(WhiskerTree & _whiskers, bool trace)
     sprintf(buf,"%s.utility",whiskers_file);
     FILE* fp = fopen(buf,"r");
     double tp=0,del=0;
-    _utility=0;
     int cnt = 0;
     while(fgets(buf,sizeof(buf),fp)){
         std::stringstream ss(buf);
@@ -104,17 +103,11 @@ void Network::run_simulation(WhiskerTree & _whiskers, bool trace)
         }
         ss>>tmp;
         del += stod(tmp);
-        //_utility += tp - del/500;
-        //std::cout<<tp<<" , "<<del/500<<std::endl;
         ++cnt;
     }
     if(cnt){
-        tp/=cnt;
-        del/=cnt;
-        del/=1800;
-        _utility = log2(tp/del);
+        _utility = Utility({tp/cnt,-del/cnt});
     }
-    else _utility = -100000000;
     fclose(fp);
 
 /*    if(chdir(current_dir) == -1){*/

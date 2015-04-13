@@ -135,7 +135,7 @@ Evaluator::Outcome Evaluator::score( WhiskerTree & run_whiskers,
 
  //printf("before:\t%s\n",the_outcome.used_whiskers.str().c_str());
 
-  std::vector<std::future<std::pair<WhiskerTree, double> > > fs;
+  std::vector<std::future<std::pair<WhiskerTree, Utility> > > fs;
   for (auto &x : configs){
         fs.emplace_back(std::async(std::launch::async, [] (NetConfig x_,WhiskerTree run_whiskers_,bool trace_){
                         Network network1( x_ );

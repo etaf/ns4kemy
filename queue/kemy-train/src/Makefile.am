@@ -21,7 +21,7 @@ common_source = evaluator.cc evaluator.hh                 \
 	memory.cc memory.hh memoryrange.cc memoryrange.hh              \
 	network.cc network.hh  poisson.hh                     \
 	random.cc random.hh            								   \
-	utility.hh whisker.cc whisker.hh whiskertree.cc whiskertree.hh \
+	utility.hh utility.cc whisker.cc whisker.hh whiskertree.cc whiskertree.hh \
 	configrange.hh configrange.cc
 
 kemy_SOURCES = $(common_source) kemy.cc ratbreeder.cc ratbreeder.hh
