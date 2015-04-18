@@ -14,7 +14,7 @@ class Utility
         bool improved (const Utility& other)const{
             double res = 0;
             for(unsigned int i=0;i<ws.size();++i){
-                res += ws[i] * (other.us[i] - us[i]) / fabs(us[i]);
+                res += ws[i] * (other.us[i] - us[i]) / fabs(us[i] + other.us[i]);
             }
             return res > 0;
         }

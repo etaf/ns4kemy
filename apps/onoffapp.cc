@@ -126,7 +126,20 @@ int OnOffApp::command(int argc, const char*const* argv) {
   if (strcmp(argv[1], "stats") == 0) {
     assert(++calls_ < 2);
     total_on_time_ += (state_ == OFF) ? 0 : (Scheduler::instance().clock() - laststart_);
-    stat_collector_.output_stats(total_on_time_, sender_id_, pkt_size_ + hdr_size_);
+
+    char buf[1024];
+    if(argc > 2){
+        strcpy(buf,argv[2]);
+    }
+    else{
+        sprintf(buf,"%s.utility",getenv("WHISKERS"));
+    }
+    FILE* fp = fopen(buf,"a");
+    if( fp == NULL ){
+        fprintf(stderr, "%s open error",buf);
+    }
+    stat_collector_.output_stats(fp, total_on_time_, sender_id_, pkt_size_ + hdr_size_);
+    fclose(fp);
     return TCL_OK;
   }
   return Application::command(argc, argv);
