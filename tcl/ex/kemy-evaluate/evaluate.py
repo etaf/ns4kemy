@@ -78,7 +78,7 @@ def onoff_eval(result_base):
         os.makedirs(result_dir)
     if do_eveal == True:
         for i in xrange(10):
-            evaluate(result_dir, "./config/func-eval.tcl", candidates, "Application/OnOff", 8, 0 )
+            evaluate(result_dir, "./config/func-eval.tcl", candidates, "Application/OnOff", 8, 0 ,i+1)
     for candidate in candidates:
         result_file = os.path.join(result_dir, candidate)
         subprocess.call(["awk -f ./awks/onoff_throughput.awk " + result_file+" >"  + result_file+".throughput" ], shell=True)
@@ -87,7 +87,7 @@ def onoff_eval(result_base):
     graph_box(result_dir,candidates, "")
     #graph_cdf(result_dir, "Heavy: 50 TCP Flows")
 
-def evaluate(result_dir, conffile, candidates, tcp_app, ntcpsrc, nudpsrc):
+def evaluate(result_dir, conffile, candidates, tcp_app, ntcpsrc, nudpsrc,run=1):
     """evaluate an AQM by run run-test.tcl """
 
     if tcp_app == "Application/OnOff":
@@ -105,6 +105,7 @@ def evaluate(result_dir, conffile, candidates, tcp_app, ntcpsrc, nudpsrc):
                                           '-bw', '15',\
                                           '-delay', '150',\
                                           '-gw', candidate,\
+                                          '-run', str(run),\
                                           trace_type, result_dir+"/"+candidate, \
                                           #'-nam', candidate+'.nam',\
                                           ]
