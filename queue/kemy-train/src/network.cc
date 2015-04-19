@@ -7,7 +7,7 @@
 #include<string>
 #include<sstream>
 #include<fcntl.h>
-void Network::run_simulation(WhiskerTree & _whiskers, bool trace)
+void Network::run_simulation(WhiskerTree & _whiskers, bool trace, unsigned int seed_run)
 {
     const unsigned int BUFFSIZE = 256;
     //write whiskers to file
@@ -43,11 +43,12 @@ void Network::run_simulation(WhiskerTree & _whiskers, bool trace)
         //exit(1);
     /*}*/
     char buf[1024];
-    sprintf(buf,"WHISKERS=%s ./run-simulation.tcl  -nsrc %d -bw %.2f -delay %.2f ",
+    sprintf(buf,"WHISKERS=%s ./run-simulation.tcl  -nsrc %d -bw %.2f -delay %.2f -run %u",
             whiskers_file,
             _config._num_senders,
             _config._bottle_bw,
-            _config._bottle_single_delay
+            _config._bottle_single_delay,
+            seed_run
             );
     if(trace){
         strcat(buf," -trace4split true");

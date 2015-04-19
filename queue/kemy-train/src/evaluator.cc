@@ -137,11 +137,11 @@ Evaluator::Outcome Evaluator::score( WhiskerTree & run_whiskers,
 
   std::vector<std::future<std::pair<WhiskerTree, Utility> > > fs;
   for (auto &x : configs){
-        fs.emplace_back(std::async(std::launch::async, [] (NetConfig x_,WhiskerTree run_whiskers_,bool trace_){
+        fs.emplace_back(std::async(std::launch::async, [] (NetConfig x_,WhiskerTree run_whiskers_,unsigned int prng_seed, bool trace_){
                         Network network1( x_ );
-                        network1.run_simulation(run_whiskers_,trace_);
+                        network1.run_simulation(run_whiskers_,trace_, (prng_seed % 1024));
                         return std::make_pair(run_whiskers_, network1.utility());
-                    },x,run_whiskers,trace));
+                    },x,run_whiskers,prng_seed, trace));
   }
   for( auto &x : fs){
       auto res = x.get();

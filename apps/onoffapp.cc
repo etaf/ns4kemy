@@ -30,6 +30,7 @@ OnOffApp::OnOffApp(string str_ontype,
       off_timer_(this)
 {
   on_timer_.sched(std::max(0.1,start_distribution_.sample()));
+  //fprintf(stderr,"seed_run=%u\n",run_);
 }
 
 void OnOffApp::turn_on() {
