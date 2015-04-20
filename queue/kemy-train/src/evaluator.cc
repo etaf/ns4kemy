@@ -12,12 +12,6 @@ Evaluator::Evaluator( const ConfigRange & range )
     _configs()
 {
   /* first load "anchors" */
-  _configs.push_back( NetConfig().set_bottle_bw( range.bottle_bw.first ).set_bottle_single_delay( range.bottle_single_delay.first ).set_num_senders( range.max_senders ));
-
-  if ( range.lo_only ) {
-    return;
-  }
-
   _configs.push_back( NetConfig().set_bottle_bw( range.bottle_bw.first ).set_bottle_single_delay( range.bottle_single_delay.first ).set_num_senders( range.max_senders ) );
 /*  _configs.push_back( NetConfig().set_bottle_bw( range.bottle_bw.first ).set_bottle_single_delay( range.bottle_single_delay.second ).set_num_senders( range.max_senders ) );*/
   //_configs.push_back( NetConfig().set_bottle_bw( range.bottle_bw.second ).set_bottle_single_delay( range.bottle_single_delay.first ).set_num_senders( range.max_senders ));
@@ -135,7 +129,7 @@ Evaluator::Outcome Evaluator::score( WhiskerTree & run_whiskers,
 
  //printf("before:\t%s\n",the_outcome.used_whiskers.str().c_str());
 
-  std::vector<std::future<std::pair<WhiskerTree, Utility> > > fs;
+  std::vector<std::future<std::pair<WhiskerTree, double> > > fs;
   for (auto &x : configs){
         fs.emplace_back(std::async(std::launch::async, [] (NetConfig x_,WhiskerTree run_whiskers_,unsigned int prng_seed, bool trace_){
                         Network network1( x_ );

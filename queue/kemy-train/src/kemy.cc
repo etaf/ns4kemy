@@ -84,7 +84,7 @@ int main( int argc, char *argv[] )
 
   while ( 1 ) {
     auto outcome = breeder.improve( whiskers );
-    printf( "run = %u, score = %s\n", run, outcome.score.str().c_str() );
+    printf( "run = %u, score = %g\n", run, outcome.score);
 
     printf( "whiskers: %s\n", whiskers.str().c_str() );
 

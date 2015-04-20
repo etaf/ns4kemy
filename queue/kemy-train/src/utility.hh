@@ -12,11 +12,12 @@ class Utility
         Utility():us(0){};
         Utility(std::vector<double> us_t):us(us_t){};
         bool improved (const Utility& other)const{
-            double res = 0;
+            double res1 = 0, res2 = 0;
             for(unsigned int i=0;i<ws.size();++i){
-                res += ws[i] * (other.us[i] - us[i]) / fabs(us[i] + other.us[i]);
+                res1 += ws[i] * (other.us[i] - us[i]) / fabs(us[i]);
+                res2 += ws[i] * (us[i] - other.us[i]) / fabs(other.us[i]);
             }
-            return res > 0;
+            return (res1 > 0 && res2 < 0);
         }
 
         void operator += (const Utility& other){

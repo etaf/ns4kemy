@@ -16,9 +16,8 @@ def get_parameters():
     (config, args) = parser.parse_args()
     return config
 
-def func_evaluate(result_dir, nTCPsrc, nUDPsrc):
+def func_evaluate(result_dir, candidates, nTCPsrc, nUDPsrc):
     """functional evaluate"""
-    candidates = ['KEMY','RED']
 
     if  os.path.exists(result_dir):
         while True:
@@ -39,23 +38,26 @@ def func_evaluate(result_dir, nTCPsrc, nUDPsrc):
 def light_eval(result_base):
     """light 5 TCP flows simulate 100s"""
     result_dir = os.path.join(result_base, 'light')
-    func_evaluate(result_dir, 5, 0)
+    candidates = ['KEMY','RED']
+    func_evaluate(result_dir, candidates, 5, 0)
 
-    graph_base_simtime(result_dir, "light: 5 TCP Flows")
+    graph_base_simtime(result_dir, candidates, "light: 5 TCP Flows")
 
 def heavy_eval(resut_base):
     """heavy 50 TCP flows simulate 100s"""
     result_dir = os.path.join(result_base, 'heavy')
-    func_evaluate(result_dir, 50, 0)
-    graph_base_simtime(result_dir, "Heavy: 50 TCP Flows")
+    candidates = ['KEMY','RED']
+    func_evaluate(result_dir, candidates, 50, 0)
+    graph_base_simtime(result_dir, candidates, "Heavy: 50 TCP Flows")
     #graph_box(result_dir, "Heavy: 50 TCP Flows")
     #graph_cdf(result_dir, "Heavy: 50 TCP Flows")
 
 def mix_eavl():
     """mix 5 TCP + 2 UDP flows simulate 100s"""
     result_dir = os.path.join(result_base, 'mix')
-    func_evaluate(result_dir, 5, 2 )
-    graph_base_simtime(result_dir, "Mixture: 5 TCP + 2 UDP Flows")
+    candidates = ['KEMY','RED']
+    func_evaluate(result_dir, candidates, 5, 2 )
+    graph_base_simtime(result_dir, candidates, "Mixture: 5 TCP + 2 UDP Flows")
 
 def burst_eval():
     pass
@@ -77,8 +79,8 @@ def onoff_eval(result_base):
     else:
         os.makedirs(result_dir)
     if do_eveal == True:
-        for i in xrange(10):
-            evaluate(result_dir, "./config/func-eval.tcl", candidates, "Application/OnOff", 8, 0 ,i+1)
+        for i in xrange(64):
+            evaluate(result_dir, "./config/func-eval.tcl", candidates, "Application/OnOff", 8, 0 ,run= i + 1)
     for candidate in candidates:
         result_file = os.path.join(result_dir, candidate)
         subprocess.call(["awk -f ./awks/onoff_throughput.awk " + result_file+" >"  + result_file+".throughput" ], shell=True)
@@ -125,12 +127,12 @@ def awk_process(result_file):
     # throughput
     subprocess.call(["awk -f ./awks/inst_throughput.awk " + result_file+" >"  + result_file+".throughput" ], shell=True)
     # delay
-    subprocess.call(["awk -f ./awks/insta_delay.awk " + result_file+" >"  + result_file+".delay" ], shell=True)
+    subprocess.call(["awk -f ./awks/inst_delay.awk " + result_file+" >"  + result_file+".delay" ], shell=True)
     # drop_rate
     #subprocess.call(["awk -f ./awks/drop_rate.awk " + result_file+" >"  + result_file+".drop_rate" ], shell=True)
 
 
-def graph_base_simtime(result_dir, graph_title):
+def graph_base_simtime(result_dir, candidates, graph_title):
     """graph base simulation time"""
     #graph x:simulation time, y: metric
     #metrics = ['throughput', 'delay', 'drop_rate']
@@ -168,7 +170,7 @@ def graph_box(result_dir, candidates, graph_title):
         plt.xticks(range(1,len(candidates)+1), candidates)
         plt.savefig(os.path.join(result_dir, metric+"-box.svg"))
         plt.show()
-def graph_cdf(result_dir, graph_title):
+def graph_cdf(result_dir, candidates, graph_title):
     metrics = ['delay','throughput']
     for metric in metrics:
         plt.title(graph_title)
@@ -201,10 +203,10 @@ if __name__ == '__main__':
 
     evaluate_func = config.evaluate_func
     if evaluate_func == "light":
-        light_eval()
+        light_eval(result_base)
     elif evaluate_func == "heavy":
-        heavy_eval()
+        heavy_eval(result_base)
     elif evaluate_func == "mix":
-        mix_eavl()
+        mix_eavl(result_base)
     elif evaluate_func == "onoff":
         onoff_eval(result_base)
