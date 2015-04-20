@@ -5,7 +5,6 @@
 #include "whiskertree.hh"
 #include<string>
 #include<fcntl.h>
-#include "utility.hh"
 using namespace std;
 
 int main(int argc, char** args)
@@ -94,7 +93,7 @@ int main(int argc, char** args)
     sprintf(buf,"%s.utility",whiskers_file);
     FILE* fp = fopen(buf,"r");
     double tp,del;
-    Utility _utility;
+    double _utility;
     double on_time=0;
     int acks=0;
     int inorder=0;
@@ -132,7 +131,11 @@ int main(int argc, char** args)
         ++cnt;
     }
     if(cnt){
-        _utility = Utility({sum_tp/cnt,-sum_del/cnt});
+        sum_del/=cnt;
+        sum_tp/=cnt;
+        _utility = log2(sum_tp) - log2(sum_del);
+    }else{
+        _utility = -999999999;
     }
     fclose(fp);
 
@@ -141,7 +144,7 @@ int main(int argc, char** args)
         perror("error awk");
         return 1;
     }
-    printf("utility: %s\n",_utility.str().c_str());
+    printf("utility: %f\n",_utility);
 /*    if(chdir(current_dir) == -1){*/
         //perror("change  directory to tcl error");
         //exit(1);

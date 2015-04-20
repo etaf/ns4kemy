@@ -65,12 +65,12 @@ Evaluator::Outcome RatBreeder::improve( WhiskerTree & whiskers )
     auto score_to_beat = outcome.score;
     while ( 1 ) {
       auto new_score = improver.improve( whisker_to_improve );
-      //assert( new_score >= score_to_beat );
-      if ( !score_to_beat.improved(new_score) ) {
+      assert( new_score >= score_to_beat );
+      if ( new_score == score_to_beat ) {
 	cerr << "Ending search." << endl;
 	break;
       } else {
-	cerr << "Score jumps from " << score_to_beat.str() << " to " << new_score.str() << endl;
+	cerr << "Score jumps from " << score_to_beat << " to " << new_score << endl;
 	score_to_beat = new_score;
       }
     }
@@ -92,8 +92,8 @@ Evaluator::Outcome RatBreeder::improve( WhiskerTree & whiskers )
   const auto old_outcome = eval2.score( input_whiskertree, false );
   //const auto old_score = eval2.score( input_whiskertree, false, 10 );
 
-  if ( !old_outcome.score.improved(new_outcome.score) ) {
-    fprintf( stderr, "Regression, old=%s, new=%s\n", old_outcome.score.str().c_str(), new_outcome.score.str().c_str() );
+  if ( old_outcome.score > new_outcome.score ) {
+    fprintf( stderr, "Regression, old=%f, new=%f\n", old_outcome.score, new_outcome.score );
     whiskers = input_whiskertree;
     return old_outcome;
   }
@@ -103,18 +103,18 @@ Evaluator::Outcome RatBreeder::improve( WhiskerTree & whiskers )
 
 WhiskerImprover::WhiskerImprover( const Evaluator & s_evaluator,
 				  const WhiskerTree & rat,
-				  const Utility score_to_beat )
+				  const double score_to_beat )
   : eval_( s_evaluator ),
     rat_( rat ),
     score_to_beat_( score_to_beat )
 {}
 
-Utility WhiskerImprover::improve( Whisker & whisker_to_improve )
+double WhiskerImprover::improve( Whisker & whisker_to_improve )
 {
   auto replacements( whisker_to_improve.next_generation() );
 
   for (const auto & test_replacement : replacements ){
-      Utility score;
+    double score;
     if ( eval_cache_.find( test_replacement ) == eval_cache_.end() ) {
       WhiskerTree replaced_whiskertree( rat_ );
       replaced_whiskertree.replace( test_replacement );
@@ -124,7 +124,7 @@ Utility WhiskerImprover::improve( Whisker & whisker_to_improve )
         score = eval_cache_.at(test_replacement);
     }
 
-    if( score_to_beat_.improved(score)){
+    if( score > score_to_beat_){
         score_to_beat_ = score;
         whisker_to_improve = test_replacement;
     }

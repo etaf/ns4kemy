@@ -107,7 +107,13 @@ void Network::run_simulation(WhiskerTree & _whiskers, bool trace, unsigned int s
         ++cnt;
     }
     if(cnt){
-        _utility = Utility({tp/cnt,-del/cnt});
+        tp/=cnt;
+        del/=cnt;
+        _utility = log2(tp) - log2(del); 
+    }
+
+    else{
+        _utility = -999999999;
     }
     fclose(fp);
 
