@@ -1,3 +1,4 @@
+
 #include <iostream>
 #include <vector>
 #include <cassert>
@@ -60,17 +61,18 @@ Evaluator::Outcome RatBreeder::improve( WhiskerTree & whiskers )
     }
 
     WhiskerImprover improver( eval, whiskers, outcome.score );
+
     Whisker whisker_to_improve = *most_used_whisker_ptr;
 
-    auto score_to_beat = outcome.score;
+    double score_to_beat = outcome.score;
     while ( 1 ) {
-      auto new_score = improver.improve( whisker_to_improve );
-      //assert( new_score >= score_to_beat );
-      if ( !score_to_beat.improved(new_score) ) {
+      double new_score = improver.improve( whisker_to_improve );
+      assert( new_score >= score_to_beat );
+      if ( new_score == score_to_beat ) {
 	cerr << "Ending search." << endl;
 	break;
       } else {
-	cerr << "Score jumps from " << score_to_beat.str() << " to " << new_score.str() << endl;
+	cerr << "Score jumps from " << score_to_beat << " to " << new_score << endl;
 	score_to_beat = new_score;
       }
     }
@@ -86,35 +88,58 @@ Evaluator::Outcome RatBreeder::improve( WhiskerTree & whiskers )
 
   /* carefully evaluate what we have vs. the previous best */
   const Evaluator eval2( _range );
-  const auto new_outcome = eval2.score( whiskers, false );
+  const auto new_score = eval2.score( whiskers, false );
   //const auto new_score = eval2.score( whiskers, false, 10 );
 
-  const auto old_outcome = eval2.score( input_whiskertree, false );
+  const auto old_score = eval2.score( input_whiskertree, false );
   //const auto old_score = eval2.score( input_whiskertree, false, 10 );
 
-/*  if ( !old_outcome.score.improved(new_outcome.score) ) {*/
-    //fprintf( stderr, "Regression, old=%s, new=%s\n", old_outcome.score.str().c_str(), new_outcome.score.str().c_str() );
-    //whiskers = input_whiskertree;
-    //return old_outcome;
-  /*}*/
+  if ( old_score.score >= new_score.score ) {
+    fprintf( stderr, "Regression, old=%f, new=%f\n", old_score.score, new_score.score );
+    whiskers = input_whiskertree;
+    return old_score;
+  }
 
-  return new_outcome;
+  return new_score;
 }
 
 WhiskerImprover::WhiskerImprover( const Evaluator & s_evaluator,
 				  const WhiskerTree & rat,
-				  const Utility score_to_beat )
+				  const double score_to_beat )
   : eval_( s_evaluator ),
     rat_( rat ),
     score_to_beat_( score_to_beat )
 {}
 
-Utility WhiskerImprover::improve( Whisker & whisker_to_improve )
+double WhiskerImprover::improve( Whisker & whisker_to_improve )
 {
   auto replacements( whisker_to_improve.next_generation() );
 
+  //vector< pair< const Whisker &, future< pair< bool, double > > > > scores;
+
+  /* find best replacement */
+/*  for ( const auto & test_replacement : replacements ) {*/
+    //if ( eval_cache_.find( test_replacement ) == eval_cache_.end() ) {
+      //[> need to fire off a new thread to evaluate <]
+      //scores.emplace_back( test_replacement,
+			   //async( launch::async, [] ( const Evaluator & e,
+							  //const Whisker & r,
+							  //const WhiskerTree & rat ) {
+					//WhiskerTree replaced_whiskertree( rat );
+					//const bool found_replacement __attribute((unused)) = replaced_whiskertree.replace( r );
+					//assert( found_replacement );
+					//return make_pair( true, e.score( replaced_whiskertree ).score ); },
+				  //eval_, test_replacement, rat_ ) );
+    //} else {
+      //[> we already know the score <]
+      //scores.emplace_back( test_replacement,
+			   //async( launch::deferred, [] ( const double value ) {
+				   //return make_pair( false, value ); }, eval_cache_.at( test_replacement ) ) );
+    //}
+  /*}*/
+
   for (const auto & test_replacement : replacements ){
-      Utility score;
+      double score;
     if ( eval_cache_.find( test_replacement ) == eval_cache_.end() ) {
       WhiskerTree replaced_whiskertree( rat_ );
       replaced_whiskertree.replace( test_replacement );
@@ -124,7 +149,7 @@ Utility WhiskerImprover::improve( Whisker & whisker_to_improve )
         score = eval_cache_.at(test_replacement);
     }
 
-    if( score_to_beat_.improved(score)){
+    if( score > score_to_beat_){
         score_to_beat_ = score;
         whisker_to_improve = test_replacement;
     }
@@ -151,3 +176,4 @@ Utility WhiskerImprover::improve( Whisker & whisker_to_improve )
 
   return score_to_beat_;
 }
+

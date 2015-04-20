@@ -33,11 +33,11 @@ class Network
 {
 private:
   NetConfig _config;
-  Utility _utility;
+  double _utility;
 public:
-  Network(const NetConfig & config ):_config(config),_utility(){}
+  Network(const NetConfig & config ):_config(config),_utility(0){}
   void run_simulation(WhiskerTree & _whiskers, bool trace, unsigned int seed_run);
-  Utility utility(){return _utility;}
+  double utility(){return _utility;}
 };
 
 #endif
