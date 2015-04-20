@@ -82,12 +82,10 @@ void KemyQueue::reset(){
 }
 
 //update states when enque
-void KemyQueue::update_enque(Packet* p ){
+void KemyQueue::update_enque(Packet* p){
 	double qlen = qib_ ? q_->byteLength() : q_->length();
-    hdr_cmn* hdr  = hdr_cmn::access(p);
-    uint32_t packet_size  = qib_ ?  hdr->size() : 1; // in bytes
+    qlen /= (qib_?1000:1);
     _ewma_qlen =0.5 * qlen + 0.5 * _ewma_qlen;
-
     _memory.update_ewma_qlen(_ewma_qlen);
 }
 
@@ -117,7 +115,6 @@ void KemyQueue::enque(Packet* p)
 Packet* KemyQueue::deque()
 {
     Packet* p = q_->deque();
-    return (p);
 }
 
 int KemyQueue::command(int argc, const char*const* argv){

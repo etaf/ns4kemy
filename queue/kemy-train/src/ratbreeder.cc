@@ -92,11 +92,11 @@ Evaluator::Outcome RatBreeder::improve( WhiskerTree & whiskers )
   const auto old_outcome = eval2.score( input_whiskertree, false );
   //const auto old_score = eval2.score( input_whiskertree, false, 10 );
 
-  if ( !old_outcome.score.improved(new_outcome.score) ) {
-    fprintf( stderr, "Regression, old=%s, new=%s\n", old_outcome.score.str().c_str(), new_outcome.score.str().c_str() );
-    whiskers = input_whiskertree;
-    return old_outcome;
-  }
+/*  if ( !old_outcome.score.improved(new_outcome.score) ) {*/
+    //fprintf( stderr, "Regression, old=%s, new=%s\n", old_outcome.score.str().c_str(), new_outcome.score.str().c_str() );
+    //whiskers = input_whiskertree;
+    //return old_outcome;
+  /*}*/
 
   return new_outcome;
 }

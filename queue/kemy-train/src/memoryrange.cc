@@ -89,9 +89,9 @@ bool MemoryRange::operator==( const MemoryRange & other ) const
 std::string MemoryRange::str( void ) const
 {
   char tmp[ 1024 ];
-  snprintf( tmp, 1024, "(\nlo=<%s>\nhi=<%s>\n),count=%d,medians=%gx%gx%g",
+  snprintf( tmp, 1024, "(\nlo=<%s>\nhi=<%s>\n)",
 	    _lower.str().c_str(),
-	    _upper.str().c_str() ,_count,_medians[0],_medians[1],_medians[2]);
+	    _upper.str().c_str());
   return tmp;
 }
 
