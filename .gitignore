@@ -39,5 +39,5 @@ core
 .deps/
 debugs/
 *.log
-*result/
-*results/
+*result/*
+*results/*

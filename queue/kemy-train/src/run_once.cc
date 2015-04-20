@@ -59,7 +59,7 @@ int main(int argc, char** args)
 
     printf("================================================================\n");
     char buf[1024];
-    sprintf(buf,"WHISKERS=%s ./run-simulation.tcl  -nsrc 50 -bw 10 -delay 100  -run 2 -qtr ./debug/out.qtr -qmon ./debug/out.qmon -trace4split true",
+    sprintf(buf,"WHISKERS=%s ./run-simulation.tcl  -nsrc 5 -bw 10 -delay 100  -run 2 -qtr ./debug/out.qtr -qmon ./debug/out.qmon -trace4split true",
             whiskers_file);
     //puts(buf);
     int ret_code = system(buf);

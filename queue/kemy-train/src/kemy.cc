@@ -58,7 +58,7 @@ int main( int argc, char *argv[] )
   unsigned int run = 0;
 
   printf( "#######################\n" );
-  printf( "Optimizing for link packets_per_ms in [%f, %f]\n",
+  printf( "Optimizing for link packets_per_ms in [%g, %f]\n",
 	  configuration_range.bottle_bw.first,
 	  configuration_range.bottle_bw.second );
   printf( "Optimizing for rtt_ms in [%f, %f]\n",
