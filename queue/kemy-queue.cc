@@ -89,9 +89,11 @@ void KemyQueue::update_enque(Packet* p ){
     double now = Scheduler::instance().clock();
 
     double interval = (now - _last_arrival)*1000; //arrive interval in ms
-    if(interval<0.01){
+    if(interval<0.00001){
         //arrive at the same time
         _pkg_acc += packet_size;
+        //fprintf(stderr,"did not update:");
+        //cout<<interval<<endl;
         return;
     }else{
         packet_size += _pkg_acc;

@@ -7,8 +7,10 @@
 #include <fcntl.h>
 
 #include "ratbreeder.hh"
+#include "utility.hh"
 
 using namespace std;
+
 
 int main( int argc, char *argv[] )
 {
@@ -41,10 +43,10 @@ int main( int argc, char *argv[] )
   }
 
   ConfigRange configuration_range;
-  configuration_range.bottle_bw = make_pair( 10, 20 ); // 10 Mbps to 20 Mbps
-  configuration_range.bottle_single_delay = make_pair( 100, 200 ); // ms
-  configuration_range.max_senders = 50;
-  configuration_range.min_senders = 5;
+  configuration_range.bottle_bw = make_pair( 15, 15 ); // 10 Mbps to 20 Mbps
+  configuration_range.bottle_single_delay = make_pair( 100, 100 ); // ms
+  configuration_range.max_senders = 16;
+  configuration_range.min_senders = 1;
 
   //configuration_range.mean_on_duration = 5000;
   //configuration_range.mean_off_duration = 5000;
@@ -56,7 +58,7 @@ int main( int argc, char *argv[] )
   unsigned int run = 0;
 
   printf( "#######################\n" );
-  printf( "Optimizing for link packets_per_ms in [%f, %f]\n",
+  printf( "Optimizing for link packets_per_ms in [%g, %f]\n",
 	  configuration_range.bottle_bw.first,
 	  configuration_range.bottle_bw.second );
   printf( "Optimizing for rtt_ms in [%f, %f]\n",
@@ -82,7 +84,7 @@ int main( int argc, char *argv[] )
 
   while ( 1 ) {
     auto outcome = breeder.improve( whiskers );
-    printf( "run = %u, score = %f\n", run, outcome.score );
+    printf( "run = %u, score = %s\n", run, outcome.score.str().c_str() );
 
     printf( "whiskers: %s\n", whiskers.str().c_str() );
 

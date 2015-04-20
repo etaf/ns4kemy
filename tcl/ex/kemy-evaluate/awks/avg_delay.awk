@@ -9,7 +9,7 @@ BEGIN{
     }
     if( event == "r"){
         recv_times[pkt_id] = curr_time
-        printf("%f %f\n", curr_time, (curr_time - send_times[pkt_id])*1000)
+        printf("%f %f\n", curr_time, (curr_time - send_times[pkt_id] - 0.1)*1000)
     }
 }
 

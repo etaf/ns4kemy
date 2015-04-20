@@ -3,6 +3,7 @@
 
 #include <string>
 #include "whiskertree.hh"
+#include "utility.hh"
 class NetConfig
 {
 public:
@@ -32,11 +33,11 @@ class Network
 {
 private:
   NetConfig _config;
-  double _utility;
+  Utility _utility;
 public:
-  Network(const NetConfig & config ):_config(config),_utility(0){}
-  void run_simulation(WhiskerTree & _whiskers, bool trace);
-  double utility(){return _utility;}
+  Network(const NetConfig & config ):_config(config),_utility(){}
+  void run_simulation(WhiskerTree & _whiskers, bool trace, unsigned int seed_run);
+  Utility utility(){return _utility;}
 };
 
 #endif

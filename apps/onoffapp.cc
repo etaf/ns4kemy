@@ -1,3 +1,4 @@
+//#define ETAF_DEBUG etaf_debug
 #include <cmath>
 #include "exception.hh"
 #include "ezio.hh"
@@ -29,10 +30,13 @@ OnOffApp::OnOffApp(string str_ontype,
       off_timer_(this)
 {
   on_timer_.sched(std::max(0.1,start_distribution_.sample()));
+  //fprintf(stderr,"seed_run=%u\n",run_);
 }
 
 void OnOffApp::turn_on() {
-  //fprintf(stderr, "%d, %f Turning on\n", sender_id_, Scheduler::instance().clock());
+#ifdef ETAF_DEBUG
+  fprintf(stderr, "%d, %f Turning on\n", sender_id_, Scheduler::instance().clock());
+#endif
   if (ontype_ == BYTE_BASED) {
     current_flow_.flow_size = lround(ceil(stop_distribution_.sample()));
     //current_flow_.flow_size = std::max(current_flow_.flow_size,(uint32_t) 5);
@@ -84,10 +88,11 @@ void OnOffApp::turn_off(void) {
 
   //double off_duration = start_distribution_.sample();
   double off_duration = std::max(0.1,start_distribution_.sample());
-/*  fprintf(stderr, "%d, %f Turning off,time used:%f\n next turning on at %f\n", sender_id_, Scheduler::instance().clock()-laststart_ -0.1 ,*/
-          //Scheduler::instance().clock(),
-                  /*Scheduler::instance().clock() + off_duration);*/
-  
+#ifdef ETAF_DEBUG
+  fprintf(stderr, "%d, %f Turning off,time used:%f\n next turning on at %f\n", sender_id_, Scheduler::instance().clock()-laststart_ -0.1 ,
+          Scheduler::instance().clock(),
+                  Scheduler::instance().clock() + off_duration);
+#endif 
   /* Either on_timer_ is unscheduled (TIMER_IDLE) */
   /* Or we got here from on_timer_'s callback, start_send. This can happen only if pkts are sent out all at once */
 /*  assert(on_timer_.status() == TIMER_IDLE or*/
@@ -126,7 +131,20 @@ int OnOffApp::command(int argc, const char*const* argv) {
   if (strcmp(argv[1], "stats") == 0) {
     assert(++calls_ < 2);
     total_on_time_ += (state_ == OFF) ? 0 : (Scheduler::instance().clock() - laststart_);
-    stat_collector_.output_stats(total_on_time_, sender_id_, pkt_size_ + hdr_size_);
+
+    char buf[1024];
+    if(argc > 2){
+        strcpy(buf,argv[2]);
+    }
+    else{
+        sprintf(buf,"%s.utility",getenv("WHISKERS"));
+    }
+    FILE* fp = fopen(buf,"a");
+    if( fp == NULL ){
+        fprintf(stderr, "%s open error",buf);
+    }
+    stat_collector_.output_stats(fp, total_on_time_, sender_id_, pkt_size_ + hdr_size_);
+    fclose(fp);
     return TCL_OK;
   }
   return Application::command(argc, argv);

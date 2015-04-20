@@ -906,7 +906,7 @@ int TcpAgent::command(int argc, const char*const* argv)
 			double on_duration = atof(argv[2]);
 			uint32_t flow_id = atoi(argv[3]);
 			uint32_t pkt_size = atoi(argv[4]);
-			stat_collector_.output_stats(on_duration, flow_id, pkt_size);
+			//stat_collector_.output_stats(on_duration, flow_id, pkt_size);
 			return (TCL_OK);
 		}
 	}

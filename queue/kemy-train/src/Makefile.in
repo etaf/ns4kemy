@@ -65,7 +65,8 @@ am__installdirs = "$(DESTDIR)$(bindir)"
 PROGRAMS = $(bin_PROGRAMS)
 am__objects_1 = evaluator.$(OBJEXT) memory.$(OBJEXT) \
 	memoryrange.$(OBJEXT) network.$(OBJEXT) random.$(OBJEXT) \
-	whisker.$(OBJEXT) whiskertree.$(OBJEXT) configrange.$(OBJEXT)
+	utility.$(OBJEXT) whisker.$(OBJEXT) whiskertree.$(OBJEXT) \
+	configrange.$(OBJEXT)
 am_kemy_OBJECTS = $(am__objects_1) kemy.$(OBJEXT) ratbreeder.$(OBJEXT)
 kemy_OBJECTS = $(am_kemy_OBJECTS)
 kemy_LDADD = $(LDADD)
@@ -221,7 +222,7 @@ common_source = evaluator.cc evaluator.hh                 \
 	memory.cc memory.hh memoryrange.cc memoryrange.hh              \
 	network.cc network.hh  poisson.hh                     \
 	random.cc random.hh            								   \
-	utility.hh whisker.cc whisker.hh whiskertree.cc whiskertree.hh \
+	utility.hh utility.cc whisker.cc whisker.hh whiskertree.cc whiskertree.hh \
 	configrange.hh configrange.cc
 
 kemy_SOURCES = $(common_source) kemy.cc ratbreeder.cc ratbreeder.hh
@@ -330,6 +331,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/random.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ratbreeder.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/run_once.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/utility.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/whisker.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/whiskers_reader.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/whiskertree.Po@am__quote@

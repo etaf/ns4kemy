@@ -19,14 +19,14 @@ Evaluator::Evaluator( const ConfigRange & range )
   }
 
   _configs.push_back( NetConfig().set_bottle_bw( range.bottle_bw.first ).set_bottle_single_delay( range.bottle_single_delay.first ).set_num_senders( range.max_senders ) );
-  _configs.push_back( NetConfig().set_bottle_bw( range.bottle_bw.first ).set_bottle_single_delay( range.bottle_single_delay.second ).set_num_senders( range.max_senders ) );
-  _configs.push_back( NetConfig().set_bottle_bw( range.bottle_bw.second ).set_bottle_single_delay( range.bottle_single_delay.first ).set_num_senders( range.max_senders ));
-  _configs.push_back( NetConfig().set_bottle_bw( range.bottle_bw.second ).set_bottle_single_delay( range.bottle_single_delay.second ).set_num_senders( range.max_senders ));
+/*  _configs.push_back( NetConfig().set_bottle_bw( range.bottle_bw.first ).set_bottle_single_delay( range.bottle_single_delay.second ).set_num_senders( range.max_senders ) );*/
+  //_configs.push_back( NetConfig().set_bottle_bw( range.bottle_bw.second ).set_bottle_single_delay( range.bottle_single_delay.first ).set_num_senders( range.max_senders ));
+  //_configs.push_back( NetConfig().set_bottle_bw( range.bottle_bw.second ).set_bottle_single_delay( range.bottle_single_delay.second ).set_num_senders( range.max_senders ));
 
-  _configs.push_back( NetConfig().set_bottle_bw( range.bottle_bw.first ).set_bottle_single_delay( range.bottle_single_delay.first ).set_num_senders( range.min_senders ) );
-  _configs.push_back( NetConfig().set_bottle_bw( range.bottle_bw.first ).set_bottle_single_delay( range.bottle_single_delay.second ).set_num_senders( range.min_senders ) );
-  _configs.push_back( NetConfig().set_bottle_bw( range.bottle_bw.second ).set_bottle_single_delay( range.bottle_single_delay.first ).set_num_senders( range.min_senders ));
-  _configs.push_back( NetConfig().set_bottle_bw( range.bottle_bw.second ).set_bottle_single_delay( range.bottle_single_delay.second ).set_num_senders( range.min_senders ));
+  //_configs.push_back( NetConfig().set_bottle_bw( range.bottle_bw.first ).set_bottle_single_delay( range.bottle_single_delay.first ).set_num_senders( range.min_senders ) );
+  //_configs.push_back( NetConfig().set_bottle_bw( range.bottle_bw.first ).set_bottle_single_delay( range.bottle_single_delay.second ).set_num_senders( range.min_senders ) );
+  //_configs.push_back( NetConfig().set_bottle_bw( range.bottle_bw.second ).set_bottle_single_delay( range.bottle_single_delay.first ).set_num_senders( range.min_senders ));
+  /*_configs.push_back( NetConfig().set_bottle_bw( range.bottle_bw.second ).set_bottle_single_delay( range.bottle_single_delay.second ).set_num_senders( range.min_senders ));*/
 
 
 /*  for ( unsigned int i = (range.max_senders+1)/3*2; i <= range.max_senders; ++i)*/
@@ -36,11 +36,11 @@ Evaluator::Evaluator( const ConfigRange & range )
   /* now load some random ones just for fun */
 
   for ( int i = 0; i < 15; i++ ) {
-    boost::random::uniform_real_distribution<> link_speed( range.bottle_bw.first, range.bottle_bw.second );
-    boost::random::uniform_real_distribution<> rtt( range.bottle_single_delay.first, range.bottle_single_delay.second );
+/*    boost::random::uniform_real_distribution<> link_speed( range.bottle_bw.first, range.bottle_bw.second );*/
+    /*boost::random::uniform_real_distribution<> rtt( range.bottle_single_delay.first, range.bottle_single_delay.second );*/
     boost::random::uniform_int_distribution<> num_senders( 1, range.max_senders );
 
-    _configs.push_back( NetConfig().set_bottle_bw( link_speed( global_PRNG() ) ).set_bottle_single_delay( rtt( global_PRNG() ) ).set_num_senders( num_senders( global_PRNG() ) ) );
+    _configs.push_back( NetConfig().set_bottle_bw( range.bottle_bw.first ).set_bottle_single_delay( range.bottle_single_delay.first ).set_num_senders( num_senders( global_PRNG() ) ) );
   }
 }
 
@@ -135,13 +135,13 @@ Evaluator::Outcome Evaluator::score( WhiskerTree & run_whiskers,
 
  //printf("before:\t%s\n",the_outcome.used_whiskers.str().c_str());
 
-  std::vector<std::future<std::pair<WhiskerTree, double> > > fs;
+  std::vector<std::future<std::pair<WhiskerTree, Utility> > > fs;
   for (auto &x : configs){
-        fs.emplace_back(std::async(std::launch::async, [] (NetConfig x_,WhiskerTree run_whiskers_,bool trace_){
+        fs.emplace_back(std::async(std::launch::async, [] (NetConfig x_,WhiskerTree run_whiskers_,unsigned int prng_seed, bool trace_){
                         Network network1( x_ );
-                        network1.run_simulation(run_whiskers_,trace_);
+                        network1.run_simulation(run_whiskers_,trace_, (prng_seed % 1024));
                         return std::make_pair(run_whiskers_, network1.utility());
-                    },x,run_whiskers,trace));
+                    },x,run_whiskers,prng_seed, trace));
   }
   for( auto &x : fs){
       auto res = x.get();

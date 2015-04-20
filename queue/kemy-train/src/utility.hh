@@ -1,75 +1,43 @@
 #ifndef UTILITY_HH
 #define UTILITY_HH
-
-#include <cmath>
-
+#include<vector>
+#include<cmath>
+#include<string>
 class Utility
 {
-private:
-  double _tick_share_sending;
-  double _tick_sended;
-  unsigned int _packets_received;
+    private:
+        std::vector<double> us; //utility parts
+        const static std::vector<double> ws; //weights
+    public:
+        Utility():us(0){};
+        Utility(std::vector<double> us_t):us(us_t){};
+        bool improved (const Utility& other)const{
+            double res = 0;
+            for(unsigned int i=0;i<ws.size();++i){
+                res += ws[i] * (other.us[i] - us[i]) / fabs(us[i] + other.us[i]);
+            }
+            return res > 0;
+        }
 
-  double _total_delay;
+        void operator += (const Utility& other){
+            if(us.empty()){
+                us = other.us;
+                return;
+            }
+            for(unsigned int i=0;i < ws.size(); ++i){
+                us[i] += other.us[i];
+            }
+        }
 
-public:
-  Utility( void ) : _tick_share_sending( 0 ),_tick_sended(0), _packets_received( 0 ), _total_delay( 0 ) {}
-
-  void sending_duration( const double & duration, const unsigned int num_sending )
-  {
-      _tick_share_sending += duration / double( num_sending );
-      _tick_sended += duration;
-  }
-  void packets_received( const std::vector< Packet > & packets ) {
-    _packets_received += packets.size();
-
-    for ( auto &x : packets ) {
-      assert( x.tick_received >= x.tick_sent );
-      _total_delay += x.tick_received - x.tick_sent;
-    }
-  }
-
-/*  double average_throughput( void ) const*/
-  //{
-    //if ( _tick_share_sending == 0 ) {
-      //return 0.0;
-    //}
-    //return double( _packets_received ) / _tick_share_sending;
-  /*}*/
-
-  double average_throughput( void ) const
-  {
-      if(_tick_sended == 0)
-      {
-          return 0.0;
-      }
-      return  1.0 * _packets_received / _tick_sended;
-  }
-  double average_delay( void ) const
-  {
-    if ( _packets_received == 0 ) {
-      return 0.0;
-    }
-    return double( _total_delay ) / double( _packets_received );
-  }
-
-  double utility( void ) const
-  {
-    if ( _tick_share_sending == 0 ) {
-      return 0.0;
-    }
-
-    if ( _packets_received == 0 ) {
-      return -INT_MAX;
-    }
-
-    const double throughput_utility = log2( average_throughput() );
-    //const double delay_penalty = log2( average_delay());
-    const double delay_penalty = log2( average_delay() / 40.0 );
-    //printf("throughput = %f\tdelay=%f\n",throughput_utility,delay_penalty);
-    //return throughput_utility -  delay_penalty;
-    return throughput_utility -  delay_penalty;
-  }
+        std::string str()const{
+            char tmp[256];
+            std::string res;
+            for(unsigned int i=0; i < ws.size(); ++i){
+                snprintf(tmp,256,"%f ",us[i]);
+                res += std::string(tmp);
+            }
+            return res;
+        }
 };
 
 #endif

@@ -1,12 +1,12 @@
 #include <boost/functional/hash.hpp>
 #include <vector>
 #include <cassert>
-
+#include <limits>
 #include "memory.hh"
 
 using namespace std;
 
-static const double alpha = 0.5;
+//static const double alpha = 0.5;
 
 /*void Memory::update(const double& tickno __attribute__((unused)),const unsigned int & qlen)*/
 //{
@@ -34,13 +34,14 @@ static const double alpha = 0.5;
 string Memory::str( void ) const
 {
   char tmp[ 256 ];
-  snprintf( tmp, 256, "ewma_qlen=%f, _ewma_arrival_rate=%f, _ewma_depart_rate=%f", _ewma_qlen,_ewma_arrival_rate,_ewma_depart_rate);
+  snprintf( tmp, 256, "ewma_qlen=%g, _ewma_arrival_rate=%g, _ewma_depart_rate=%g", _ewma_qlen,_ewma_arrival_rate,_ewma_depart_rate);
   return tmp;
 }
 
 const Memory & MAX_MEMORY( void )
 {
-  static const Memory max_memory( { 163840, 1638400, 1638400 } );
+    const double MAX_MV = std::numeric_limits<double>::max();
+  static const Memory max_memory( { MAX_MV, MAX_MV, MAX_MV } );
   return max_memory;
 }
 
@@ -55,7 +56,7 @@ KemyBuffers::Memory Memory::DNA( void ) const
 
 /* If fields are missing in the DNA, we want to wildcard the resulting rule to match anything */
 #define get_val_or_default( protobuf, field, limit ) \
-  ( (protobuf).has_ ## field() ? (protobuf).field() : (limit) ? 0 : 163840 )
+  ( (protobuf).has_ ## field() ? (protobuf).field() : (limit) ? 0 : 999999999 )
 
 Memory::Memory( const bool is_lower_limit, const KemyBuffers::Memory & dna )
   : _ewma_qlen( get_val_or_default( dna, ewma_qlen, is_lower_limit ) ),
