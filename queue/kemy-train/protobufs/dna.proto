@@ -22,8 +22,6 @@ message MemoryRange {
 
 message Memory {
   optional double ewma_qlen = 21;
-  optional double ewma_arrival_rate = 22;
-  optional double ewma_depart_rate = 23;
 }
 
 message Whisker {
