@@ -6,7 +6,7 @@
         send_times[pkt_id] = curr_time
     }
     if( event == "r"){
-        printf("%f %f\n", curr_time, (curr_time - send_times[pkt_id])*1000 - 100)
+        printf("%f %f\n", curr_time, (curr_time - send_times[pkt_id])*1000 - 50)
     }
 }
 

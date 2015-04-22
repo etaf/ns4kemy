@@ -1,7 +1,7 @@
 #!/usr/bin/awk -f
 #===============================================================================
 #
-#          File:  onoff_delay.awk
+#          File:  bw_delay.awk
 # 
 #   Description:  
 # 
@@ -9,11 +9,14 @@
 #        Author:  YOUR NAME (), 
 #  Organization:  
 #       Version:  1.0
-#       Created:  Saturday, April 18, 2015 15:48
+#       Created:  Wednesday, April 22, 2015 07:57
 #      Revision:  ---
 #       License:  
 #===============================================================================
-
 {
-    printf("%f\n",$5 * 1000 - 200)
+    sum += $5
+    if(NR%senders == 0) {
+        printf("%f\n",sum/senders);
+        sum = 0;
+    }
 }
