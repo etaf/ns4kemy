@@ -13,7 +13,7 @@ set opt(sink) TCPSink
 # AQM details
 set opt(gw) KEMY;            # queueing at bottleneck
 set opt(rcvwin) 65536
-set opt(qlimit) 200
+set opt(qlimit) 65536
 # app parameters
 set opt(tcp_app) Application/OnOff
 set opt(pktsize) 1000;           # doesn't include proto headers (bytes)

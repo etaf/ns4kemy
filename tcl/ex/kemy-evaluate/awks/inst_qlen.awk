@@ -1,7 +1,7 @@
 #!/usr/bin/awk -f
 #===============================================================================
 #
-#          File:  onoff_delay.awk
+#          File:  inst_qlen.awk
 # 
 #   Description:  
 # 
@@ -9,11 +9,10 @@
 #        Author:  YOUR NAME (), 
 #  Organization:  
 #       Version:  1.0
-#       Created:  Saturday, April 18, 2015 15:48
+#       Created:  Tuesday, April 21, 2015 17:05
 #      Revision:  ---
 #       License:  
 #===============================================================================
-
 {
-    printf("%f\n",$5 * 1000 - 200)
+    print $1,$5
 }
