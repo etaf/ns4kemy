@@ -88,8 +88,13 @@ void KemyQueue::update_enque(Packet* p ){
     uint32_t packet_size  = qib_ ?  hdr->size() : 1; // in bytes
     double now = Scheduler::instance().clock();
 
+    double lamda = 0.5;
+    qlen /= (qib_?1000:1);
+    _ewma_qlen = ( 1-lamda) * qlen + lamda * _ewma_qlen;
+    _memory.update_ewma_qlen(_ewma_qlen);
+
     double interval = (now - _last_arrival)*1000; //arrive interval in ms
-    if(interval<0.00001){
+    if(interval<1e-9){
         //arrive at the same time
         _pkg_acc += packet_size;
         //fprintf(stderr,"did not update:");
@@ -108,14 +113,11 @@ void KemyQueue::update_enque(Packet* p ){
     //update _last_arrival
     _last_arrival = now;
     //update _ewma_qlen
-    double lamda = exp(- interval/_min_arrive_interval * _K);
-    qlen /= (qib_?1000:1);
-    _ewma_qlen = ( 1-lamda) * qlen + lamda * _ewma_qlen;
-    _memory.update_ewma_qlen(_ewma_qlen);
-
+    //double lamda = exp(- interval/_min_arrive_interval * _K);
+    
     /*std::cout<<"packt_size:"<<packet_size<<"\t interval:"<<interval<<std::endl;*/
     //update_ewma_arrival_rate
-
+    if(interval < 1e-9) std::cout<<interval<<endl;
     _ewma_arrival_rate = (1-lamda) * packet_size / interval  + lamda * _ewma_arrival_rate;
     _memory.update_ewma_arrival_rate(_ewma_arrival_rate);
 
@@ -139,7 +141,8 @@ void KemyQueue::update_deque(Packet* p){
     _last_depart = now;
 
     //update _ewma_depart_rate
-    double lamda = exp( - interval/_min_depart_interval * _K);
+    //double lamda = exp( - interval/_min_depart_interval * _K);
+    double lamda = 0.5;
     _ewma_depart_rate = (1-lamda) * packet_size / interval  + lamda * _ewma_depart_rate;
     _memory.update_ewma_depart_rate(_ewma_depart_rate);
 

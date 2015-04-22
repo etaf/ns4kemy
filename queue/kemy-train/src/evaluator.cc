@@ -11,12 +11,6 @@ Evaluator::Evaluator( const ConfigRange & range )
   : _prng_seed( global_PRNG()() ), /* freeze the PRNG seed for the life of this Evaluator */
     _configs()
 {
-  /* first load "anchors" */
-  _configs.push_back( NetConfig().set_bottle_bw( range.bottle_bw.first ).set_bottle_single_delay( range.bottle_single_delay.first ).set_num_senders( range.max_senders ));
-
-  if ( range.lo_only ) {
-    return;
-  }
 
   _configs.push_back( NetConfig().set_bottle_bw( range.bottle_bw.first ).set_bottle_single_delay( range.bottle_single_delay.first ).set_num_senders( range.max_senders ) );
 /*  _configs.push_back( NetConfig().set_bottle_bw( range.bottle_bw.first ).set_bottle_single_delay( range.bottle_single_delay.second ).set_num_senders( range.max_senders ) );*/
@@ -36,11 +30,11 @@ Evaluator::Evaluator( const ConfigRange & range )
   /* now load some random ones just for fun */
 
   for ( int i = 0; i < 15; i++ ) {
-/*    boost::random::uniform_real_distribution<> link_speed( range.bottle_bw.first, range.bottle_bw.second );*/
+    boost::random::uniform_real_distribution<> link_speed( range.bottle_bw.first, range.bottle_bw.second );
     /*boost::random::uniform_real_distribution<> rtt( range.bottle_single_delay.first, range.bottle_single_delay.second );*/
-    boost::random::uniform_int_distribution<> num_senders( 1, range.max_senders );
+    //boost::random::uniform_int_distribution<> num_senders( 1, range.max_senders );
 
-    _configs.push_back( NetConfig().set_bottle_bw( range.bottle_bw.first ).set_bottle_single_delay( range.bottle_single_delay.first ).set_num_senders( num_senders( global_PRNG() ) ) );
+    _configs.push_back( NetConfig().set_bottle_bw( link_speed(global_PRNG()) ).set_bottle_single_delay( range.bottle_single_delay.first ).set_num_senders( range.max_senders ) );
   }
 }
 
