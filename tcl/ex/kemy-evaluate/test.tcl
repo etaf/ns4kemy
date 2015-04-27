@@ -32,10 +32,10 @@ $ns color 1 Blue
 $ns color 2 Red
 
 #Open the NAM trace file
-set nf [open out.nam w]
-set tr [open out.tr w]
-$ns namtrace-all $nf
-$ns trace-all $tr
+#set nf [open out.nam w]
+#set tr [open out.tr w]
+#$ns namtrace-all $nf
+#$ns trace-all $tr
 #Define a 'finish' procedure
 proc finish {} {
         global ns nf kemyq onoff_ftp mq_f tr
@@ -47,14 +47,14 @@ proc finish {} {
         #$kemyq printstats $utility
         #
         #$onoff_ftp stats
-        #$kemyq printstats
+        $onoff_ftp stats "/home/lxa/test.out"
         $ns flush-trace
         #Close the NAM trace file
-        close $nf
+        #close $nf
         close $mq_f
-        close $tr
+        #close $tr
         #Execute NAM on the trace file
-        exec ../../../../bin/nam out.nam &
+        #exec ../../../../bin/nam out.nam &
         exit 0
 }
 
@@ -66,16 +66,17 @@ set n3 [$ns node]
 
 set gw "PIE"
 #Create links between the nodes
-$ns duplex-link $n0 $n2 2Mb 10ms $gw
-$ns duplex-link $n1 $n2 2Mb 10ms $gw
+$ns duplex-link $n0 $n2 2000Mb 10ms $gw
+$ns duplex-link $n1 $n2 2000Mb 10ms $gw
 $ns duplex-link $n2 $n3 0.1Mb 20ms $gw
-set kemyq [[$ns link $n0 $n2] queue]
-
+set kemyq [[$ns link $n2 $n3] queue]
+set mylink [[$ns link $n2 $n3] link]
+$mylink set bandwidth_ 1000Mb
 set mq_f [open mq.out w]
 $ns trace-queue $n2 $n3 $mq_f
 
 #Set Queue Size of link (n2-n3) to 10
-$ns queue-limit $n2 $n3 10
+$ns queue-limit $n2 $n3 10000000
 
 #Give node position (for NAM)
 $ns duplex-link-op $n0 $n2 orient right-down
@@ -96,7 +97,7 @@ $ns connect $tcp $sink
 $tcp set fid_ 1
 
 #Setup a FTP over TCP connection
-set onoff_ftp [new Application/OnOff "bytes" 1 1200 50 1  5.0 0.2 $tcp 0]
+set onoff_ftp [new Application/OnOff "bytes" 1 1200 50 1  50000.0 0.2 $tcp]
 
 $onoff_ftp attach-agent $tcp
 
@@ -114,13 +115,14 @@ set cbr [new Application/Traffic/CBR]
 $cbr attach-agent $udp
 $cbr set type_ CBR
 $cbr set packet_size_ 1000
-$cbr set rate_ 1mb
+$cbr set rate_ 100mb
 $cbr set random_ false
 
 
 #Schedule events for the CBR and FTP agents
 $ns at 0.1 "$cbr start"
 $ns at 1.0 "$onoff_ftp start"
+$ns at 100.0 "$mylink set bandwidth_ 10Mb"
 $ns at 400.0 "$onoff_ftp stop"
 $ns at 400.5 "$cbr stop"
 
@@ -128,11 +130,11 @@ $ns at 400.5 "$cbr stop"
 $ns at 400.5 "$ns detach-agent $n0 $tcp ; $ns detach-agent $n3 $sink"
 
 #Call the finish procedure after 5 seconds of simulation time
-$ns at 500.0 "finish"
+$ns at 401 "finish"
 
 #Print CBR packet size and interval
-puts "CBR packet size = [$cbr set packet_size_]"
-puts "CBR interval = [$cbr set interval_]"
+#puts "CBR packet size = [$cbr set packet_size_]"
+#puts "CBR interval = [$cbr set interval_]"
 
 #Run the simulation
 $ns run

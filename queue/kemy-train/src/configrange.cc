@@ -18,8 +18,8 @@ KemyBuffers::ConfigRange ConfigRange::DNA( void ) const
   ret.mutable_bottle_single_delay()->CopyFrom( pair_to_range( bottle_single_delay ) );
   ret.mutable_num_senders()->CopyFrom( pair_to_range( make_pair( min_senders, max_senders ) ) );
 
-/*  ret.set_mean_off_duration( mean_off_duration );*/
-  /*ret.set_mean_on_duration( mean_on_duration );*/
+  //ret.set_mean_off_duration( mean_off_duration );
+  //ret.set_mean_on_duration( mean_on_duration );
 
   return ret;
 }

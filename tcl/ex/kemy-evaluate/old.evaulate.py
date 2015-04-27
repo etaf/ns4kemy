@@ -80,49 +80,16 @@ def onoff_eval(result_base):
                 break
     else:
         os.makedirs(result_dir)
-    rtt = 100
     if do_eveal == True:
         for i in xrange(128):
-            evaluate(result_dir, "./config/func-eval.tcl", candidates, "Application/OnOff",5, 0, run= i + 1, delay = rtt/2)
-        for candidate in candidates:
-            result_file = os.path.join(result_dir, candidate)
-            subprocess.call(["awk -f ./awks/onoff_throughput.awk " + result_file+" >"  + result_file+".throughput" ], shell=True)
-            subprocess.call(["awk -v rtt="+str(rtt)+" -f ./awks/onoff_delay.awk " + result_file+" >"  + result_file+".delay" ], shell=True)
+            evaluate(result_dir, "./config/func-eval.tcl", candidates, "Application/OnOff", 8, 0 ,run= i + 1)
+    for candidate in candidates:
+        result_file = os.path.join(result_dir, candidate)
+        subprocess.call(["awk -f ./awks/onoff_throughput.awk " + result_file+" >"  + result_file+".throughput" ], shell=True)
+        subprocess.call(["awk -f ./awks/onoff_delay.awk " + result_file+" >"  + result_file+".delay" ], shell=True)
 
     graph_box(result_dir,candidates, "")
     #graph_cdf(result_dir, "Heavy: 50 TCP Flows")
-
-def rtt_eval(result_base):
-    candidates = ["RED", "CoDel", "PIE", "KEMY"]
-    result_dir = os.path.join(result_base, 'rtt')
-    do_eveal = True
-    if  os.path.exists(result_dir):
-        while True:
-            ret = raw_input("Results already existed in " + result_dir + ", remove and continue ? y/n\t")
-            if ret == 'y':
-                os.system("rm -rf "+result_dir)
-                os.makedirs(result_dir)
-                break
-            elif ret == 'n':
-                do_eveal = False
-                break
-    else:
-        os.makedirs(result_dir)
-
-    rtts = [10, 50, 100,120, 150, 180, 200, 250]
-    bw = 15
-    iter_times = 32
-    if do_eveal == True:
-        for rtt in rtts:
-            for i in xrange(iter_times):
-                evaluate(result_dir, "./config/func-eval.tcl", candidates, "Application/OnOff", 8, 0 ,run= i+1 , bw=bw, delay=rtt/2)
-        for candidate in candidates:
-            result_file = os.path.join(result_dir, candidate)
-            subprocess.call(["awk -v senders=8 -v iter="+str(iter_times)+" -f  ./awks/bw_throughput.awk " + result_file+" >"  + result_file+".throughput" ], shell=True)
-            subprocess.call(["awk -v senders=8 -v iter="+str(iter_times)+" -f ./awks/rtt_delay.awk " + result_file+" >"  + result_file+".delay" ], shell=True)
-
-    #graph_box(result_dir,candidates, "")
-    graph_base_rtt(result_dir, candidates, "", rtts)
 
 def bw_eval(result_base):
     candidates = ["RED", "CoDel", "PIE", "KEMY"]
@@ -130,7 +97,7 @@ def bw_eval(result_base):
     do_eveal = True
     if  os.path.exists(result_dir):
         while True:
-            ret = raw_input("Results already existed in" + result_dir + ", remove and continue ? y/n\t")
+            ret = raw_input("Results already existed, remove and continue ? y/n\t")
             if ret == 'y':
                 os.system("rm -rf "+result_dir)
                 os.makedirs(result_dir)
@@ -141,17 +108,16 @@ def bw_eval(result_base):
     else:
         os.makedirs(result_dir)
 
-    bws = [ 10, 30, 50, 60, 80, 100, 150, 200]
-    delay = 50
-    iter_times = 64
+    bws = [1,5,10,20,50,70,100,120]
+
     if do_eveal == True:
         for bw in bws:
-            for i in xrange(iter_times):
-                evaluate(result_dir, "./config/func-eval.tcl", candidates, "Application/OnOff", 8, 0 ,run= i+1, bw=bw, delay=delay)
-        for candidate in candidates:
-            result_file = os.path.join(result_dir, candidate)
-            subprocess.call(["awk -v senders=8 -v iter="+str(iter_times)+" -f  ./awks/bw_throughput.awk " + result_file+" >"  + result_file+".throughput" ], shell=True)
-            subprocess.call(["awk -v senders=8 -v iter="+str(iter_times)+" -v rtt="+str(delay*2)+" -f ./awks/bw_delay.awk " + result_file+" >"  + result_file+".delay" ], shell=True)
+            evaluate(result_dir, "./config/func-eval.tcl", candidates, "Application/OnOff", 8, 0 ,run= 1, bw=bw)
+
+    for candidate in candidates:
+        result_file = os.path.join(result_dir, candidate)
+        subprocess.call(["awk -v senders=8 -f  ./awks/bw_throughput.awk " + result_file+" >"  + result_file+".throughput" ], shell=True)
+        subprocess.call(["awk -v senders=8 -f ./awks/bw_delay.awk " + result_file+" >"  + result_file+".delay" ], shell=True)
 
     #graph_box(result_dir,candidates, "")
     graph_base_bw(result_dir, candidates, "", bws)
@@ -200,61 +166,24 @@ def awk_process(result_file):
     #queue length
     subprocess.call(["awk -f ./awks/inst_qlen.awk " + result_file+" >"  + result_file+".qlen" ], shell=True)
 
-def graph_base_rtt(result_dir, candidates, graph_title, rtts):
-    """graph base simulation rtt"""
-    metrics = ['throughput', 'delay']
-    ylabels = {}
-    ylabels['throughput'] = 'Goodput [Mbps]'
-    ylabels['delay'] = 'Queueing Delay [msec]'
-    styles={}
-    styles['KEMY'] = '-s'
-    styles['RED'] = '-*'
-    styles['CoDel'] = '-^'
-    styles['PIE'] = '-o'
-    #row = 0
-    for metric in metrics:
-        #row = row + 1
-        #plt.subplot(len(metrics),1,row)
-        plt.title(graph_title)
-        plt.grid()
-        plt.ylabel(ylabels[metric],fontsize=18)
-        plt.xlabel("Bottleneck RTT [ms]",fontsize=18)
-        for candidate in candidates:
-            result_file = os.path.join(result_dir, candidate) +"." + metric
-            data = np.loadtxt(result_file, unpack = True)
-            line, =plt.plot(data,styles[candidate], label = candidate, markersize=10)
-
-        plt.legend()
-
-        plt.xticks(range(len(rtts)), rtts)
-        plt.savefig( os.path.join(result_dir,metric) +".eps", format="eps")
-        plt.show()
 
 def graph_base_bw(result_dir, candidates, graph_title, bws):
     """graph base simulation bandwidth"""
     metrics = ['throughput', 'delay']
     ylabels = {}
-    ylabels['throughput'] = 'Goodput [Mbps]'
+    ylabels['throughput'] = 'Throughput [Mbps]'
     ylabels['delay'] = 'Queueing Delay [msec]'
-    styles={}
-    styles['KEMY'] = '-s'
-    styles['RED'] = '-*'
-    styles['CoDel'] = '-^'
-    styles['PIE'] = '-o'
-    #row = 0
+
     for metric in metrics:
-        #row = row + 1
-        #plt.subplot(len(metrics),1,row)
         plt.title(graph_title)
         plt.grid()
-        plt.ylabel(ylabels[metric],fontsize=18)
-        plt.xlabel("Bottleneck Bandwidth [Mbps]",fontsize=18)
+        plt.ylabel(ylabels[metric])
         for candidate in candidates:
             result_file = os.path.join(result_dir, candidate) +"." + metric
             data = np.loadtxt(result_file, unpack = True)
-            line, =plt.plot(data,styles[candidate], label = candidate, markersize=10)
+            line, =plt.plot(data, label = candidate)
 
-        plt.legend(loc=2)
+        plt.legend()
         plt.xticks(range(len(bws)), bws)
         plt.savefig( os.path.join(result_dir,metric) +".eps", format="eps")
         plt.show()
@@ -273,8 +202,8 @@ def graph_base_simtime(result_dir, candidates, graph_title):
     for metric in metrics:
         plt.title(graph_title)
         plt.grid()
-        plt.xlabel("Simulation Time [Sec]",fontsize=18)
-        plt.ylabel(ylabels[metric],fontsize=18)
+        plt.xlabel("Simulation Time [Sec]")
+        plt.ylabel(ylabels[metric])
 
         for candidate in candidates:
             result_file = os.path.join(result_dir, candidate) +"." + metric
@@ -288,13 +217,13 @@ def graph_base_simtime(result_dir, candidates, graph_title):
 def graph_box(result_dir, candidates, graph_title):
     metrics = ['throughput', 'delay']
     ylabels = {}
-    ylabels['throughput'] = 'Goodput [Mbps]'
-    ylabels['delay'] = 'Queueing Delay [msec]'
+    ylabels['throughput'] = 'Average Throughput [Mbps]'
+    ylabels['delay'] = 'Average Queueing Delay [msec]'
     colors = ["purple", "pink", "blue"]
     for metric in metrics:
         plt.title(graph_title)
         plt.grid(True)
-        plt.ylabel(ylabels[metric],fontsize=18)
+        plt.ylabel(ylabels[metric])
         data = []
         for candidate in candidates:
             result_file = os.path.join(result_dir, candidate + "." + metric)
@@ -306,7 +235,7 @@ def graph_box(result_dir, candidates, graph_title):
             #patch.set_alpha(0.8)
 
         #boxs= plt.boxplot(data)
-        plt.xticks(range(1,len(candidates)+1), candidates,fontsize=18)
+        plt.xticks(range(1,len(candidates)+1), candidates)
         plt.savefig(os.path.join(result_dir, metric+"-box.eps"), format='eps')
         plt.show()
 def graph_cdf(result_dir, candidates, graph_title):
@@ -351,5 +280,3 @@ if __name__ == '__main__':
         onoff_eval(result_base)
     elif evaluate_func == "bw":
         bw_eval(result_base)
-    elif evaluate_func == "rtt":
-        rtt_eval(result_base)

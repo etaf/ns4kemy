@@ -1,7 +1,7 @@
 #!/usr/bin/awk -f
 #===============================================================================
 #
-#          File:  bw_throughput.awk
+#          File:  cmuthput.awk
 # 
 #   Description:  
 # 
@@ -9,17 +9,19 @@
 #        Author:  YOUR NAME (), 
 #  Organization:  
 #       Version:  1.0
-#       Created:  Wednesday, April 22, 2015 07:43
+#       Created:  Thursday, April 23, 2015 20:54
 #      Revision:  ---
 #       License:  
 #===============================================================================
-BEGIN{
-    M = iter * senders
-}
 {
-    sum += $2
-    if(NR%M == 0) {
-        printf("%f\n",sum/M);
-        sum = 0;
+
+    event = $1
+    time = $2
+    pkt_size = $6
+
+    if( event == "r")
+    {
+        recv_sum += pkt_size
+        printf("%f %f\n", time, recv_sum)
     }
 }

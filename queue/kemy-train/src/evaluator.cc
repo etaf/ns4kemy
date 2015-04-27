@@ -12,12 +12,6 @@ Evaluator::Evaluator( const ConfigRange & range )
     _configs()
 {
   /* first load "anchors" */
-  _configs.push_back( NetConfig().set_bottle_bw( range.bottle_bw.first ).set_bottle_single_delay( range.bottle_single_delay.first ).set_num_senders( range.max_senders ));
-
-  if ( range.lo_only ) {
-    return;
-  }
-
   _configs.push_back( NetConfig().set_bottle_bw( range.bottle_bw.first ).set_bottle_single_delay( range.bottle_single_delay.first ).set_num_senders( range.max_senders ) );
 /*  _configs.push_back( NetConfig().set_bottle_bw( range.bottle_bw.first ).set_bottle_single_delay( range.bottle_single_delay.second ).set_num_senders( range.max_senders ) );*/
   //_configs.push_back( NetConfig().set_bottle_bw( range.bottle_bw.second ).set_bottle_single_delay( range.bottle_single_delay.first ).set_num_senders( range.max_senders ));
