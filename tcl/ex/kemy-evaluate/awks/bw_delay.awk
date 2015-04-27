@@ -13,10 +13,13 @@
 #      Revision:  ---
 #       License:  
 #===============================================================================
+BEGIN{
+    M = iter * senders
+}
 {
     sum += $5
-    if(NR%senders == 0) {
-        printf("%f\n",sum/senders);
+    if(NR%M == 0) {
+        printf("%f\n",sum/M * 1000 - rtt);
         sum = 0;
     }
 }

@@ -114,10 +114,9 @@ void KemyQueue::update_enque(Packet* p ){
     _last_arrival = now;
     //update _ewma_qlen
     //double lamda = exp(- interval/_min_arrive_interval * _K);
-    
+
     /*std::cout<<"packt_size:"<<packet_size<<"\t interval:"<<interval<<std::endl;*/
     //update_ewma_arrival_rate
-    if(interval < 1e-9) std::cout<<interval<<endl;
     _ewma_arrival_rate = (1-lamda) * packet_size / interval  + lamda * _ewma_arrival_rate;
     _memory.update_ewma_arrival_rate(_ewma_arrival_rate);
 
