@@ -254,9 +254,13 @@ def graph_base_bw(result_dir, candidates, graph_title, bws):
             data = np.loadtxt(result_file, unpack = True)
             line, =plt.plot(data,styles[candidate], label = candidate, markersize=10)
 
-        plt.legend(loc=2)
+        if metric == "throughput":
+            plt.legend(loc=2)
+        else:
+            plt.legend()
         plt.xticks(range(len(bws)), bws)
         plt.savefig( os.path.join(result_dir,metric) +".eps", format="eps")
+        #plt.savefig( os.path.join(result_dir,metric) +".svg", format="svg")
         plt.show()
 
 def graph_base_simtime(result_dir, candidates, graph_title):

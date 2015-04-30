@@ -16,14 +16,8 @@ int main(int argc, char** args)
     const unsigned int BUFFSIZE = 1024;
     //write whiskers to file
     char whiskers_file[BUFFSIZE];
-    char current_dir[BUFFSIZE];
-
-    char* tmp = getcwd(current_dir,sizeof(current_dir));
-    if(!tmp){
-        perror("error get cwd");
-    }
     std::stringstream ss;
-    sprintf(whiskers_file,"%s/%s", current_dir, args[1]);
+    sprintf(whiskers_file,"%s", args[1]);
 
     int fd = open( whiskers_file, O_RDONLY );
     if ( fd < 0 ) {

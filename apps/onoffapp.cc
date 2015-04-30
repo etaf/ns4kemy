@@ -1,4 +1,4 @@
-//#define ETAF_DEBUG etaf_debug
+#define ETAF_DEBUG etaf_debug
 #include <cmath>
 #include "exception.hh"
 #include "ezio.hh"
