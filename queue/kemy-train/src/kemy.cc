@@ -42,15 +42,14 @@ int main( int argc, char *argv[] )
   }
 
   ConfigRange configuration_range;
-  configuration_range.bottle_bw = make_pair( 10,20 ); // 10 Mbps to 20 Mbps
-  configuration_range.bottle_single_delay = make_pair( 50, 50 ); // ms
-  configuration_range.max_senders = 16;
-  configuration_range.min_senders = 8;
+  configuration_range.bottle_bw = make_pair( 1,100 ); // 10 Mbps to 20 Mbps
+  configuration_range.bottle_single_delay = make_pair( 50, 100 ); // rtt 100-200 ms
+  configuration_range.max_senders = 50;
+  configuration_range.min_senders = 1;
 
   //configuration_range.mean_on_duration = 5000;
   //configuration_range.mean_off_duration = 5000;
 
-  //  configuration_range.lo_only = true;
 
   RatBreeder breeder( configuration_range );
 
