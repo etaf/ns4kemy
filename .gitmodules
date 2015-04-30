@@ -1,0 +1,3 @@
+[submodule "tcl/ex/kemy-evaluate"]
+	path = tcl/ex/kemy-evaluate
+	url = git@github.com:etaf/kemy-evaluate.git
