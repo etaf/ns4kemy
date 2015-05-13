@@ -45,7 +45,7 @@ class OnOffApp : public Application {
   void turn_on(void);    /* Called when the flow starts */
   void turn_off(void);   /* Called when the flow ends */
   int command(int argc, const char*const* argv) override;
-
+  const static double min_off;
  private:
   /* ontype, unique ID, packet, and header size */
   const enum {BYTE_BASED, TIME_BASED, EMPIRICAL} ontype_;

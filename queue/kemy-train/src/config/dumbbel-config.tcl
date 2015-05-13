@@ -28,7 +28,7 @@ set opt(ontype) "bytes";         # valid options: "time", "bytes", and "flowcdf"
 #set opt(ontype) "time";         # valid options: "time", "bytes", and "flowcdf"
 
 # simulator parameters
-set opt(simtime) 500.0;          # total simulated time (s)
+set opt(simtime) 100.0;          # total simulated time (s)
 #set opt(tr) kemyout;            # output trace in opt(tr).out
 set opt(partialresults) false;   # show partial throughput, delay, and utility?
 set opt(verbose) false;          # verbose printing for debugging (esp stats)

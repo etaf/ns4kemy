@@ -6,6 +6,7 @@
 
 using namespace std;
 
+const double OnOffApp::min_off = 0.01;
 OnOffApp::OnOffApp(string str_ontype,
                    uint32_t t_id,
                    uint32_t t_pkt_size,
@@ -73,7 +74,7 @@ void OnOffApp::resume(void) {
   if (ontype_ == BYTE_BASED or ontype_ == EMPIRICAL) {
     //printf("%d sender is turning off\n",sender_id_);
     //turn_off();
-    off_timer_.sched(0.1);
+    off_timer_.sched(min_off);
   }
 }
 
@@ -84,12 +85,12 @@ void OnOffApp::turn_off(void) {
   }
 
   state_ = OFF;
-  total_on_time_ += (Scheduler::instance().clock() - laststart_ - 0.1);
+  total_on_time_ += (Scheduler::instance().clock() - laststart_ - min_off);
 
   //double off_duration = start_distribution_.sample();
   double off_duration = std::max(0.1,start_distribution_.sample());
 #ifdef ETAF_DEBUG
-  fprintf(stderr, "%d, %f Turning off,time used:%f\n next turning on at %f\n", sender_id_, Scheduler::instance().clock()-laststart_ -0.1 ,
+  fprintf(stderr, "%d, %f Turning off,time used:%f\n next turning on at %f\n", sender_id_, Scheduler::instance().clock()-laststart_ -min_off ,
           Scheduler::instance().clock(),
                   Scheduler::instance().clock() + off_duration);
 #endif 

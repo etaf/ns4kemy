@@ -129,7 +129,7 @@ void KemyQueue::update_deque(Packet* p){
     double now = Scheduler::instance().clock();
 
     double interval = (now - _last_depart)*1000;
-
+    //std::cout<<interval<<std::endl;
     //update _min_depart_interval
     if( _min_depart_interval == 0){
         _min_depart_interval = interval;
